@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Dieses Projekt dient als Unterstützung und Musterlösung zu meinem Workshop. In den einzelnen Branches sind die
-jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. Hier im `main` befindet sich das erste 
+jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. Hier im `main` befindet sich das erste
 Projektsetup.
 
 ## Requirements
@@ -16,7 +16,7 @@ Projektsetup.
 
 ## Build and run
 
-Siehe [Makefile](Makefile) für genauere Informationen. 
+Siehe [Makefile](Makefile) für genauere Informationen.
 
 ```shell
 # java 
