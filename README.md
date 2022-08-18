@@ -16,7 +16,7 @@ Projektsetup.
 
 ## Build and run
 
-Siehe [Makefile](Makefile) für genauere Informationen.
+Siehe [Makefile](Makefile) und [requests.http](requests.http) für genauere Informationen.
 
 ```shell
 # java 
@@ -27,5 +27,4 @@ $ make http-call
 # docker
 $ make docker/build
 $ make docker/run
-$ make http-call
 ```
