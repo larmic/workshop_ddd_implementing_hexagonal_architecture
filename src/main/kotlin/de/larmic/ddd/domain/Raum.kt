@@ -1,4 +1,4 @@
-package de.neusta.larmic.ddd.domain
+package de.larmic.ddd.domain
 
 // aggregate. Nummer is id.
 class Raum(val nummer: Nummer, val name: Name) {

@@ -1,4 +1,6 @@
-package de.neusta.larmic.ddd.domain
+package de.larmic.ddd.domain
+
+import de.larmic.ddd.domain.Raum
 
 fun createRaumTestData(
     raumNummer: String = "0815",

@@ -1,4 +1,4 @@
-package de.neusta.larmic.ddd.domain
+package de.larmic.ddd.domain
 
 interface RaumRepository {
 

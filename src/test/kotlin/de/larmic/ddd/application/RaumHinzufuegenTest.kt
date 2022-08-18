@@ -1,0 +1,46 @@
+package de.larmic.ddd.application
+
+import de.larmic.ddd.domain.RaumRepository
+import de.larmic.ddd.domain.createRaumTestData
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+
+internal class RaumHinzufuegenTest {
+
+    private val raumRepositoryMock = mockk<RaumRepository>(relaxed = true)
+    private val raumHinzufuegen = RaumHinzufuegen(raumRepositoryMock)
+
+    @Test
+    internal fun `add not existing room`() {
+        val raum = createRaumTestData()
+
+        every { raumRepositoryMock.existiert(raum.nummer) } returns false
+
+        val answer = raumHinzufuegen.fuegeRaumHinzu(raum)
+
+        assertThat(answer).isEqualTo(Ok)
+
+        verify {
+            raumRepositoryMock.speichere(withArg {
+                assertThat(it.nummer.value).isEqualTo(raum.nummer.value)
+                assertThat(it.name.value).isEqualTo(raum.name.value)
+            })
+        }
+    }
+
+    @Test
+    internal fun `add existing room`() {
+        val raum = createRaumTestData()
+
+        every { raumRepositoryMock.existiert(raum.nummer) } returns true
+
+        val answer = raumHinzufuegen.fuegeRaumHinzu(raum)
+
+        assertThat(answer).isEqualTo(RaumExistiertBereits)
+
+        verify(exactly = 0) { raumRepositoryMock.speichere(any()) }
+    }
+}
