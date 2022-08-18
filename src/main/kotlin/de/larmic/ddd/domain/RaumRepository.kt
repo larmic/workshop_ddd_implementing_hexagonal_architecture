@@ -1,5 +1,6 @@
 package de.larmic.ddd.domain
 
+@Repository
 interface RaumRepository {
 
     fun speichere(raum: Raum)

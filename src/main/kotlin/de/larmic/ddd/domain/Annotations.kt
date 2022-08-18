@@ -23,3 +23,11 @@ annotation class Entity
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 annotation class ValueObject
+
+/**
+ * Marks given class as DDD building block 'repository'.
+ */
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+annotation class Repository
