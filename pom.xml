@@ -28,7 +28,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <kotlin.version>1.7.10</kotlin.version>
+        <!-- do not use 1.7.0 with mockk. see https://github.com/mockk/mockk/issues/832 -->
+        <kotlin.version>1.6.21</kotlin.version>
 
         <!-- testing -->
         <junit-jupiter.version>5.9.0</junit-jupiter.version>
