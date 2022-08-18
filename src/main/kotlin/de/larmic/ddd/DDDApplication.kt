@@ -1,4 +1,4 @@
-package de.neusta.larmic.ddd
+package de.larmic.ddd
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
