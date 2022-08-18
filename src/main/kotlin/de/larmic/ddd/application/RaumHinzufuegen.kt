@@ -4,7 +4,7 @@ import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
 import org.springframework.stereotype.Component
 
-@Component
+@UseCase
 class RaumHinzufuegen(private val raumRepository: RaumRepository) {
 
     fun fuegeRaumHinzu(raum: Raum) = if (raumRepository.existiert(raum.nummer)) {
