@@ -9,7 +9,7 @@ class CacheRoomRepository : RaumRepository {
 
     private val rooms = mutableMapOf<Raum.Nummer, Raum>()
 
-    override fun speichere(raum: Raum) {
+    override fun legeAn(raum: Raum) {
         rooms[raum.nummer] = raum
     }
 

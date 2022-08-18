@@ -13,7 +13,7 @@ internal class CacheRoomRepositoryTest {
     internal fun `store and get a room`() {
         val raum = createRaumTestData()
 
-        roomRepository.speichere(raum)
+        roomRepository.legeAn(raum)
 
         assertThat(roomRepository.size).isEqualTo(1)
         assertThat(roomRepository.finde(raum.nummer)).isNotNull
@@ -25,8 +25,8 @@ internal class CacheRoomRepositoryTest {
     internal fun `store a room twice`() {
         val raum = createRaumTestData()
 
-        roomRepository.speichere(raum)
-        roomRepository.speichere(raum)
+        roomRepository.legeAn(raum)
+        roomRepository.legeAn(raum)
 
         assertThat(roomRepository.size).isEqualTo(1)
         assertThat(roomRepository.finde(raum.nummer)).isNotNull
@@ -43,7 +43,7 @@ internal class CacheRoomRepositoryTest {
     internal fun `containing room`() {
         val raum = createRaumTestData()
 
-        roomRepository.speichere(raum)
+        roomRepository.legeAn(raum)
 
         assertThat(roomRepository.existiert(raum.nummer)).isTrue
     }

@@ -2,7 +2,6 @@ package de.larmic.ddd.application
 
 import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
-import org.springframework.stereotype.Component
 
 @UseCase
 class RaumHinzufuegen(private val raumRepository: RaumRepository) {
@@ -10,13 +9,13 @@ class RaumHinzufuegen(private val raumRepository: RaumRepository) {
     fun fuegeRaumHinzu(raum: Raum) = if (raumRepository.existiert(raum.nummer)) {
         RaumExistiertBereits
     } else {
-        raumRepository.speichere(raum)
+        raumRepository.legeAn(raum)
         Ok
     }
 
 }
 
-sealed class Answer
+sealed class Result
 
-object Ok : Answer()
-object RaumExistiertBereits : Answer()
+object Ok : Result()
+object RaumExistiertBereits : Result()

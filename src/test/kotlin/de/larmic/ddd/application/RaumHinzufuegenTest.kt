@@ -24,7 +24,7 @@ internal class RaumHinzufuegenTest {
         assertThat(answer).isEqualTo(Ok)
 
         verify {
-            raumRepositoryMock.speichere(withArg {
+            raumRepositoryMock.legeAn(withArg {
                 assertThat(it.nummer.value).isEqualTo(raum.nummer.value)
                 assertThat(it.name.value).isEqualTo(raum.name.value)
             })
@@ -41,6 +41,6 @@ internal class RaumHinzufuegenTest {
 
         assertThat(answer).isEqualTo(RaumExistiertBereits)
 
-        verify(exactly = 0) { raumRepositoryMock.speichere(any()) }
+        verify(exactly = 0) { raumRepositoryMock.legeAn(any()) }
     }
 }
