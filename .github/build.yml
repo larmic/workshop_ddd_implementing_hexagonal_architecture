@@ -1,0 +1,22 @@
+name: Build pipeline
+
+on: [push]
+
+jobs:
+  properties:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 17 ]
+
+    name: Run tests with java ${{ matrix.java }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup java ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+      - run: mvn clean test
