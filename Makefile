@@ -6,7 +6,7 @@ java/build:
 
 java/test:
 	echo "Run java unit tests"
-	./mvnw clean test
+	./mvnw clean verify
 
 java/run:
 	java -jar target/workshop_implementing_ddd.jar
