@@ -1,0 +1,25 @@
+name: Story 3 - Person in mehreren Räumen
+
+on:
+  push:
+    branches:
+      - "story3_person_in_mehreren_räumen"
+
+jobs:
+  properties:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ 17 ]
+
+    name: Run tests with java ${{ matrix.java }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup java ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+      - run: mvn clean verify
