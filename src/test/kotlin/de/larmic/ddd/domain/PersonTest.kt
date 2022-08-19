@@ -91,7 +91,7 @@ internal class PersonTest {
         @EnumSource(Person.Namenszusatz::class)
         internal fun `person has Anrede but no Titel`(namenszusatz: Person.Namenszusatz) {
             val person = createPersonTestData(vorname = "Alexander", nachname = "Cole", ldap = "acole", namenszusatz = namenszusatz)
-            assertThat(person.fullName).isEqualTo("Alexander ${namenszusatz.label} Cole (acole)")
+            assertThat(person.fullName).isEqualTo("Alexander ${namenszusatz.value} Cole (acole)")
         }
     }
 

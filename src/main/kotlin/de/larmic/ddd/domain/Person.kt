@@ -21,38 +21,38 @@ class Person(
                 .trim()
         }
 
+    @ValueObject
     data class Id(val id: UUID = UUID.randomUUID())
 
     @ValueObject
-    // TODO rename inner fields to value
-    class Vorname(vorname: String) {
-        val value: String = vorname.normalizeName()
+    class Vorname(value: String) {
+        val value: String = value.normalizeName()
 
         init {
-            require(vorname.isNotBlank()) { "First name must not be empty" }
+            require(value.isNotBlank()) { "First name must not be empty" }
         }
     }
 
     @ValueObject
-    class Nachname(nachname: String) {
-        val value: String = nachname.normalizeName()
+    class Nachname(value: String) {
+        val value: String = value.normalizeName()
 
         init {
-            require(nachname.isNotBlank()) { "Last name must not be empty" }
+            require(value.isNotBlank()) { "Last name must not be empty" }
         }
     }
 
     @ValueObject
-    class Ldap(ldap: String) {
-        val value: String = ldap.normalizeName()
+    class Ldap(value: String) {
+        val value: String = value.normalizeName()
 
         init {
-            require(ldap.isNotBlank()) { "LDAP user must not be empty" }
+            require(value.isNotBlank()) { "LDAP user must not be empty" }
         }
     }
 
     @ValueObject
-    enum class Namenszusatz(val label: String) {
+    enum class Namenszusatz(val value: String) {
 
         VON("von"),
         VAN("van"),
@@ -65,13 +65,13 @@ class Person(
                 label.mapToAddition() ?: throw IllegalArgumentException("Person addition '$label' is not supported")
             }
 
-            private fun String.mapToAddition() = Namenszusatz.values().firstOrNull { it.label == this.trimAndLowercase() }
+            private fun String.mapToAddition() = Namenszusatz.values().firstOrNull { it.value == this.trimAndLowercase() }
             private fun String.trimAndLowercase() = this.trim { it <= ' ' }.lowercase()
         }
     }
 
     @ValueObject
-    enum class Titel(val label: String) {
+    enum class Titel(val value: String) {
 
         DR("Dr.");
 
@@ -82,13 +82,13 @@ class Person(
                 label.mapToAddition() ?: throw IllegalArgumentException("Person title '$label' is not supported")
             }
 
-            private fun String.mapToAddition() = Titel.values().firstOrNull { it.label.lowercase() == this.trimAndLowercase() }
+            private fun String.mapToAddition() = Titel.values().firstOrNull { it.value.lowercase() == this.trimAndLowercase() }
             private fun String.trimAndLowercase() = this.trim { it <= ' ' }.lowercase()
         }
     }
 }
 
-private fun Person.Titel?.asString() = this?.label ?: ""
-private fun Person.Namenszusatz?.asString() = this?.label ?: ""
+private fun Person.Titel?.asString() = this?.value ?: ""
+private fun Person.Namenszusatz?.asString() = this?.value ?: ""
 private fun String.removeDuplicatedWhiteSpaces() = this.replace("\\s+".toRegex(), " ")
 private fun String.normalizeName() = trim { it <= ' ' }
