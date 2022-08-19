@@ -17,6 +17,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 * :boom: [Events](misc/stories/story4_events.png): `story4_events`
 
 :100: - Fertig
+
 :boom: - In Arbeit oder noch nicht begonnen
 
 #### Story in diesem Branch ```main```
