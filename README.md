@@ -12,9 +12,9 @@ Hier im `main` befindet sich das erste Projektsetup.
 * Projektsetup: ```main```
 * Erfassen von Räumen: `story1_anlegen_von_räumen`
 
-#### Story in diesem Branch ```main```
+#### Story in diesem Branch ```story1_anlegen_von_räumen```
 
-![Story1 - Projektsetup](misc/stories/story1_projekt_setup.png)
+![Story1 - Erfassen von Räumen](misc/stories/story2_erfassen_von_raeumen.png)
 
 ## Requirements
 
