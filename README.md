@@ -1,14 +1,14 @@
 # Musterlösung zum Workshop `implementing DDD with hexagonal architecture`
 
-[![Story1 - Projektsetup](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml)
-[![Story2 - Anlegen von Räumen](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml/badge.svg?branch=story1_anlegen_von_r%C3%A4umen)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml)
+[![Story1 - Projektsetup](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story1.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story1.yml)
+[![Story2 - Anlegen von Räumen](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story2.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story2.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Dieses Projekt dient als Unterstützung und Musterlösung zu meinem [Workshop](misc/presentation/workshop_folien.pdf). 
 In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. 
 Hier im `main` befindet sich das erste Projektsetup.
 
-## Story 1 Projektsetup
+### Story 1 Projektsetup
 
 ![Story1 - Projektsetup](misc/stories/story1_projekt_setup.png)
 
