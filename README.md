@@ -16,7 +16,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 #### Story in diesem Branch ```story2_hinzufügen_von_personen```
 
-![Story1 - Hinzufügen von Personen](misc/stories/story2_hinzufuegen_von_personen.png)
+![Story2 - Hinzufügen von Personen](misc/stories/story2_hinzufuegen_von_personen.png)
 
 ## Requirements
 
