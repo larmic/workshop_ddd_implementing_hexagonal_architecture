@@ -1,9 +1,9 @@
-name: Story2 - Anlegen von Räumen
+name: Story1 - Projektsetup
 
 on:
   push:
     branches:
-      - "story1_anlegen_von_räumen"
+      - "main"
 
 jobs:
   properties:

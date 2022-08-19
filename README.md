@@ -14,7 +14,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 #### Story in diesem Branch ```main```
 
-![Story1 - Projektsetup](misc/stories/story1_projekt_setup.png)
+![Projektsetup](misc/stories/projekt_setup.png)
 
 ## Requirements
 
