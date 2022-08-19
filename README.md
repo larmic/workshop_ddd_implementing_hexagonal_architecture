@@ -8,7 +8,11 @@ Dieses Projekt dient als Unterstützung und Musterlösung zu meinem [Workshop](m
 In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. 
 Hier im `main` befindet sich das erste Projektsetup.
 
-### Story 1 Projektsetup
+#### Stories und Branches
+* Projektsetup: ```main```
+* Erfassen von Räumen: `story1_anlegen_von_räumen`
+
+#### Story in diesem Branch
 
 ![Story1 - Projektsetup](misc/stories/story1_projekt_setup.png)
 
