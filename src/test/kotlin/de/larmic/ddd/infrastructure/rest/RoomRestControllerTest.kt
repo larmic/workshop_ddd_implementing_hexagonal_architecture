@@ -2,13 +2,16 @@ package de.larmic.ddd.infrastructure.rest
 
 import com.ninjasquad.springmockk.MockkBean
 import de.larmic.ddd.application.Ok
+import de.larmic.ddd.application.PersonHinzufuegen
 import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
+import de.larmic.ddd.domain.Person
 import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
 import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
+import de.larmic.ddd.infrastructure.common.putPersonToRoom
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -31,6 +34,9 @@ internal class RoomRestControllerTest {
 
     @MockkBean
     private lateinit var raumHinzufuegenMock: RaumHinzufuegen
+
+    @MockkBean
+    private lateinit var personHinzufuegenMock: PersonHinzufuegen
 
     @Test
     internal fun `post a new valid room`() {
@@ -116,5 +122,49 @@ internal class RoomRestControllerTest {
 
         this.mockMvc.getRoom(roomNumber)
             .andExpect(status().isNotFound)
+    }
+
+    @Test
+    internal fun `put a person to an existing room`() {
+        val roomNumber = "0815"
+        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok
+
+        this.mockMvc.putPersonToRoom(roomNumber, """
+            {
+                "firstName": "Lars",
+                "lastName": "Michaelis",
+                "ldap": "lamichae",
+                "title": "Dr.",
+                "addition" : "von"
+            }
+        """.trimIndent())
+            .andExpect(status().is2xxSuccessful)
+
+        verify {
+            personHinzufuegenMock.fuegePersonZuRaumHinzu(Raum.Nummer(roomNumber), withArg {
+                assertThat(it.vorname.value).isEqualTo("Lars")
+                assertThat(it.nachname.value).isEqualTo("Michaelis")
+                assertThat(it.ldap.value).isEqualTo("lamichae")
+                assertThat(it.titel).isEqualTo(Person.Titel.DR)
+                assertThat(it.namenszusatz).isEqualTo(Person.Namenszusatz.VON)
+            })
+        }
+    }
+
+    @Test
+    internal fun `put a person to an not existing room`() {
+        val roomNumber = "0815"
+        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.RaumNichtGefunden
+
+        this.mockMvc.putPersonToRoom(roomNumber, """
+            {
+                "firstName": "Lars",
+                "lastName": "Michaelis",
+                "ldap": "lamichae",
+                "title": "Dr.",
+                "addition" : "von"
+            }
+        """.trimIndent())
+            .andExpect(status().is4xxClientError)
     }
 }
