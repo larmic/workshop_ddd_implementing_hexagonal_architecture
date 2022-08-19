@@ -72,6 +72,44 @@ internal class RaumTest {
         }
     }
 
+    @Nested
+    @DisplayName("Create Raum Personen with")
+    inner class RaumPersonsTests {
+
+        @Test
+        internal fun `persons are empty`() {
+            val raum = createRaumTestData()
+
+            assertThat(raum.personen).isEmpty()
+        }
+
+        @Test
+        internal fun `persons are not empty`() {
+            val raum = createRaumTestData()
+
+            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae"))
+            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", titel = Person.Titel.DR))
+
+            assertThat(raum.personen)
+                .containsExactlyInAnyOrder(
+                    "Lars Michaelis (lamichae)",
+                    "Dr. Lars Mühlmann (lamueh)"
+                )
+        }
+
+        @Test
+        internal fun `person already exists`() {
+            val raum = createRaumTestData()
+            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae")
+
+            raum.fuegeHinzu(person)
+
+            assertThatThrownBy { raum.fuegeHinzu(person) }
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Person '${person.fullName}' is already part of this room")
+        }
+    }
+
     @Test
     internal fun `create Raum`() {
         val number = "1234"

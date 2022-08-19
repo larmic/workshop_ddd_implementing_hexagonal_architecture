@@ -4,7 +4,18 @@ import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
 
 @AggregateRoot(id = "nummer") // is it a good idea to use a natural key as an id?
-class Raum(val nummer: Nummer, val name: Name) {
+class Raum(val nummer: Nummer, val name: Name, private val persons: MutableList<Person> = mutableListOf()) {
+
+    val personen: List<String>
+        get() = this.persons.map { it.fullName }
+
+    fun fuegeHinzu(person: Person) {
+        if (persons beinhaltet person) {
+            throw IllegalArgumentException("Person '${person.fullName}' is already part of this room")
+        }
+
+        this.persons.add(person)
+    }
 
     @ValueObject
     data class Nummer(val value: String) {
@@ -27,3 +38,4 @@ class Raum(val nummer: Nummer, val name: Name) {
 private fun String.normalizeName() = trim { it <= ' ' }
 private fun String.validateRoomNumber() = this.length == 4 && this.isNumeric()
 private fun String.isNumeric() = this.all { it.isDigit() }
+private infix fun List<Person>.beinhaltet(person: Person) = this.map { it.id }.contains(person.id)
