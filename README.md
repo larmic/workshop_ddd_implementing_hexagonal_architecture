@@ -19,8 +19,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 ## Requirements
 
 * Java 17
-* Maven >= 3.6.x
-* Docker optional
+* Docker
 
 ## Build and run
 
