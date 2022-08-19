@@ -12,6 +12,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 #### Stories und Branches
 * Projektsetup: ```main```
 * Erfassen von Räumen: `story1_anlegen_von_räumen`
+* Hinzufügen von Personen: `story2_hinzufügen_von_personen`
 
 #### Story in diesem Branch ```main```
 
