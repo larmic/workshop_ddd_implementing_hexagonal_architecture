@@ -24,7 +24,9 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 ## Build and run
 
-Siehe [Makefile](Makefile) für genauere Informationen.
+Siehe [Makefile](Makefile) und [requests.http](misc/requests.http) 
+([Jetbrains HTTP Client](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)) für genauere 
+Informationen.
 
 ```shell
 # java 

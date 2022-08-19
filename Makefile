@@ -17,6 +17,3 @@ docker/build:
 
 docker/run:
 	docker run --rm -p 8080:8080 larmic/workshop_implementing_ddd:$(DOCKER_TAG)
-
-http-call:
-	curl -i -H "Accept: text/plain" --request GET http://localhost:8080/api/hello
