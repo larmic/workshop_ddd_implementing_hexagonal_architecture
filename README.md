@@ -32,10 +32,8 @@ Informationen.
 # java 
 $ make java/build
 $ make java/run
-$ make http-call
 
 # docker
 $ make docker/build
 $ make docker/run
-$ make http-call
 ```
