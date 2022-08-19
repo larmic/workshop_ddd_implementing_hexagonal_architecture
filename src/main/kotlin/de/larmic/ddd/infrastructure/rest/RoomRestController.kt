@@ -49,7 +49,7 @@ class RoomRestController(
         name = Raum.Name(value = this.name)
     )
 
-    private fun Raum.mapToDto() = RoomDto(number = this.nummer.value, name = this.name.value)
+    private fun Raum.mapToDto() = RoomDto(number = this.nummer.value, name = this.name.value, persons = this.personen)
 
     private fun CreatePersonDto.mapToDomain() = Person(
         vorname = Person.Vorname(this.firstName),
@@ -60,7 +60,7 @@ class RoomRestController(
     )
 }
 
-class RoomDto(val number: String, val name: String)
+class RoomDto(val number: String, val name: String, val persons: List<String>)
 class CreateRoomDto(val number: String, val name: String)
 class CreatePersonDto(
     val firstName: String,

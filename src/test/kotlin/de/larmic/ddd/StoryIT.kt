@@ -2,6 +2,7 @@ package de.larmic.ddd
 
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
+import de.larmic.ddd.infrastructure.common.putPersonToRoom
 import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
@@ -22,20 +23,33 @@ class StoryIT {
     private lateinit var mockMvc: MockMvc
 
     @Test
-    internal fun `create and load room`() {
+    internal fun `create room, add person and load room`() {
         val roomNumber = "0007"
         val roomName = "James Room"
 
+        // create a new room
         this.mockMvc.postRoom(
             json = """{"number": "$roomNumber", "name": "$roomName"}"""
         ).andExpect(status().isOk)
 
+        // add person to room
+        this.mockMvc.putPersonToRoom(roomNumber = roomNumber, json = """
+            {
+                "firstName": "Lars",
+                "lastName": "Michaelis",
+                "ldap": "lamichae",
+                "title": "Dr.",
+                "addition" : "von"
+            }
+        """.trimIndent())
+
+        // load room
         val response = this.mockMvc.getRoom(roomNumber)
             .andExpect(status().isOk)
             .andReturn().response.contentAsString
 
         JSONAssert.assertEquals(
-            """{"number":  "$roomNumber", "name":  "$roomName"}""",
+            """{"number":  "$roomNumber", "name":  "$roomName", "persons": ["Dr. Lars von Michaelis (lamichae)"] }""",
             response,
             JSONCompareMode.STRICT
         )

@@ -5,10 +5,7 @@ import de.larmic.ddd.application.Ok
 import de.larmic.ddd.application.PersonHinzufuegen
 import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.RaumRepository
-import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.domain.*
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
@@ -109,7 +106,7 @@ internal class RoomRestControllerTest {
             .andReturn().response.contentAsString
 
         JSONAssert.assertEquals(
-            """{"number":  "${raum.nummer.value}", "name":  "${raum.name.value}"}""",
+            """{"number":  "${raum.nummer.value}", "name":  "${raum.name.value}", "persons": []}""",
             response,
             JSONCompareMode.STRICT
         )
@@ -122,6 +119,29 @@ internal class RoomRestControllerTest {
 
         this.mockMvc.getRoom(roomNumber)
             .andExpect(status().isNotFound)
+    }
+
+    @Test
+    internal fun `get an existing room with existing persons`() {
+        val person = createPersonTestData()
+        val raum = createRaumTestData(persons = mutableListOf(person))
+
+        every { raumRepositoryMock.finde(raum.nummer) } returns raum
+
+        val response = this.mockMvc.getRoom(raum.nummer.value)
+            .andExpect(status().isOk)
+            .andReturn().response.contentAsString
+
+        JSONAssert.assertEquals("""
+                {
+                  "number":  "${raum.nummer.value}", 
+                  "name":  "${raum.name.value}", 
+                  "persons":["${person.fullName}"]
+                }
+                """.trimIndent(),
+            response,
+            JSONCompareMode.STRICT
+        )
     }
 
     @Test
