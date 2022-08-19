@@ -12,7 +12,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 * Projektsetup: ```main```
 * Erfassen von Räumen: `story1_anlegen_von_räumen`
 
-#### Story in diesem Branch
+#### Story in diesem Branch ```main```
 
 ![Story1 - Projektsetup](misc/stories/story1_projekt_setup.png)
 
