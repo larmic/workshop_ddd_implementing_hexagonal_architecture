@@ -13,9 +13,9 @@ Hier im `main` befindet sich das erste Projektsetup.
 * Projektsetup: ```main```
 * Erfassen von Räumen: `story1_anlegen_von_räumen`
 
-#### Story in diesem Branch ```story1_anlegen_von_räumen```
+#### Story in diesem Branch ```story2_hinzufügen_von_personen```
 
-![Story1 - Erfassen von Räumen](misc/stories/story1_erfassen_von_raeumen.png)
+![Story1 - Hinzufügen von Personen](misc/stories/story2_hinzufuegen_von_personen.png)
 
 ## Requirements
 
