@@ -1,5 +1,7 @@
 package de.larmic.ddd.domain
 
+import de.larmic.ddd.common.Repository
+
 @Repository
 interface RaumRepository {
 
