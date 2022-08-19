@@ -1,7 +1,5 @@
 package de.larmic.ddd.domain
 
-import de.neusta.larmic.ddd.domain.Namenszusatz
-import de.neusta.larmic.ddd.domain.Titel
 import java.util.*
 
 fun createPersonTestData(
@@ -9,8 +7,8 @@ fun createPersonTestData(
     vorname: String = "Uwe",
     nachname: String = "Svensson",
     ldap: String = "usvens",
-    titel: Titel? = null,
-    namenszusatz: Namenszusatz? = null,
+    titel: Person.Titel? = null,
+    namenszusatz: Person.Namenszusatz? = null,
 ) = Person(
     id = Person.Id(id),
     vorname = Person.Vorname(vorname),

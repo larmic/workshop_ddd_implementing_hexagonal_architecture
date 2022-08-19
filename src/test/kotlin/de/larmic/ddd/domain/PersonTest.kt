@@ -1,7 +1,5 @@
 package de.larmic.ddd.domain
 
-import de.neusta.larmic.ddd.domain.Namenszusatz
-import de.neusta.larmic.ddd.domain.Titel
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -37,16 +35,16 @@ internal class PersonTest {
         }
 
         @ParameterizedTest
-        @EnumSource(Namenszusatz::class)
-        fun `has Anrede`(namenszusatz: Namenszusatz) {
+        @EnumSource(Person.Namenszusatz::class)
+        fun `has Anrede`(namenszusatz: Person.Namenszusatz) {
             val person = createPersonTestData(namenszusatz = namenszusatz)
             assertThat(person.namenszusatz).isEqualTo(namenszusatz)
         }
 
         @Test
         fun `has Titel`() {
-            val person = createPersonTestData(titel = Titel.DR)
-            assertThat(person.titel).isEqualTo(Titel.DR)
+            val person = createPersonTestData(titel = Person.Titel.DR)
+            assertThat(person.titel).isEqualTo(Person.Titel.DR)
         }
 
         @ParameterizedTest
@@ -85,15 +83,72 @@ internal class PersonTest {
 
         @Test
         internal fun `person has Title but no Anrede`() {
-            val person = createPersonTestData(titel = Titel.DR)
+            val person = createPersonTestData(titel = Person.Titel.DR)
             assertThat(person.fullName).isEqualTo("Dr. Uwe Svensson (usvens)")
         }
 
         @ParameterizedTest
-        @EnumSource(Namenszusatz::class)
-        internal fun `person has Anrede but no Titel`(namenszusatz: Namenszusatz) {
+        @EnumSource(Person.Namenszusatz::class)
+        internal fun `person has Anrede but no Titel`(namenszusatz: Person.Namenszusatz) {
             val person = createPersonTestData(vorname = "Alexander", nachname = "Cole", ldap = "acole", namenszusatz = namenszusatz)
             assertThat(person.fullName).isEqualTo("Alexander ${namenszusatz.label} Cole (acole)")
+        }
+    }
+
+    @Nested
+    @DisplayName("Test Namenszusatz with")
+    inner class Namenszusatz {
+
+        @Test
+        fun `get value by label`() {
+            assertThat(Person.Namenszusatz.create("von")).isEqualTo(Person.Namenszusatz.VON)
+            assertThat(Person.Namenszusatz.create(" von ")).isEqualTo(Person.Namenszusatz.VON)
+            assertThat(Person.Namenszusatz.create("van")).isEqualTo(Person.Namenszusatz.VAN)
+            assertThat(Person.Namenszusatz.create(" van ")).isEqualTo(Person.Namenszusatz.VAN)
+            assertThat(Person.Namenszusatz.create("de")).isEqualTo(Person.Namenszusatz.DE)
+            assertThat(Person.Namenszusatz.create(" de ")).isEqualTo(Person.Namenszusatz.DE)
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = ["", " ", "   "])
+        fun `get value by label when label is empty`(label: String) {
+            assertThat(Person.Namenszusatz.create(label)).isNull()
+        }
+
+        @Test
+        fun `get value by label when label is unknown`() {
+            assertThatThrownBy { Person.Namenszusatz.create("not-known") }
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Person addition 'not-known' is not supported")
+        }
+    }
+
+    @Nested
+    @DisplayName("Test Titel with")
+    inner class PersonTitle {
+
+        @Test
+        fun `get value by label`() {
+            assertThat(Person.Titel.create("Dr.")).isEqualTo(Person.Titel.DR)
+            assertThat(Person.Titel.create(" Dr. ")).isEqualTo(Person.Titel.DR)
+        }
+
+        @Test
+        fun `get value by label when label is empty`() {
+            assertThat(Person.Titel.create("")).isNull()
+            assertThat(Person.Titel.create(" ")).isNull()
+        }
+
+        @Test
+        fun `get value by label when label is null`() {
+            assertThat(Person.Titel.create(null)).isNull()
+        }
+
+        @Test
+        fun `get value by label when label is unknown`() {
+            assertThatThrownBy { Person.Titel.create("not-known") }
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Person title 'not-known' is not supported")
         }
     }
 }
