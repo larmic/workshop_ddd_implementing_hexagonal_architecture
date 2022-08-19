@@ -1,6 +1,6 @@
 # Musterlösung zum Workshop `implementing DDD with hexagonal architecture`
 
-[![Story1: Projektsetup](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml)
+[![Story1 - Projektsetup](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml)
 [![Story2: Anlegen von Räumen](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml/badge.svg?branch=story1_anlegen_von_r%C3%A4umen)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
