@@ -1,4 +1,6 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.common
+
+import org.springframework.stereotype.Component
 
 /**
  * Marks given class as DDD building block 'aggregate root'.
@@ -31,3 +33,14 @@ annotation class ValueObject
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 annotation class Repository
+
+/**
+ * Marks class as 'use case'.
+ * In DDD this building block is a 'service'.
+ * This annotation extends Spring Boot @Component a class marked with this extention will be known in spring context.
+ */
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+@Component
+annotation class UseCase
