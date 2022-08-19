@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
  * In DDD building block this is a 'service'.
  */
 @Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @Component
 annotation class UseCase

@@ -7,6 +7,8 @@ import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
 import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.infrastructure.common.getRoom
+import de.larmic.ddd.infrastructure.common.postRoom
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -15,11 +17,7 @@ import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(RoomRestController::class)
@@ -120,13 +118,3 @@ internal class RoomRestControllerTest {
             .andExpect(status().isNotFound)
     }
 }
-
-private fun MockMvc.getRoom(number: String) = this.perform(
-    get("/api/room/$number"))
-    .andDo(MockMvcResultHandlers.print())
-
-private fun MockMvc.postRoom(json: String) = this.perform(
-    post("/api/room")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(json.trimIndent()))
-    .andDo(MockMvcResultHandlers.print())
