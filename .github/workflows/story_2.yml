@@ -1,9 +1,9 @@
-name: Story2 - Anlegen von Räumen
+name: Story 2 - Hinzufügen von Personen
 
 on:
   push:
     branches:
-      - "story1_anlegen_von_räumen"
+      - "story2_hinzufügen_von_personen"
 
 jobs:
   properties:
