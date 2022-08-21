@@ -16,7 +16,7 @@ annotation class AggregateRoot
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class Entity(val id: String)
+annotation class Entity
 
 /**
  * Marks given class as DDD building block 'value object'.

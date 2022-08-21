@@ -4,7 +4,7 @@ import de.larmic.ddd.common.Entity
 import de.larmic.ddd.common.ValueObject
 import java.util.*
 
-@Entity(id = "id")
+@Entity
 class Person(
     val id: Id = Id(),
     val vorname: Vorname,
