@@ -1,8 +1,6 @@
 package de.larmic.ddd.infrastructure.rest
 
 import com.ninjasquad.springmockk.MockkBean
-import de.larmic.ddd.application.Ok
-import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
@@ -35,7 +33,7 @@ internal class RoomRestControllerTest {
     internal fun `post a new valid room`() {
         val raum = createRaumTestData(raumNummer = "0007", raumName = "James Room")
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok(raum = raum)
+        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.Ok(raum = raum)
 
         this.mockMvc.postRoom(raum = raum)
             .andExpect(status().isOk)
@@ -73,7 +71,7 @@ internal class RoomRestControllerTest {
     internal fun `post an existing room`() {
         val raum = createRaumTestData()
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumExistiertBereits
+        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.RaumExistiertBereits
 
         val response = this.mockMvc.postRoom(raum = raum)
             .andExpect(status().is4xxClientError)

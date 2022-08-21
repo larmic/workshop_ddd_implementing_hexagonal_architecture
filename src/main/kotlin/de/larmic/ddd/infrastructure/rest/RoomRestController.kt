@@ -1,7 +1,5 @@
 package de.larmic.ddd.infrastructure.rest
 
-import de.larmic.ddd.application.Ok
-import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
@@ -15,8 +13,8 @@ class RoomRestController(private val raumRepository: RaumRepository, private val
     @PostMapping(value = ["/api/room"], consumes = ["application/json"], produces = ["application/json"])
     fun postRoom(@RequestBody dto: CreateRoomDto): ResponseEntity<Any> {
         return when (val result = raumHinzufuegen.fuegeRaumHinzu(dto.mapToDomain())) {
-            is Ok -> ResponseEntity.ok(result.raum.mapToDto())
-            RaumExistiertBereits -> ResponseEntity.badRequest().body("Room number ${dto.number} already exists")
+            is RaumHinzufuegen.Ok -> ResponseEntity.ok(result.raum.mapToDto())
+            RaumHinzufuegen.RaumExistiertBereits -> ResponseEntity.badRequest().body("Room number ${dto.number} already exists")
         }
     }
 
