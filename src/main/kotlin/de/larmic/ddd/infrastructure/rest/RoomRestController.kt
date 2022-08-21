@@ -21,8 +21,8 @@ class RoomRestController(
     @PostMapping(value = ["/api/room"], consumes = ["application/json"], produces = ["application/json"])
     fun postRoom(@RequestBody dto: CreateRoomDto): ResponseEntity<Any> {
         return when (val result = raumHinzufuegen.fuegeRaumHinzu(dto.mapToDomain())) {
-            is Ok -> ResponseEntity.ok(result.raum.mapToDto())
-            RaumExistiertBereits -> ResponseEntity.badRequest().body("Room number ${dto.number} already exists")
+            is RaumHinzufuegen.Ok -> ResponseEntity.ok(result.raum.mapToDto())
+            RaumHinzufuegen.RaumExistiertBereits -> ResponseEntity.badRequest().body("Room number ${dto.number} already exists")
         }
     }
 

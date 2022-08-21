@@ -19,7 +19,7 @@ internal class RaumHinzufuegenTest {
 
         every { raumRepositoryMock.existiert(raum.nummer) } returns false
 
-        val result = raumHinzufuegen.fuegeRaumHinzu(raum) as Ok
+        val result = raumHinzufuegen.fuegeRaumHinzu(raum) as RaumHinzufuegen.Ok
 
         assertThat(raum.id).isEqualTo(result.raum.id)
         assertThat(raum.nummer.value).isEqualTo(result.raum.nummer.value)
@@ -41,7 +41,7 @@ internal class RaumHinzufuegenTest {
 
         val result = raumHinzufuegen.fuegeRaumHinzu(raum)
 
-        assertThat(result).isEqualTo(RaumExistiertBereits)
+        assertThat(result).isEqualTo(RaumHinzufuegen.RaumExistiertBereits)
 
         verify(exactly = 0) { raumRepositoryMock.legeAn(any()) }
     }

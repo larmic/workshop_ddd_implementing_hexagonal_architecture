@@ -1,9 +1,6 @@
 package de.larmic.ddd
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.createPersonTestData
-import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
@@ -28,15 +25,13 @@ class StoryIT {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    private val objectMapper = jacksonObjectMapper()
-
     @Test
     internal fun `create room, add person and load room`() {
         val raum = createRaumTestData()
         val person = createPersonTestData(titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
 
         // post room
-        val roomId = this.mockMvc.postRoom(json = """{"number": "${raum.nummer.value}", "name": "${raum.name.value}"}""")
+        val roomId = this.mockMvc.postRoom(raum = raum)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").isNotEmpty)
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
@@ -58,7 +53,7 @@ class StoryIT {
             .andExpect(status().isOk)
 
         // read room
-        this.mockMvc.getRoom(roomId)
+        this.mockMvc.getRoom(id = roomId)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(roomId))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
@@ -66,9 +61,8 @@ class StoryIT {
             .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
             .andExpect(jsonPath("$.persons.length()").value(1))
     }
-
-    private fun ResultActions.andReturnReadRoomDto() = this.andReturn().mapToReadRoomDto()
-    private fun MvcResult.mapToReadRoomDto() = this.response.contentAsString.readJsonValue()
-    private fun String.readJsonValue() = objectMapper.readValue(this, ReadRoomDto::class.java)
 }
 
+private fun ResultActions.andReturnReadRoomDto() = this.andReturn().mapToReadRoomDto()
+private fun MvcResult.mapToReadRoomDto() = this.response.contentAsString.readJsonValue()
+private fun String.readJsonValue() = jacksonObjectMapper().readValue(this, ReadRoomDto::class.java)

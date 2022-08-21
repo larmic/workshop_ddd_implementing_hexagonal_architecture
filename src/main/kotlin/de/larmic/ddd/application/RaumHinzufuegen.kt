@@ -14,9 +14,8 @@ class RaumHinzufuegen(private val raumRepository: RaumRepository) {
         Ok(raum)
     }
 
+    sealed class Result
+
+    class Ok(val raum: Raum) : Result()
+    object RaumExistiertBereits : Result()
 }
-
-sealed class Result
-
-class Ok(val raum: Raum) : Result()
-object RaumExistiertBereits : Result()

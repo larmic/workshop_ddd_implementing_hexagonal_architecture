@@ -21,7 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.util.*
 
 @WebMvcTest(RoomRestController::class)
 internal class RoomRestControllerTest {
@@ -42,15 +41,9 @@ internal class RoomRestControllerTest {
     internal fun `post a new valid room`() {
         val raum = createRaumTestData(raumNummer = "0007", raumName = "James Room")
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok(raum = raum)
+        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.Ok(raum = raum)
 
-        this.mockMvc.postRoom(
-            json = """
-            {
-                "number": "${raum.nummer.value}",
-                "name": "${raum.name.value}"
-            }"""
-        )
+        this.mockMvc.postRoom(raum = raum)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
@@ -87,30 +80,24 @@ internal class RoomRestControllerTest {
 
     @Test
     internal fun `post an existing room`() {
-        val roomNumber = "0007"
+        val raum = createRaumTestData()
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumExistiertBereits
+        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.RaumExistiertBereits
 
-        val response = this.mockMvc.postRoom(
-            json = """
-            {
-                "number": "$roomNumber",
-                "name": "Bond Room"
-            }"""
-        )
+        val response = this.mockMvc.postRoom(raum = raum)
             .andExpect(status().is4xxClientError)
             .andReturn().response.contentAsString
 
-        assertThat(response).isEqualTo("Room number $roomNumber already exists")
+        assertThat(response).isEqualTo("Room number ${raum.nummer.value} already exists")
     }
 
     @Test
     internal fun `get an existing room`() {
         val raum = createRaumTestData()
 
-        every { raumRepositoryMock.finde(raum.id) } returns raum
+        every { raumRepositoryMock.finde(id = raum.id) } returns raum
 
-        this.mockMvc.getRoom(raum.id.value)
+        this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
@@ -121,10 +108,10 @@ internal class RoomRestControllerTest {
 
     @Test
     internal fun `get a not existing room`() {
-        val roomId = UUID.randomUUID()
-        every { raumRepositoryMock.finde(Raum.Id(roomId)) } returns null
+        val raumId = Raum.Id()
+        every { raumRepositoryMock.finde(id = raumId) } returns null
 
-        this.mockMvc.getRoom(roomId)
+        this.mockMvc.getRoom(raumId)
             .andExpect(status().isNotFound)
     }
 
