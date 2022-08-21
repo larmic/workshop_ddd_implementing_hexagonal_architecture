@@ -8,7 +8,6 @@ import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.*
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
-import de.larmic.ddd.infrastructure.common.putPersonToRoom
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -41,7 +40,7 @@ internal class RoomRestControllerTest {
 
         every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok(raum = raum)
 
-        val response = this.mockMvc.postRoom(
+        this.mockMvc.postRoom(
             json = """
             {
                 "number": "${raum.nummer.value}",
