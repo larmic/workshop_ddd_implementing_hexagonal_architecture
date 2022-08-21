@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class AggregateRoot(val id: String)
+annotation class AggregateRoot
 
 /**
  * Marks given class as DDD building block 'entity'.

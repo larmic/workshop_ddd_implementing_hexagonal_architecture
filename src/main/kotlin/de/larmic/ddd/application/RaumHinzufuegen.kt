@@ -11,12 +11,12 @@ class RaumHinzufuegen(private val raumRepository: RaumRepository) {
         RaumExistiertBereits
     } else {
         raumRepository.legeAn(raum)
-        Ok
+        Ok(raum)
     }
 
 }
 
 sealed class Result
 
-object Ok : Result()
+class Ok(val raum: Raum) : Result()
 object RaumExistiertBereits : Result()

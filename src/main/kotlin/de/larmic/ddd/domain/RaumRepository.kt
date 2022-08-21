@@ -6,7 +6,7 @@ import de.larmic.ddd.common.Repository
 interface RaumRepository {
 
     fun legeAn(raum: Raum)
-    fun finde(nummer: Raum.Nummer): Raum?
+    fun finde(id: Raum.Id): Raum?
     fun existiert(nummer: Raum.Nummer): Boolean
 
 }

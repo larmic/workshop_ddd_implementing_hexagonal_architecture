@@ -14,14 +14,16 @@ internal class RaumHinzufuegenTest {
     private val raumHinzufuegen = RaumHinzufuegen(raumRepositoryMock)
 
     @Test
-    internal fun `add not existing room`() {
+    internal fun `add a not existing room`() {
         val raum = createRaumTestData()
 
         every { raumRepositoryMock.existiert(raum.nummer) } returns false
 
-        val answer = raumHinzufuegen.fuegeRaumHinzu(raum)
+        val result = raumHinzufuegen.fuegeRaumHinzu(raum) as Ok
 
-        assertThat(answer).isEqualTo(Ok)
+        assertThat(raum.id).isEqualTo(result.raum.id)
+        assertThat(raum.nummer.value).isEqualTo(result.raum.nummer.value)
+        assertThat(raum.name.value).isEqualTo(result.raum.name.value)
 
         verify {
             raumRepositoryMock.legeAn(withArg {
@@ -37,9 +39,9 @@ internal class RaumHinzufuegenTest {
 
         every { raumRepositoryMock.existiert(raum.nummer) } returns true
 
-        val answer = raumHinzufuegen.fuegeRaumHinzu(raum)
+        val result = raumHinzufuegen.fuegeRaumHinzu(raum)
 
-        assertThat(answer).isEqualTo(RaumExistiertBereits)
+        assertThat(result).isEqualTo(RaumExistiertBereits)
 
         verify(exactly = 0) { raumRepositoryMock.legeAn(any()) }
     }

@@ -18,7 +18,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.util.*
 
 @WebMvcTest(RoomRestController::class)
 internal class RoomRestControllerTest {
@@ -34,24 +36,31 @@ internal class RoomRestControllerTest {
 
     @Test
     internal fun `post a new valid room`() {
-        val roomNumber = "0007"
-        val roomName = "James Room"
+        val raum = createRaumTestData(raumNummer = "0007", raumName = "James Room")
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok
+        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok(raum = raum)
 
-        this.mockMvc.postRoom(
+        val response = this.mockMvc.postRoom(
             json = """
             {
-                "number": "$roomNumber",
-                "name": "$roomName"
+                "number": "${raum.nummer.value}",
+                "name": "${raum.name.value}"
             }"""
-        ).andExpect(status().isOk)
+        )
+            .andExpect(status().isOk)
+            .andReturn().response.contentAsString
+
+        JSONAssert.assertEquals(
+            """{"id":  "${raum.id.value}", "number":  "${raum.nummer.value}", "name":  "${raum.name.value}"}""",
+            response,
+            JSONCompareMode.STRICT
+        )
 
         verify {
             raumHinzufuegenMock.fuegeRaumHinzu(withArg {
                 assertThat(it).isNotNull
-                assertThat(it.nummer.value).isEqualTo(roomNumber)
-                assertThat(it.name.value).isEqualTo(roomName)
+                assertThat(it.nummer.value).isEqualTo(raum.nummer.value)
+                assertThat(it.name.value).isEqualTo(raum.name.value)
             })
         }
     }
@@ -96,25 +105,21 @@ internal class RoomRestControllerTest {
     internal fun `get an existing room`() {
         val raum = createRaumTestData()
 
-        every { raumRepositoryMock.finde(raum.nummer) } returns raum
+        every { raumRepositoryMock.finde(raum.id) } returns raum
 
-        val response = this.mockMvc.getRoom(raum.nummer.value)
+        this.mockMvc.getRoom(raum.id.value)
             .andExpect(status().isOk)
-            .andReturn().response.contentAsString
-
-        JSONAssert.assertEquals(
-            """{"number":  "${raum.nummer.value}", "name":  "${raum.name.value}"}""",
-            response,
-            JSONCompareMode.STRICT
-        )
+            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
     }
 
     @Test
     internal fun `get a not existing room`() {
-        val roomNumber = "0815"
-        every { raumRepositoryMock.finde(Raum.Nummer(roomNumber)) } returns null
+        val roomId = UUID.randomUUID()
+        every { raumRepositoryMock.finde(Raum.Id(roomId)) } returns null
 
-        this.mockMvc.getRoom(roomNumber)
+        this.mockMvc.getRoom(roomId)
             .andExpect(status().isNotFound)
     }
 }
