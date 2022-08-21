@@ -112,7 +112,8 @@ internal class RoomRestControllerTest {
             .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
             .andExpect(jsonPath("$.name").value(raum.name.value))
-        // TODO verify "persons": []
+            .andExpect(jsonPath("$.persons").isArray)
+            .andExpect(jsonPath("$.persons").isEmpty)
     }
 
     @Test

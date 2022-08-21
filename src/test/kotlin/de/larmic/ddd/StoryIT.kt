@@ -1,6 +1,9 @@
 package de.larmic.ddd
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import de.larmic.ddd.domain.Person
+import de.larmic.ddd.domain.createPersonTestData
+import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
@@ -29,33 +32,37 @@ class StoryIT {
 
     @Test
     internal fun `create room, add person and load room`() {
-        val roomNumber = "0007"
-        val roomName = "James Room"
+        val raum = createRaumTestData()
+        val person = createPersonTestData(titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
 
-        val roomId = this.mockMvc.postRoom(json = """{"number": "$roomNumber", "name": "$roomName"}""")
+        val roomId = this.mockMvc.postRoom(json = """{"number": "${raum.nummer.value}", "name": "${raum.name.value}"}""")
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").isNotEmpty)
-            .andExpect(jsonPath("$.number").value(roomNumber))
-            .andExpect(jsonPath("$.name").value(roomName))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
+            .andExpect(jsonPath("$.persons").isArray)
+            .andExpect(jsonPath("$.persons").isEmpty)
             .andReturnReadRoomDto().id
 
         // add person to room
-        this.mockMvc.putPersonToRoom(roomNumber = roomNumber, json = """
+        this.mockMvc.putPersonToRoom(roomId = roomId, json = """
             {
-                "firstName": "Lars",
-                "lastName": "Michaelis",
-                "ldap": "lamichae",
-                "title": "Dr.",
-                "addition" : "von"
+                "firstName": "${person.vorname.value}",
+                "lastName": "${person.nachname.value}",
+                "ldap": "${person.ldap.value}",
+                "title": "${person.titel?.value}",
+                "addition" : "${person.namenszusatz?.value}"
             }
         """.trimIndent())
+            .andExpect(status().isOk)
 
         this.mockMvc.getRoom(roomId)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(roomId))
-            .andExpect(jsonPath("$.number").value(roomNumber))
-            .andExpect(jsonPath("$.name").value(roomName))
-        // TODO verify persons
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
+            .andExpect(jsonPath("$.persons[0]").value(person.fullName))
+            .andExpect(jsonPath("$.persons.length()").value(1))
     }
 
     private fun ResultActions.andReturnReadRoomDto() = this.andReturn().mapToReadRoomDto()

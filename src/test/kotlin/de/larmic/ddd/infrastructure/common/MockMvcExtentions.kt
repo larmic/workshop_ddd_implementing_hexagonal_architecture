@@ -18,8 +18,8 @@ fun MockMvc.postRoom(json: String) = this.perform(
         .content(json.trimIndent()))
     .andDo(print())
 
-fun MockMvc.putPersonToRoom(roomNumber: String, json: String) = this.perform(
-    put("/api/room/$roomNumber/person")
+fun MockMvc.putPersonToRoom(roomId: String, json: String) = this.perform(
+    put("/api/room/$roomId/person")
         .contentType(MediaType.APPLICATION_JSON)
         .content(json.trimIndent()))
     .andDo(print())
