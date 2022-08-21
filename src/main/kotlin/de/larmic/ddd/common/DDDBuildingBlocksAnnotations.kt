@@ -21,7 +21,7 @@ annotation class Entity
 /**
  * Marks given class as DDD building block 'value object'.
  */
-@Target(AnnotationTarget.CLASS)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.PROPERTY)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 annotation class ValueObject

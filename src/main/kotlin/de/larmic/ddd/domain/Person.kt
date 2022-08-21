@@ -14,6 +14,7 @@ class Person(
     val namenszusatz: Namenszusatz? = null
 ) {
 
+    @ValueObject
     val kurzschreibweise: String
         get() {
             return "${titel.asString()} ${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${ldap.value})"
