@@ -2,9 +2,10 @@ package de.larmic.ddd.domain
 
 import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
+import java.util.*
 
-@AggregateRoot(id = "nummer") // is it a good idea to use a natural key as an id?
-class Raum(val nummer: Nummer, val name: Name, private val persons: MutableList<Person> = mutableListOf()) {
+@AggregateRoot
+class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val persons: MutableList<Person> = mutableListOf()) {
 
     val personen: List<String>
         get() = this.persons.map { it.fullName }
@@ -16,6 +17,9 @@ class Raum(val nummer: Nummer, val name: Name, private val persons: MutableList<
 
         this.persons.add(person)
     }
+
+    @ValueObject
+    data class Id(val value: UUID = UUID.randomUUID())
 
     @ValueObject
     data class Nummer(val value: String) {

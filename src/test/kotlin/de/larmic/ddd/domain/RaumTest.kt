@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import java.util.*
 
 internal class RaumTest {
 
@@ -111,12 +112,26 @@ internal class RaumTest {
     }
 
     @Test
-    internal fun `create Raum`() {
+    internal fun `create Raum with auto generated id`() {
         val number = "1234"
         val name = "Raum 1"
 
         val raum = createRaumTestData(raumNummer = number, raumName = name)
 
+        assertThat(raum.id).isNotNull
+        assertThat(raum.nummer.value).isEqualTo(number)
+        assertThat(raum.name.value).isEqualTo(name)
+    }
+
+    @Test
+    internal fun `create Raum with given id`() {
+        val id = UUID.randomUUID()
+        val number = "1234"
+        val name = "Raum 1"
+
+        val raum = createRaumTestData(id = id, raumNummer = number, raumName = name)
+
+        assertThat(raum.id.value).isEqualTo(id)
         assertThat(raum.nummer.value).isEqualTo(number)
         assertThat(raum.name.value).isEqualTo(name)
     }

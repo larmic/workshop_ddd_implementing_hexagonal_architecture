@@ -18,7 +18,7 @@ class CacheRoomRepository : RaumRepository {
         rooms[raum.nummer] = raum
     }
 
-    override fun finde(nummer: Raum.Nummer) = rooms[nummer]
+    override fun finde(id: Raum.Id) = rooms.filter { it.value.id == id }.map { it.value }.firstOrNull()
 
     override fun finde(personLdap: Person.Ldap) =
         rooms.values.firstOrNull { it.personen.anyEndsWith("(${personLdap.value})") }

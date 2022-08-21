@@ -1,15 +1,18 @@
 package de.larmic.ddd
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
+import de.larmic.ddd.infrastructure.rest.ReadRoomDto
 import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.MvcResult
+import org.springframework.test.web.servlet.ResultActions
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 /**
@@ -22,15 +25,19 @@ class StoryIT {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
+    private val objectMapper = jacksonObjectMapper()
+
     @Test
     internal fun `create room, add person and load room`() {
         val roomNumber = "0007"
         val roomName = "James Room"
 
-        // create a new room
-        this.mockMvc.postRoom(
-            json = """{"number": "$roomNumber", "name": "$roomName"}"""
-        ).andExpect(status().isOk)
+        val roomId = this.mockMvc.postRoom(json = """{"number": "$roomNumber", "name": "$roomName"}""")
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id").isNotEmpty)
+            .andExpect(jsonPath("$.number").value(roomNumber))
+            .andExpect(jsonPath("$.name").value(roomName))
+            .andReturnReadRoomDto().id
 
         // add person to room
         this.mockMvc.putPersonToRoom(roomNumber = roomNumber, json = """
@@ -43,15 +50,16 @@ class StoryIT {
             }
         """.trimIndent())
 
-        // load room
-        val response = this.mockMvc.getRoom(roomNumber)
+        this.mockMvc.getRoom(roomId)
             .andExpect(status().isOk)
-            .andReturn().response.contentAsString
-
-        JSONAssert.assertEquals(
-            """{"number":  "$roomNumber", "name":  "$roomName", "persons": ["Dr. Lars von Michaelis (lamichae)"] }""",
-            response,
-            JSONCompareMode.STRICT
-        )
+            .andExpect(jsonPath("$.id").value(roomId))
+            .andExpect(jsonPath("$.number").value(roomNumber))
+            .andExpect(jsonPath("$.name").value(roomName))
+        // TODO verify persons
     }
+
+    private fun ResultActions.andReturnReadRoomDto() = this.andReturn().mapToReadRoomDto()
+    private fun MvcResult.mapToReadRoomDto() = this.response.contentAsString.readJsonValue()
+    private fun String.readJsonValue() = objectMapper.readValue(this, ReadRoomDto::class.java)
 }
+

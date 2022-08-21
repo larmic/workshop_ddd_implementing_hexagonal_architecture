@@ -20,9 +20,9 @@ internal class CacheRoomRepositoryTest {
         roomRepository.legeAn(raum)
 
         assertThat(roomRepository.size).isEqualTo(1)
-        assertThat(roomRepository.finde(raum.nummer)).isNotNull
-        assertThat(roomRepository.finde(raum.nummer)!!.nummer.value).isEqualTo(raum.nummer.value)
-        assertThat(roomRepository.finde(raum.nummer)!!.name.value).isEqualTo(raum.name.value)
+        assertThat(roomRepository.finde(raum.id)).isNotNull
+        assertThat(roomRepository.finde(raum.id)!!.nummer.value).isEqualTo(raum.nummer.value)
+        assertThat(roomRepository.finde(raum.id)!!.name.value).isEqualTo(raum.name.value)
     }
 
     @Test
@@ -33,9 +33,9 @@ internal class CacheRoomRepositoryTest {
         roomRepository.aktualisiere(raum)
 
         assertThat(roomRepository.size).isEqualTo(1)
-        assertThat(roomRepository.finde(raum.nummer)).isNotNull
-        assertThat(roomRepository.finde(raum.nummer)!!.nummer.value).isEqualTo(raum.nummer.value)
-        assertThat(roomRepository.finde(raum.nummer)!!.name.value).isEqualTo(raum.name.value)
+        assertThat(roomRepository.finde(raum.id)).isNotNull
+        assertThat(roomRepository.finde(raum.id)!!.nummer.value).isEqualTo(raum.nummer.value)
+        assertThat(roomRepository.finde(raum.id)!!.name.value).isEqualTo(raum.name.value)
     }
 
     @Test
