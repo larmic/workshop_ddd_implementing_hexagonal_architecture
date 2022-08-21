@@ -2,6 +2,7 @@ package de.larmic.ddd
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.larmic.ddd.domain.Person
+import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.createPersonTestData
 import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.util.*
 
 /**
  * User story acceptance tests.
@@ -44,15 +46,7 @@ class StoryIT {
             .andReturnReadRoomDto().id
 
         // add person to room
-        this.mockMvc.putPersonToRoom(roomId = roomId, json = """
-            {
-                "firstName": "${person.vorname.value}",
-                "lastName": "${person.nachname.value}",
-                "ldap": "${person.ldap.value}",
-                "title": "${person.titel?.value}",
-                "addition" : "${person.namenszusatz?.value}"
-            }
-        """.trimIndent())
+        this.mockMvc.putPersonToRoom(raumId = Raum.Id(UUID.fromString(roomId)), person = person)
             .andExpect(status().isOk)
 
         // read room

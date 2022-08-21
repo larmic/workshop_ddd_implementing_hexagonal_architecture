@@ -131,21 +131,15 @@ internal class RoomRestControllerTest {
 
     @Test
     internal fun `put a person to an existing room`() {
-        val roomId = Raum.Id()
+        val raumId = Raum.Id()
         val person = createPersonTestData()
         every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok(person = person)
 
-        this.mockMvc.putPersonToRoom(roomId.value.toString(), """
-            {
-                "firstName": "${person.vorname.value}",
-                "lastName": "${person.nachname.value}",
-                "ldap": "${person.ldap.value}"
-            }
-        """.trimIndent())
+        this.mockMvc.putPersonToRoom(raumId = raumId, person = person)
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personHinzufuegenMock.fuegePersonZuRaumHinzu(roomId, withArg {
+            personHinzufuegenMock.fuegePersonZuRaumHinzu(raumId, withArg {
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
                 assertThat(it.ldap.value).isEqualTo(person.ldap.value)
@@ -157,18 +151,10 @@ internal class RoomRestControllerTest {
 
     @Test
     internal fun `put a person to an not existing room`() {
-        val roomNumber = "0815"
+        val raumId = Raum.Id()
         every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.RaumNichtGefunden
 
-        this.mockMvc.putPersonToRoom(roomNumber, """
-            {
-                "firstName": "Lars",
-                "lastName": "Michaelis",
-                "ldap": "lamichae",
-                "title": "Dr.",
-                "addition" : "von"
-            }
-        """.trimIndent())
+        this.mockMvc.putPersonToRoom(raumId = raumId, person = createPersonTestData())
             .andExpect(status().is4xxClientError)
     }
 }
