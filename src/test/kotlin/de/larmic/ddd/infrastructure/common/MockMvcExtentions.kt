@@ -20,6 +20,7 @@ fun MockMvc.postRoom(json: String) = this.perform(
         .content(json.trimIndent()))
     .andDo(print())
 
+// TODO use damain building blocks
 fun MockMvc.putPersonToRoom(roomId: String, json: String) = this.perform(
     put("/api/room/$roomId/person")
         .contentType(MediaType.APPLICATION_JSON)

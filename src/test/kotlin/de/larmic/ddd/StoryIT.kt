@@ -1,6 +1,9 @@
 package de.larmic.ddd
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import de.larmic.ddd.domain.Person
+import de.larmic.ddd.domain.createPersonTestData
+import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom

@@ -1,8 +1,6 @@
 package de.larmic.ddd.infrastructure.rest
 
-import de.larmic.ddd.application.Ok
 import de.larmic.ddd.application.PersonHinzufuegen
-import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.Person
 import de.larmic.ddd.domain.Raum
