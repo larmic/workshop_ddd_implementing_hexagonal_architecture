@@ -19,12 +19,12 @@ internal class PersonHinzufuegenTest {
         val raum = createRaumTestData()
         val person = createPersonTestData()
 
-        every { raumRepositoryMock.finde(raum.nummer) } returns raum
+        every { raumRepositoryMock.finde(raum.id) } returns raum
         every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
 
-        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(raum.nummer, person)
+        val result = personHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person)
 
-        assertThat(answer).isEqualTo(PersonHinzufuegen.Ok)
+        assertThat(result).isEqualTo(PersonHinzufuegen.Ok)
 
         verify {
             raumRepositoryMock.aktualisiere(withArg {
@@ -40,10 +40,10 @@ internal class PersonHinzufuegenTest {
         val person = createPersonTestData()
         val raum = createRaumTestData(persons = mutableListOf(person))
 
-        every { raumRepositoryMock.finde(raum.nummer) } returns raum
+        every { raumRepositoryMock.finde(raum.id) } returns raum
         every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
 
-        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(raum.nummer, person)
+        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person)
 
         assertThat(answer).isEqualTo(PersonHinzufuegen.PersonIstDemRaumBereitsZugewiesen)
 
@@ -56,11 +56,11 @@ internal class PersonHinzufuegenTest {
         val raum1 = createRaumTestData()
         val raum2 = createRaumTestData(raumNummer = "0987", raumName = "anderer raum", persons = mutableListOf(person))
 
-        every { raumRepositoryMock.finde(raum1.nummer) } returns raum1
-        every { raumRepositoryMock.finde(raum2.nummer) } returns raum2
+        every { raumRepositoryMock.finde(raum1.id) } returns raum1
+        every { raumRepositoryMock.finde(raum2.id) } returns raum2
         every { raumRepositoryMock.finde(person.ldap) } returns raum2
 
-        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(raum1.nummer, person)
+        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(raum1.id, person)
 
         assertThat(answer).isEqualTo(PersonHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen)
 
@@ -70,11 +70,11 @@ internal class PersonHinzufuegenTest {
     @Test
     internal fun `room not exists`() {
         val person = createPersonTestData()
-        val nummer = Raum.Nummer("0815")
+        val roomId = Raum.Id()
 
-        every { raumRepositoryMock.finde(nummer) } returns null
+        every { raumRepositoryMock.finde(roomId) } returns null
 
-        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(nummer, person)
+        val answer = personHinzufuegen.fuegePersonZuRaumHinzu(roomId, person)
 
         assertThat(answer).isEqualTo(PersonHinzufuegen.RaumNichtGefunden)
 

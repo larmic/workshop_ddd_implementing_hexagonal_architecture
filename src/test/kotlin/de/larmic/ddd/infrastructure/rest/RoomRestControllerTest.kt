@@ -5,9 +5,7 @@ import de.larmic.ddd.application.Ok
 import de.larmic.ddd.application.PersonHinzufuegen
 import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.RaumRepository
-import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.domain.*
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
@@ -15,8 +13,6 @@ import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
@@ -53,13 +49,12 @@ internal class RoomRestControllerTest {
             }"""
         )
             .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
+            .andExpect(jsonPath("$.persons").isArray)
+            .andExpect(jsonPath("$.persons").isEmpty)
             .andReturn().response.contentAsString
-
-        JSONAssert.assertEquals(
-            """{"id":  "${raum.id.value}", "number":  "${raum.nummer.value}", "name":  "${raum.name.value}"}""",
-            response,
-            JSONCompareMode.STRICT
-        )
 
         verify {
             raumHinzufuegenMock.fuegeRaumHinzu(withArg {
@@ -134,30 +129,23 @@ internal class RoomRestControllerTest {
         val person = createPersonTestData()
         val raum = createRaumTestData(persons = mutableListOf(person))
 
-        every { raumRepositoryMock.finde(raum.nummer) } returns raum
+        every { raumRepositoryMock.finde(raum.id) } returns raum
 
-        val response = this.mockMvc.getRoom(raum.nummer.value)
+        this.mockMvc.getRoom(raum.id.value)
             .andExpect(status().isOk)
-            .andReturn().response.contentAsString
-
-        JSONAssert.assertEquals("""
-                {
-                  "number":  "${raum.nummer.value}", 
-                  "name":  "${raum.name.value}", 
-                  "persons":["${person.fullName}"]
-                }
-                """.trimIndent(),
-            response,
-            JSONCompareMode.STRICT
-        )
+            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
+            .andExpect(jsonPath("$.persons[0]").value(person.fullName))
+            .andExpect(jsonPath("$.persons.length()").value(1))
     }
 
     @Test
     internal fun `put a person to an existing room`() {
-        val roomNumber = "0815"
+        val roomId = Raum.Id()
         every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok
 
-        this.mockMvc.putPersonToRoom(roomNumber, """
+        this.mockMvc.putPersonToRoom(roomId.value.toString(), """
             {
                 "firstName": "Lars",
                 "lastName": "Michaelis",
@@ -169,7 +157,7 @@ internal class RoomRestControllerTest {
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personHinzufuegenMock.fuegePersonZuRaumHinzu(Raum.Nummer(roomNumber), withArg {
+            personHinzufuegenMock.fuegePersonZuRaumHinzu(roomId, withArg {
                 assertThat(it.vorname.value).isEqualTo("Lars")
                 assertThat(it.nachname.value).isEqualTo("Michaelis")
                 assertThat(it.ldap.value).isEqualTo("lamichae")

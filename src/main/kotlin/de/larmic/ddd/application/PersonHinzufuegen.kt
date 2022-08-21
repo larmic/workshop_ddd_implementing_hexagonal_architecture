@@ -8,8 +8,8 @@ import de.larmic.ddd.domain.RaumRepository
 @UseCase
 class PersonHinzufuegen(val raumRepository: RaumRepository) {
 
-    fun fuegePersonZuRaumHinzu(nummer: Raum.Nummer, person: Person): Answer {
-        val raum = raumRepository.finde(nummer) ?: return RaumNichtGefunden
+    fun fuegePersonZuRaumHinzu(id: Raum.Id, person: Person): Result {
+        val raum = raumRepository.finde(id) ?: return RaumNichtGefunden
 
         if (raumRepository.finde(person.ldap) != null) {
             return PersonIstEinemAnderenRaumBereitsZugewiesen
@@ -26,10 +26,10 @@ class PersonHinzufuegen(val raumRepository: RaumRepository) {
         return Ok
     }
 
-    sealed class Answer
+    sealed class Result
 
-    object Ok : Answer()
-    object PersonIstDemRaumBereitsZugewiesen : Answer()
-    object PersonIstEinemAnderenRaumBereitsZugewiesen : Answer()
-    object RaumNichtGefunden : Answer()
+    object Ok : Result()
+    object PersonIstDemRaumBereitsZugewiesen : Result()
+    object PersonIstEinemAnderenRaumBereitsZugewiesen : Result()
+    object RaumNichtGefunden : Result()
 }
