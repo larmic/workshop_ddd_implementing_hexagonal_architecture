@@ -14,7 +14,7 @@ class Person(
     val namenszusatz: Namenszusatz? = null
 ) {
 
-    val fullName: String
+    val kurzschreibweise: String
         get() {
             return "${titel.asString()} ${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${ldap.value})"
                 .removeDuplicatedWhiteSpaces()
@@ -22,7 +22,7 @@ class Person(
         }
 
     @ValueObject
-    data class Id(val id: UUID = UUID.randomUUID())
+    data class Id(val value: UUID = UUID.randomUUID())
 
     @ValueObject
     class Vorname(value: String) {

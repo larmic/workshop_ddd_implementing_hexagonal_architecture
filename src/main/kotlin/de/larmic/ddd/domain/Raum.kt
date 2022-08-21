@@ -8,11 +8,11 @@ import java.util.*
 class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val persons: MutableList<Person> = mutableListOf()) {
 
     val personen: List<String>
-        get() = this.persons.map { it.fullName }
+        get() = this.persons.map { it.kurzschreibweise }
 
     fun fuegeHinzu(person: Person) {
         if (persons beinhaltet person) {
-            throw IllegalArgumentException("Person '${person.fullName}' is already part of this room")
+            throw IllegalArgumentException("Person '${person.kurzschreibweise}' is already part of this room")
         }
 
         this.persons.add(person)

@@ -73,25 +73,25 @@ internal class PersonTest {
     }
 
     @Nested
-    @DisplayName("Test fullName with")
-    inner class ToString {
+    @DisplayName("Test Kurzschreibweise with")
+    inner class Kurzschreibweise {
         @Test
         internal fun `person has no title or addition`() {
             val person = createPersonTestData(vorname = "Susanne", nachname = "Moog", ldap = "smoog")
-            assertThat(person.fullName).isEqualTo("Susanne Moog (smoog)")
+            assertThat(person.kurzschreibweise).isEqualTo("Susanne Moog (smoog)")
         }
 
         @Test
         internal fun `person has Title but no Anrede`() {
             val person = createPersonTestData(titel = Person.Titel.DR)
-            assertThat(person.fullName).isEqualTo("Dr. Uwe Svensson (usvens)")
+            assertThat(person.kurzschreibweise).isEqualTo("Dr. Uwe Svensson (usvens)")
         }
 
         @ParameterizedTest
         @EnumSource(Person.Namenszusatz::class)
         internal fun `person has Anrede but no Titel`(namenszusatz: Person.Namenszusatz) {
             val person = createPersonTestData(vorname = "Alexander", nachname = "Cole", ldap = "acole", namenszusatz = namenszusatz)
-            assertThat(person.fullName).isEqualTo("Alexander ${namenszusatz.value} Cole (acole)")
+            assertThat(person.kurzschreibweise).isEqualTo("Alexander ${namenszusatz.value} Cole (acole)")
         }
     }
 

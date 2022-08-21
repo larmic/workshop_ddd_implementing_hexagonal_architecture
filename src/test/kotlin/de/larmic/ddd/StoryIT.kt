@@ -35,6 +35,7 @@ class StoryIT {
         val raum = createRaumTestData()
         val person = createPersonTestData(titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
 
+        // post room
         val roomId = this.mockMvc.postRoom(json = """{"number": "${raum.nummer.value}", "name": "${raum.name.value}"}""")
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").isNotEmpty)
@@ -56,12 +57,13 @@ class StoryIT {
         """.trimIndent())
             .andExpect(status().isOk)
 
+        // read room
         this.mockMvc.getRoom(roomId)
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.id").value(roomId))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
             .andExpect(jsonPath("$.name").value(raum.name.value))
-            .andExpect(jsonPath("$.persons[0]").value(person.fullName))
+            .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
             .andExpect(jsonPath("$.persons.length()").value(1))
     }
 

@@ -107,7 +107,7 @@ internal class RaumTest {
 
             assertThatThrownBy { raum.fuegeHinzu(person) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Person '${person.fullName}' is already part of this room")
+                .hasMessage("Person '${person.kurzschreibweise}' is already part of this room")
         }
     }
 

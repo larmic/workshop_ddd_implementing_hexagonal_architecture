@@ -29,7 +29,7 @@ class RoomRestController(
     @PutMapping(value = ["/api/room/{id}/person"], consumes = ["application/json"], produces = ["application/json"])
     fun postPerson(@PathVariable id: String, @RequestBody dto: CreatePersonDto): ResponseEntity<Any> {
         return when (personHinzufuegen.fuegePersonZuRaumHinzu(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
-            PersonHinzufuegen.Ok -> ResponseEntity.ok().build()
+            is PersonHinzufuegen.Ok -> ResponseEntity.ok().build()
             PersonHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
             PersonHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()
             PersonHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
@@ -60,7 +60,12 @@ private fun CreateRoomDto.mapToDomain() = Raum(
 )
 
 private fun Raum.mapToDto() =
-    ReadRoomDto(id = this.id.value.toString(), number = this.nummer.value, name = this.name.value, persons = this.personen)
+    ReadRoomDto(
+        id = this.id.value.toString(),
+        number = this.nummer.value,
+        name = this.name.value,
+        persons = this.personen
+    )
 
 private fun CreatePersonDto.mapToDomain() = Person(
     vorname = Person.Vorname(this.firstName),

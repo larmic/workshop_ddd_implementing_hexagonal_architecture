@@ -5,7 +5,10 @@ import de.larmic.ddd.application.Ok
 import de.larmic.ddd.application.PersonHinzufuegen
 import de.larmic.ddd.application.RaumExistiertBereits
 import de.larmic.ddd.application.RaumHinzufuegen
-import de.larmic.ddd.domain.*
+import de.larmic.ddd.domain.Raum
+import de.larmic.ddd.domain.RaumRepository
+import de.larmic.ddd.domain.createPersonTestData
+import de.larmic.ddd.domain.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
@@ -137,33 +140,32 @@ internal class RoomRestControllerTest {
             .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
             .andExpect(jsonPath("$.number").value(raum.nummer.value))
             .andExpect(jsonPath("$.name").value(raum.name.value))
-            .andExpect(jsonPath("$.persons[0]").value(person.fullName))
+            .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
             .andExpect(jsonPath("$.persons.length()").value(1))
     }
 
     @Test
     internal fun `put a person to an existing room`() {
         val roomId = Raum.Id()
-        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok
+        val person = createPersonTestData()
+        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok(person = person)
 
         this.mockMvc.putPersonToRoom(roomId.value.toString(), """
             {
-                "firstName": "Lars",
-                "lastName": "Michaelis",
-                "ldap": "lamichae",
-                "title": "Dr.",
-                "addition" : "von"
+                "firstName": "${person.vorname.value}",
+                "lastName": "${person.nachname.value}",
+                "ldap": "${person.ldap.value}"
             }
         """.trimIndent())
             .andExpect(status().is2xxSuccessful)
 
         verify {
             personHinzufuegenMock.fuegePersonZuRaumHinzu(roomId, withArg {
-                assertThat(it.vorname.value).isEqualTo("Lars")
-                assertThat(it.nachname.value).isEqualTo("Michaelis")
-                assertThat(it.ldap.value).isEqualTo("lamichae")
-                assertThat(it.titel).isEqualTo(Person.Titel.DR)
-                assertThat(it.namenszusatz).isEqualTo(Person.Namenszusatz.VON)
+                assertThat(it.vorname.value).isEqualTo(person.vorname.value)
+                assertThat(it.nachname.value).isEqualTo(person.nachname.value)
+                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
+                assertThat(it.titel).isNull()
+                assertThat(it.namenszusatz).isNull()
             })
         }
     }
