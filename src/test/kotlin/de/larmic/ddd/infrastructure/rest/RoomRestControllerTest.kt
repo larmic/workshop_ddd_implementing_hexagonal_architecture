@@ -13,8 +13,6 @@ import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.web.servlet.MockMvc
@@ -40,7 +38,7 @@ internal class RoomRestControllerTest {
 
         every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns Ok(raum = raum)
 
-        val response = this.mockMvc.postRoom(
+        this.mockMvc.postRoom(
             json = """
             {
                 "number": "${raum.nummer.value}",
@@ -48,13 +46,9 @@ internal class RoomRestControllerTest {
             }"""
         )
             .andExpect(status().isOk)
-            .andReturn().response.contentAsString
-
-        JSONAssert.assertEquals(
-            """{"id":  "${raum.id.value}", "number":  "${raum.nummer.value}", "name":  "${raum.name.value}"}""",
-            response,
-            JSONCompareMode.STRICT
-        )
+            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
 
         verify {
             raumHinzufuegenMock.fuegeRaumHinzu(withArg {
