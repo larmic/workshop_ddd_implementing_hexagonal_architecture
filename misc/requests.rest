@@ -57,7 +57,15 @@ Content-Type: application/json
 ###
 
 # Add person to a room
-PUT localhost:8080/api/room/{{room-id}}/person/{{person-id}}
+# curl -i -X PUT localhost:8080/api/room/0815/person -H 'Content-Type: application/json' -d '{"firstName":"Lars","lastName":"Michaelis","ldap":"larmic"}'
+PUT localhost:8080/api/room/{{room-id}}/person
+Content-Type: application/json
+
+{
+  "firstName": "{{first-name}}",
+  "lastName": "{{last-name}}",
+  "ldap": "{{ldap}}"
+}
 
 > {%
     client.test("Request executed successfully", function() {
