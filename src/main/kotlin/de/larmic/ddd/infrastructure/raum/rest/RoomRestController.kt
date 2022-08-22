@@ -5,6 +5,7 @@ import de.larmic.ddd.application.raum.RaumHinzufuegen
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
+import de.larmic.ddd.infrastructure.person.rest.CreatePersonDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*

@@ -10,10 +10,7 @@ import java.util.*
 
 fun MockMvc.getRoom(id: Raum.Id) = this.getRoom(id.value)
 fun MockMvc.getRoom(id: String) = this.getRoom(UUID.fromString(id))
-fun MockMvc.getRoom(id: UUID) = this.perform(
-    get("/api/room/$id")
-)
-    .andDo(print())
+fun MockMvc.getRoom(id: UUID) = this.perform(get("/api/room/$id")).andDo(print())
 
 fun MockMvc.postRoom(raum: Raum) =
     this.postRoom(json = """{"number": "${raum.nummer.value}", "name": "${raum.name.value}"}""")
@@ -25,8 +22,23 @@ fun MockMvc.postRoom(json: String) = this.perform(
 )
     .andDo(print())
 
+fun MockMvc.getPerson(id: Person.Id) = this.getPerson(id.value)
+fun MockMvc.getPerson(id: String) = this.getPerson(UUID.fromString(id))
+fun MockMvc.getPerson(id: UUID) = this.perform(get("/api/person/$id")).andDo(print())
+
+fun MockMvc.postPerson(person: Person) = this.postPerson(json = person.toJson())
+
+fun MockMvc.postPerson(json: String) = this.perform(
+    post("/api/person")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json.trimIndent())
+)
+    .andDo(print())
+
 // TODO use damain building blocks
-fun MockMvc.putPersonToRoom(raumId: Raum.Id, person: Person) = this.putPersonToRoom(roomId = raumId.value.toString(), json = person.toJson())
+fun MockMvc.putPersonToRoom(raumId: Raum.Id, person: Person) =
+    this.putPersonToRoom(roomId = raumId.value.toString(), json = person.toJson())
+
 fun MockMvc.putPersonToRoom(roomId: String, json: String) = this.perform(
     put("/api/room/$roomId/person")
         .contentType(MediaType.APPLICATION_JSON)
