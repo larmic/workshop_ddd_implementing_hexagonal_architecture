@@ -1,4 +1,4 @@
-package de.larmic.ddd.infrastructure.rest
+package de.larmic.ddd.infrastructure.common
 
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
