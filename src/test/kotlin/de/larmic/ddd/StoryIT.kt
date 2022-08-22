@@ -78,6 +78,7 @@ class StoryIT {
             .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
             .andExpect(jsonPath("$.persons.length()").value(1))
 
+        // verify PersonWurdeRaumZugeordnetEvent is send
         assertThat(this.eventRepository.events).containsExactly(PersonWurdeRaumZugeordnetEvent(raumId = raumId, personRefId = personId.mapToPersonRefId()))
     }
 }
