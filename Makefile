@@ -8,7 +8,7 @@ java/test:
 	echo "Run java unit tests"
 	./mvnw clean verify
 
-java/run:
+java/run: java/build
 	java -jar target/workshop_implementing_ddd.jar
 
 docker/build:
