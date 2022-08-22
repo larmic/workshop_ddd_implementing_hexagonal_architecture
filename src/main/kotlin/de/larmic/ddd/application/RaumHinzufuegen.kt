@@ -7,7 +7,7 @@ import de.larmic.ddd.domain.RaumRepository
 @UseCase
 class RaumHinzufuegen(private val raumRepository: RaumRepository) {
 
-    fun fuegeRaumHinzu(raum: Raum) = if (raumRepository.existiert(raum.nummer)) {
+    fun fuegeRaumHinzu(raum: Raum) = if (raumRepository existiert raum.nummer) {
         RaumExistiertBereits
     } else {
         raumRepository.legeAn(raum)

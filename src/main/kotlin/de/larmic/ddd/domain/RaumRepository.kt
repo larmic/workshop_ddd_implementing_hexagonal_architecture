@@ -7,6 +7,6 @@ interface RaumRepository {
 
     fun legeAn(raum: Raum)
     fun finde(id: Raum.Id): Raum?
-    fun existiert(nummer: Raum.Nummer): Boolean
+    infix fun existiert(nummer: Raum.Nummer): Boolean
 
 }
