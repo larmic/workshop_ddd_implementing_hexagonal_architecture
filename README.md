@@ -21,7 +21,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 :boom: - In Arbeit oder noch nicht begonnen
 
-#### Story in diesem Branch ```story3_person_in_mehreren_räumen```
+#### Story in diesem Branch ```story4_events```
 
 ![Story3 - Person in mehreren Räumen](misc/stories/story4_events.png)
 
