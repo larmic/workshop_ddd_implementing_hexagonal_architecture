@@ -3,6 +3,7 @@ package de.larmic.ddd
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.PersonWurdeRaumZugeordnetEvent
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
@@ -10,7 +11,9 @@ import de.larmic.ddd.infrastructure.common.postPerson
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
 import de.larmic.ddd.infrastructure.person.rest.ReadPersonDto
+import de.larmic.ddd.infrastructure.raum.database.CacheEventRepository
 import de.larmic.ddd.infrastructure.rest.ReadRoomDto
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -31,6 +34,9 @@ class StoryIT {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @Autowired
+    private lateinit var eventRepository: CacheEventRepository
 
     @Test
     internal fun `create room, add person and load room`() {
@@ -71,6 +77,8 @@ class StoryIT {
             .andExpect(jsonPath("$.name").value(raum.name.value))
             .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
             .andExpect(jsonPath("$.persons.length()").value(1))
+
+        assertThat(this.eventRepository.events).containsExactly(PersonWurdeRaumZugeordnetEvent(raumId = raumId, personRefId = personId.mapToPersonRefId()))
     }
 }
 
@@ -83,3 +91,5 @@ private fun String.readPersonJsonValue() = jacksonObjectMapper().readValue(this,
 
 private fun ReadRoomDto.mapToRaumId() = Raum.Id(UUID.fromString(this.id))
 private fun ReadPersonDto.mapToPersonId() = Person.Id(UUID.fromString(this.id))
+
+private fun Person.Id.mapToPersonRefId() = Raum.PersonRefId(value = this.value)

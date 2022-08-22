@@ -44,7 +44,7 @@ internal class PersonZuRaumHinzufuegenTest {
 
         verify {
             eventRepositoryMock.sende(withArg {
-                assertThat(it.raumid).isEqualTo(raum.id)
+                assertThat(it.raumId).isEqualTo(raum.id)
                 assertThat(it.personRefId).isEqualTo(person.id.mapToPersonRefId())
             })
         }
@@ -90,7 +90,7 @@ internal class PersonZuRaumHinzufuegenTest {
 
         verify {
             eventRepositoryMock.sende(withArg {
-                assertThat(it.raumid).isEqualTo(raum1.id)
+                assertThat(it.raumId).isEqualTo(raum1.id)
                 assertThat(it.personRefId).isEqualTo(person.id.mapToPersonRefId())
             })
         }

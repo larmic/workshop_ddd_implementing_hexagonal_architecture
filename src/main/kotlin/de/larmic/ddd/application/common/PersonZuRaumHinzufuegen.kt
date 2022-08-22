@@ -28,7 +28,7 @@ class PersonZuRaumHinzufuegen(
 
         raumRepository.aktualisiere(raum)
 
-        eventRepository.sende(PersonWurdeRaumZugeordnetEvent(raumid = raumId, personRefId = person.id.mapToPersonRefId()))
+        eventRepository.sende(PersonWurdeRaumZugeordnetEvent(raumId = raumId, personRefId = person.id.mapToPersonRefId()))
 
         return Ok
     }
