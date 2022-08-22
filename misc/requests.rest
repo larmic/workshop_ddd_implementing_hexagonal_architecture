@@ -58,7 +58,7 @@ Content-Type: application/json
 
 # Add person to a room
 # curl -i -X PUT localhost:8080/api/room/0815/person -H 'Content-Type: application/json' -d '{"firstName":"Lars","lastName":"Michaelis","ldap":"larmic"}'
-PUT localhost:8080/api/room/{{room-id}}/person
+PUT localhost:8080/api/room/{{room-id}}/person/{{person-id}}
 Content-Type: application/json
 
 {
