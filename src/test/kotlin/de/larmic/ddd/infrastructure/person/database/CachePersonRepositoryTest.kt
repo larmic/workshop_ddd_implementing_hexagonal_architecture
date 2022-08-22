@@ -1,5 +1,6 @@
 package de.larmic.ddd.infrastructure.person.database
 
+import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.createPersonTestData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -38,5 +39,19 @@ internal class CachePersonRepositoryTest {
         assertThat(personRepository.finde(person.id)!!.titel?.value).isEqualTo(person.titel?.value)
         assertThat(personRepository.finde(person.id)!!.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
         assertThat(personRepository.finde(person.id)!!.kurzschreibweise).isEqualTo(person.kurzschreibweise)
+    }
+
+    @Test
+    internal fun `not containing room`() {
+        assertThat(personRepository.existiert(Person.Id())).isFalse
+    }
+
+    @Test
+    internal fun `containing room`() {
+        val person = createPersonTestData()
+
+        personRepository.legeAn(person)
+
+        assertThat(personRepository.existiert(person.id)).isTrue
     }
 }

@@ -1,6 +1,5 @@
 package de.larmic.ddd.application.raum
 
-import de.larmic.ddd.application.raum.RaumHinzufuegen
 import de.larmic.ddd.domain.raum.RaumRepository
 import de.larmic.ddd.domain.raum.createRaumTestData
 import io.mockk.every

@@ -15,6 +15,8 @@ class CachePersonRepository : PersonRepository {
 
     override fun finde(id: Person.Id) = persons[id]
 
+    override infix fun existiert(id: Person.Id) = persons[id] != null
+
     val size: Int
         get() = persons.size
 }
