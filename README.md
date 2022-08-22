@@ -14,7 +14,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 * :100: [Projektsetup](misc/stories/projekt_setup.png) Branch: ```main```
 * :100: [Erfassen von Räumen](misc/stories/story1_erfassen_von_raeumen.png) Branch: `story1_anlegen_von_räumen`
 * :100: [Hinzufügen von Personen](misc/stories/story2_hinzufuegen_von_personen.png) Branch: `story2_hinzufügen_von_personen`
-* :boom: [Person in mehreren Räumen](misc/stories/story3_mehrere_raeume.png) Branch: `story3_person_in_mehreren_räumen`
+* :100: [Person in mehreren Räumen](misc/stories/story3_mehrere_raeume.png) Branch: `story3_person_in_mehreren_räumen`
 * :boom: [Events](misc/stories/story4_events.png) Branch: `story4_events`
 
 :100: - Fertig
