@@ -23,7 +23,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 #### Story in diesem Branch ```story3_person_in_mehreren_räumen```
 
-![Story3 - Person in mehreren Räumen](misc/stories/story3_mehrere_raeume.png)
+![Story3 - Person in mehreren Räumen](misc/stories/story4_events.png)
 
 ## Requirements
 
