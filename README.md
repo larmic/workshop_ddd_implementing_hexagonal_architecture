@@ -8,7 +8,6 @@
 
 Dieses Projekt dient als Unterstützung und Musterlösung zu meinem [Workshop](misc/presentation/workshop_folien.pdf). 
 In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. 
-Hier im `main` befindet sich das erste Projektsetup.
 
 #### Stories und Branches
 * :100: [Projektsetup](misc/stories/projekt_setup.png) Branch: ```main```
