@@ -1,4 +1,4 @@
-package de.larmic.ddd.infrastructure.database
+package de.larmic.ddd.infrastructure.raum.database
 
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum

@@ -1,10 +1,10 @@
 package de.larmic.ddd.domain.person
 
-import de.larmic.ddd.common.Entity
+import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
 import java.util.*
 
-@Entity
+@AggregateRoot
 class Person(
     val id: Id = Id(),
     val vorname: Vorname,

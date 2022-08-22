@@ -1,9 +1,10 @@
-package de.larmic.ddd.infrastructure.database
+package de.larmic.ddd.infrastructure.raum.database
 
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.person.createPersonTestData
 import de.larmic.ddd.domain.raum.createRaumTestData
+import de.larmic.ddd.infrastructure.raum.database.CacheRoomRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
