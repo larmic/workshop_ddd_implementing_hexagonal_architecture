@@ -16,22 +16,24 @@ internal class PersonTest {
     inner class CreatePerson {
         @Test
         fun `has minimal attributes`() {
-            val person = createPersonTestData(vorname = "Uwe", nachname = "Svensson", ldap = "usvens")
+            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "larmic")
             assertThat(person.id).isNotNull
-            assertThat(person.vorname.value).isEqualTo("Uwe")
-            assertThat(person.nachname.value).isEqualTo("Svensson")
-            assertThat(person.ldap.value).isEqualTo("usvens")
+            assertThat(person.vorname.value).isEqualTo("Lars")
+            assertThat(person.nachname.value).isEqualTo("Michaelis")
+            assertThat(person.ldap.value).isEqualTo("larmic")
+            assertThat(person.titel).isNull()
+            assertThat(person.namenszusatz).isNull()
         }
 
         @Test
         fun `has minimal not trimmed attributes`() {
-            val person = createPersonTestData(vorname = " Uwe ", nachname = " Svensson ", ldap = " usvens ")
+            val person = createPersonTestData(vorname = " Lars ", nachname = " Michaelis ", ldap = " larmic ", titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
             assertThat(person.id).isNotNull
-            assertThat(person.vorname.value).isEqualTo("Uwe")
-            assertThat(person.nachname.value).isEqualTo("Svensson")
-            assertThat(person.ldap.value).isEqualTo("usvens")
-            assertThat(person.namenszusatz).isNull()
-            assertThat(person.titel).isNull()
+            assertThat(person.vorname.value).isEqualTo("Lars")
+            assertThat(person.nachname.value).isEqualTo("Michaelis")
+            assertThat(person.ldap.value).isEqualTo("larmic")
+            assertThat(person.titel).isEqualTo(Person.Titel.DR)
+            assertThat(person.namenszusatz).isEqualTo(Person.Namenszusatz.VON)
         }
 
         @ParameterizedTest
@@ -77,21 +79,21 @@ internal class PersonTest {
     inner class Kurzschreibweise {
         @Test
         internal fun `person has no title or addition`() {
-            val person = createPersonTestData(vorname = "Susanne", nachname = "Moog", ldap = "smoog")
-            assertThat(person.kurzschreibweise).isEqualTo("Susanne Moog (smoog)")
+            val person = createPersonTestData(vorname = "Maxina", nachname = "Musterfrau", ldap = "muster")
+            assertThat(person.kurzschreibweise).isEqualTo("Maxina Musterfrau (muster)")
         }
 
         @Test
         internal fun `person has Title but no Anrede`() {
             val person = createPersonTestData(titel = Person.Titel.DR)
-            assertThat(person.kurzschreibweise).isEqualTo("Dr. Uwe Svensson (usvens)")
+            assertThat(person.kurzschreibweise).isEqualTo("Dr. Lars Michaelis (larmic)")
         }
 
         @ParameterizedTest
         @EnumSource(Person.Namenszusatz::class)
         internal fun `person has Anrede but no Titel`(namenszusatz: Person.Namenszusatz) {
-            val person = createPersonTestData(vorname = "Alexander", nachname = "Cole", ldap = "acole", namenszusatz = namenszusatz)
-            assertThat(person.kurzschreibweise).isEqualTo("Alexander ${namenszusatz.value} Cole (acole)")
+            val person = createPersonTestData(vorname = "Max", nachname = "Mustermann", ldap = "maxmu", namenszusatz = namenszusatz)
+            assertThat(person.kurzschreibweise).isEqualTo("Max ${namenszusatz.value} Mustermann (maxmu)")
         }
     }
 
