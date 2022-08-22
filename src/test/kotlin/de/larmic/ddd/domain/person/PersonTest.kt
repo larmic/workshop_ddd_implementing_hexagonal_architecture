@@ -1,4 +1,4 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.person
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -106,7 +106,7 @@ internal class PersonTest {
             assertThat(Person.Namenszusatz.create("van")).isEqualTo(Person.Namenszusatz.VAN)
             assertThat(Person.Namenszusatz.create(" van ")).isEqualTo(Person.Namenszusatz.VAN)
             assertThat(Person.Namenszusatz.create("de")).isEqualTo(Person.Namenszusatz.DE)
-            assertThat(Person.Namenszusatz.create(" de ")).isEqualTo(Person.Namenszusatz.DE)
+            assertThat(Person.Namenszusatz.create("de ")).isEqualTo(Person.Namenszusatz.DE)
         }
 
         @ParameterizedTest

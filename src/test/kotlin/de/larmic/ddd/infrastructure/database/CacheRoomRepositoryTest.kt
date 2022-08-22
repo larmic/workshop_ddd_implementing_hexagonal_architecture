@@ -1,9 +1,9 @@
 package de.larmic.ddd.infrastructure.database
 
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.createPersonTestData
-import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.raum.Raum
+import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.createRaumTestData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

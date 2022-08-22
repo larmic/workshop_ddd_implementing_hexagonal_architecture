@@ -1,8 +1,8 @@
 package de.larmic.ddd.infrastructure.database
 
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.RaumRepository
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.raum.Raum
+import de.larmic.ddd.domain.raum.RaumRepository
 import org.springframework.stereotype.Repository
 
 @Repository

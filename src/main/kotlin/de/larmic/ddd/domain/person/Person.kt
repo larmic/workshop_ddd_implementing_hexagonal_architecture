@@ -1,4 +1,4 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.person
 
 import de.larmic.ddd.common.Entity
 import de.larmic.ddd.common.ValueObject

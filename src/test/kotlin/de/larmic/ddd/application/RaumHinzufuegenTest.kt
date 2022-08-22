@@ -1,7 +1,7 @@
 package de.larmic.ddd.application
 
-import de.larmic.ddd.domain.RaumRepository
-import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.domain.raum.RaumRepository
+import de.larmic.ddd.domain.raum.createRaumTestData
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

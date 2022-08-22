@@ -1,6 +1,7 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.raum
 
 import de.larmic.ddd.common.Repository
+import de.larmic.ddd.domain.person.Person
 
 @Repository
 interface RaumRepository {

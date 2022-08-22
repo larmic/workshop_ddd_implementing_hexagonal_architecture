@@ -1,5 +1,7 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.raum
 
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.person.createPersonTestData
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName

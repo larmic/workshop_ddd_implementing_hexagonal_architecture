@@ -1,5 +1,7 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.raum
 
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.raum.Raum
 import java.util.*
 
 fun createRaumTestData(

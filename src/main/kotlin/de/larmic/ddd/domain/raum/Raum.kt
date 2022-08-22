@@ -1,7 +1,8 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.raum
 
 import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
+import de.larmic.ddd.domain.person.Person
 import java.util.*
 
 @AggregateRoot

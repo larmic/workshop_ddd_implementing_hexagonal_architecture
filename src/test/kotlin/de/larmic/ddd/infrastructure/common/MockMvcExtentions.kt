@@ -1,7 +1,7 @@
 package de.larmic.ddd.infrastructure.common
 
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.Raum
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.raum.Raum
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*

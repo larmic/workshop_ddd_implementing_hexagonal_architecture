@@ -3,10 +3,10 @@ package de.larmic.ddd.infrastructure.rest
 import com.ninjasquad.springmockk.MockkBean
 import de.larmic.ddd.application.PersonHinzufuegen
 import de.larmic.ddd.application.RaumHinzufuegen
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.RaumRepository
-import de.larmic.ddd.domain.createPersonTestData
-import de.larmic.ddd.domain.createRaumTestData
+import de.larmic.ddd.domain.raum.Raum
+import de.larmic.ddd.domain.raum.RaumRepository
+import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom

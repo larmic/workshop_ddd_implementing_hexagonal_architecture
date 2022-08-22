@@ -1,6 +1,10 @@
 package de.larmic.ddd.application
 
-import de.larmic.ddd.domain.*
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.Raum
+import de.larmic.ddd.domain.raum.RaumRepository
+import de.larmic.ddd.domain.raum.createRaumTestData
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

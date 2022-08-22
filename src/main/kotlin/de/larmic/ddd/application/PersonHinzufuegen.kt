@@ -1,9 +1,9 @@
 package de.larmic.ddd.application
 
 import de.larmic.ddd.common.UseCase
-import de.larmic.ddd.domain.Person
-import de.larmic.ddd.domain.Raum
-import de.larmic.ddd.domain.RaumRepository
+import de.larmic.ddd.domain.person.Person
+import de.larmic.ddd.domain.raum.Raum
+import de.larmic.ddd.domain.raum.RaumRepository
 
 @UseCase
 class PersonHinzufuegen(val raumRepository: RaumRepository) {
