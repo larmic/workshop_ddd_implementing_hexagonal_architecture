@@ -1,5 +1,6 @@
-package de.larmic.ddd.application
+package de.larmic.ddd.application.raum
 
+import de.larmic.ddd.application.raum.PersonHinzufuegen
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.createPersonTestData
 import de.larmic.ddd.domain.raum.Raum

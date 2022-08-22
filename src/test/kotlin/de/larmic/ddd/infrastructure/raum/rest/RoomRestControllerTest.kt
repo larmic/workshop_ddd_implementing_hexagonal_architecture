@@ -1,8 +1,8 @@
 package de.larmic.ddd.infrastructure.raum.rest
 
 import com.ninjasquad.springmockk.MockkBean
-import de.larmic.ddd.application.PersonHinzufuegen
-import de.larmic.ddd.application.RaumHinzufuegen
+import de.larmic.ddd.application.raum.PersonHinzufuegen
+import de.larmic.ddd.application.raum.RaumHinzufuegen
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
 import de.larmic.ddd.domain.person.createPersonTestData

@@ -1,7 +1,7 @@
 package de.larmic.ddd.infrastructure.rest
 
-import de.larmic.ddd.application.PersonHinzufuegen
-import de.larmic.ddd.application.RaumHinzufuegen
+import de.larmic.ddd.application.raum.PersonHinzufuegen
+import de.larmic.ddd.application.raum.RaumHinzufuegen
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository

@@ -1,4 +1,4 @@
-package de.larmic.ddd.application
+package de.larmic.ddd.application.raum
 
 import de.larmic.ddd.common.UseCase
 import de.larmic.ddd.domain.raum.Raum
