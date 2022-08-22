@@ -9,6 +9,6 @@ interface RaumRepository {
     fun aktualisiere(raum: Raum)
     fun finde(id: Raum.Id): Raum?
     fun finde(personLdap: Person.Ldap) : Raum?
-    fun existiert(nummer: Raum.Nummer): Boolean
+    infix fun existiert(nummer: Raum.Nummer): Boolean
 
 }

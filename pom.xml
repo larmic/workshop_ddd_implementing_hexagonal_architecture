@@ -16,13 +16,6 @@
         <version>2.7.3</version>
     </parent>
 
-    <licenses>
-        <license>
-            <name>Apache Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-
     <properties>
         <maven.min.version>3.2.1</maven.min.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
