@@ -32,7 +32,7 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 ## Build and run
 
-Siehe [Makefile](Makefile) und [requests.http](misc/requests.http) 
+Siehe [Makefile](Makefile) und [requests.http](misc/requests.rest) 
 ([Jetbrains HTTP Client](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)) für genauere 
 Informationen.
 

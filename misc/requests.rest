@@ -1,0 +1,80 @@
+# Jetbrains HTTP Client: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+# Change values in http-client.env.json if needed!
+
+###
+
+# Add a new person
+POST localhost:8080/api/person
+Content-Type: application/json
+
+{
+  "firstName": "{{first-name}}",
+  "lastName": "{{last-name}}",
+  "ldap": "{{ldap}}"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.global.set("person-id", response.body.id)
+    client.log("person-id is " + client.global.get("person-id"))
+%}
+
+###
+
+# Get person
+GET localhost:8080/api/person/{{person-id}}
+Content-Type: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+# Add a new room
+POST localhost:8080/api/room
+Content-Type: application/json
+
+{
+  "number": "{{room-number}}",
+  "name": "{{room-name}}"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.global.set("room-id", response.body.id)
+    client.log("room-id is " + client.global.get("room-id"))
+%}
+
+###
+
+# Add person to a room
+PUT localhost:8080/api/room/{{room-id}}/person/{{person-id}}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+# Get a room by id
+GET localhost:8080/api/room/{{room-id}}
+Content-Type: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
