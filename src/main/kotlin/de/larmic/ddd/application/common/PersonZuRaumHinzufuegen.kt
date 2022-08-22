@@ -13,10 +13,9 @@ class PersonZuRaumHinzufuegen(
     private val personRepository: PersonRepository,
 ) {
 
-    // TODO, wenn statt Person.Id Raum.PersonRefId verwendet wird, kann der Usecase zurück in das raum-package.
-    fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personId: Person.Id): Result {
+    fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personRefId: Person.Id): Result {
         val raum = raumRepository.finde(raumId) ?: return RaumNichtGefunden
-        val person = personRepository.finde(personId) ?: return PersonNichtGefunden
+        val person = personRepository.finde(personRefId) ?: return PersonNichtGefunden
 
         try {
             raum.fuegeHinzu(person.id.mapToPersonRefId())
