@@ -4,9 +4,9 @@ import java.util.*
 
 fun createPersonTestData(
     id: UUID = UUID.randomUUID(),
-    vorname: String = "Uwe",
-    nachname: String = "Svensson",
-    ldap: String = "usvens",
+    vorname: String = "Lars",
+    nachname: String = "Michaelis",
+    ldap: String = "larmic",
     titel: Person.Titel? = null,
     namenszusatz: Person.Namenszusatz? = null,
 ) = Person(
