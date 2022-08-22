@@ -13,9 +13,9 @@ class PersonZuRaumHinzufuegen(
     private val personRepository: PersonRepository,
 ) {
 
-    fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personRefId: Person.Id): Result {
+    fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personId: Person.Id): Result {
         val raum = raumRepository.finde(raumId) ?: return RaumNichtGefunden
-        val person = personRepository.finde(personRefId) ?: return PersonNichtGefunden
+        val person = personRepository.finde(personId) ?: return PersonNichtGefunden
 
         try {
             raum.fuegeHinzu(person.id.mapToPersonRefId())

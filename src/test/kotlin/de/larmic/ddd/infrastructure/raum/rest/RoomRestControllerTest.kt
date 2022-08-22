@@ -146,7 +146,7 @@ internal class RoomRestControllerTest {
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(raumId = raumId, personRefId = person.id)
+            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(raumId = raumId, personId = person.id)
         }
     }
 
