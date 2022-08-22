@@ -3,6 +3,8 @@ package de.larmic.ddd.application.common
 import de.larmic.ddd.common.UseCase
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.PersonRepository
+import de.larmic.ddd.domain.raum.EventRepository
+import de.larmic.ddd.domain.raum.PersonWurdeRaumZugeordnetEvent
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
 
@@ -11,6 +13,7 @@ import de.larmic.ddd.domain.raum.RaumRepository
 class PersonZuRaumHinzufuegen(
     private val raumRepository: RaumRepository,
     private val personRepository: PersonRepository,
+    private val eventRepository: EventRepository,
 ) {
 
     fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personId: Person.Id): Result {
@@ -24,6 +27,8 @@ class PersonZuRaumHinzufuegen(
         }
 
         raumRepository.aktualisiere(raum)
+
+        eventRepository.sende(PersonWurdeRaumZugeordnetEvent(raumid = raumId, personRefId = person.id.mapToPersonRefId()))
 
         return Ok
     }

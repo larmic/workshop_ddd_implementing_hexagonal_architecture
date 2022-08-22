@@ -14,7 +14,7 @@ class CacheEventRepository : EventRepository {
 
     val events = mutableListOf<PersonWurdeRaumZugeordnetEvent>()
 
-    override fun send(event: PersonWurdeRaumZugeordnetEvent) {
+    override fun sende(event: PersonWurdeRaumZugeordnetEvent) {
         events.add(event)
     }
 

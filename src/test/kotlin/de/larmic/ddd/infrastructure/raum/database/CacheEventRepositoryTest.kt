@@ -12,7 +12,7 @@ internal class CacheEventRepositoryTest {
     internal fun `send event`() {
         val event = createPersonWurdeRaumZugeordnetEventTestData()
 
-        eventRepository.send(event)
+        eventRepository.sende(event)
 
         assertThat(eventRepository.size).isEqualTo(1)
         assertThat(eventRepository.events).contains(event)
@@ -22,8 +22,8 @@ internal class CacheEventRepositoryTest {
     internal fun `send event twice`() {
         val event = createPersonWurdeRaumZugeordnetEventTestData()
 
-        eventRepository.send(event)
-        eventRepository.send(event)
+        eventRepository.sende(event)
+        eventRepository.sende(event)
 
         assertThat(eventRepository.size).isEqualTo(2)
         assertThat(eventRepository.events).contains(event)

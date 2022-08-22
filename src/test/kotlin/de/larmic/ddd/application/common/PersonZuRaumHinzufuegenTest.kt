@@ -1,7 +1,9 @@
 package de.larmic.ddd.application.common
 
+import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.PersonRepository
 import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.EventRepository
 import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
 import de.larmic.ddd.domain.raum.createRaumTestData
@@ -17,7 +19,8 @@ internal class PersonZuRaumHinzufuegenTest {
 
     private val raumRepositoryMock = mockk<RaumRepository>(relaxed = true)
     private val personRepositoryMock = mockk<PersonRepository>(relaxed = true)
-    private val personZuRaumHinzufuegen = PersonZuRaumHinzufuegen(raumRepositoryMock, personRepositoryMock)
+    private val eventRepositoryMock = mockk<EventRepository>(relaxed = true)
+    private val personZuRaumHinzufuegen = PersonZuRaumHinzufuegen(raumRepositoryMock, personRepositoryMock, eventRepositoryMock)
 
     @Test
     internal fun `room exists and person is not part of it`() {
@@ -38,6 +41,13 @@ internal class PersonZuRaumHinzufuegenTest {
                 assertThat(it.personenIds).containsExactly(Raum.PersonRefId(person.id.value))
             })
         }
+
+        verify {
+            eventRepositoryMock.sende(withArg {
+                assertThat(it.raumid).isEqualTo(raum.id)
+                assertThat(it.personRefId).isEqualTo(person.id.mapToPersonRefId())
+            })
+        }
     }
 
     @Test
@@ -53,6 +63,7 @@ internal class PersonZuRaumHinzufuegenTest {
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.PersonIstDemRaumBereitsZugewiesen)
 
         verify(exactly = 0) { raumRepositoryMock.aktualisiere(any()) }
+        verify(exactly = 0) { eventRepositoryMock.sende(any()) }
     }
 
     @Test
@@ -76,6 +87,13 @@ internal class PersonZuRaumHinzufuegenTest {
                 assertThat(it.personenIds).containsExactly(Raum.PersonRefId(person.id.value))
             })
         }
+
+        verify {
+            eventRepositoryMock.sende(withArg {
+                assertThat(it.raumid).isEqualTo(raum1.id)
+                assertThat(it.personRefId).isEqualTo(person.id.mapToPersonRefId())
+            })
+        }
     }
 
     @Test
@@ -91,6 +109,7 @@ internal class PersonZuRaumHinzufuegenTest {
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.RaumNichtGefunden)
 
         verify(exactly = 0) { raumRepositoryMock.aktualisiere(any()) }
+        verify(exactly = 0) { eventRepositoryMock.sende(any()) }
     }
 
     @Test
@@ -106,5 +125,8 @@ internal class PersonZuRaumHinzufuegenTest {
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.PersonNichtGefunden)
 
         verify(exactly = 0) { raumRepositoryMock.aktualisiere(any()) }
+        verify(exactly = 0) { eventRepositoryMock.sende(any()) }
     }
 }
+
+private fun Person.Id.mapToPersonRefId() = Raum.PersonRefId(value = this.value)
