@@ -5,13 +5,16 @@ import de.larmic.ddd.domain.person.PersonRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-class PersonRepositoryImpl : PersonRepository {
+class CachePersonRepository : PersonRepository {
+
+    private val persons = mutableMapOf<Person.Id, Person>()
 
     override fun legeAn(person: Person) {
-        TODO("Not yet implemented")
+        persons[person.id] = person
     }
 
-    override fun finde(id: Person.Id): Person? {
-        TODO("Not yet implemented")
-    }
+    override fun finde(id: Person.Id) = persons[id]
+
+    val size: Int
+        get() = persons.size
 }
