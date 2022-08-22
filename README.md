@@ -21,9 +21,9 @@ Hier im `main` befindet sich das erste Projektsetup.
 
 :boom: - In Arbeit oder noch nicht begonnen
 
-#### Story in diesem Branch ```story2_hinzufügen_von_personen```
+#### Story in diesem Branch ```story3_person_in_mehreren_räumen```
 
-![Story2 - Hinzufügen von Personen](misc/stories/story2_hinzufuegen_von_personen.png)
+![Story3 - Person in mehreren Räumen](misc/stories/story3_mehrere_raeume.png)
 
 ## Requirements
 
