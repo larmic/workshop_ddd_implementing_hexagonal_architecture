@@ -7,8 +7,7 @@ import de.larmic.ddd.domain.person.PersonRepository
 @UseCase
 class PersonHinzufuegen(private val personRepository: PersonRepository) {
 
-    // TODO prüfen, ob eine Person mit dem LDAP bereits existiert
-    fun fuegePersonHinzu(person: Person) = if (personRepository existiert person.id) {
+    fun fuegePersonHinzu(person: Person) = if (personRepository existiert person) {
         PersonExistiertBereits
     } else {
         personRepository.legeAn(person)
@@ -20,3 +19,5 @@ class PersonHinzufuegen(private val personRepository: PersonRepository) {
     class Ok(val person: Person) : Result()
     object PersonExistiertBereits : Result()
 }
+
+private infix fun PersonRepository.existiert(person: Person) = this existiert person.id || this existiert person.ldap

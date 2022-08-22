@@ -43,10 +43,11 @@ internal class PersonHinzufuegenTest {
     }
 
     @Test
-    internal fun `add existing room`() {
+    internal fun `add existing person by id`() {
         val person = createPersonTestData()
 
         every { personRepositoryMock.existiert(person.id) } returns true
+        every { personRepositoryMock.existiert(person.ldap) } returns false
 
         val result = personHinzufuegen.fuegePersonHinzu(person)
 
@@ -55,4 +56,17 @@ internal class PersonHinzufuegenTest {
         verify(exactly = 0) { personRepositoryMock.legeAn(any()) }
     }
 
+    @Test
+    internal fun `add existing person by ldap`() {
+        val person = createPersonTestData()
+
+        every { personRepositoryMock.existiert(person.id) } returns false
+        every { personRepositoryMock.existiert(person.ldap) } returns true
+
+        val result = personHinzufuegen.fuegePersonHinzu(person)
+
+        assertThat(result).isEqualTo(PersonHinzufuegen.PersonExistiertBereits)
+
+        verify(exactly = 0) { personRepositoryMock.legeAn(any()) }
+    }
 }
