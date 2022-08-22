@@ -40,7 +40,11 @@ class StoryIT {
         // post person
         val personId = this.mockMvc.postPerson(person = person)
             .andExpect(status().isOk)
-            // TODO verify person fields
+            .andExpect(jsonPath("$.id").isNotEmpty)
+            .andExpect(jsonPath("$.firstName").value(person.vorname.value))
+            .andExpect(jsonPath("$.lastName").value(person.nachname.value))
+            .andExpect(jsonPath("$.title").value(person.titel!!.value))
+            .andExpect(jsonPath("$.addition").value(person.namenszusatz!!.value))
             .andReturnReadPersonDto()
             .mapToPersonId()
 

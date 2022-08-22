@@ -23,7 +23,6 @@ fun MockMvc.postRoom(json: String) = this.perform(
     .andDo(print())
 
 fun MockMvc.getPerson(id: Person.Id) = this.getPerson(id.value)
-fun MockMvc.getPerson(id: String) = this.getPerson(UUID.fromString(id))
 fun MockMvc.getPerson(id: UUID) = this.perform(get("/api/person/$id")).andDo(print())
 
 fun MockMvc.postPerson(person: Person) = this.postPerson(json = person.toJson())
