@@ -6,7 +6,7 @@ import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
 
 @UseCase
-class PersonHinzufuegen(val raumRepository: RaumRepository) {
+class PersonZuRaumHinzufuegen(val raumRepository: RaumRepository) {
 
     fun fuegePersonZuRaumHinzu(id: Raum.Id, person: Person): Result {
         val raum = raumRepository.finde(id) ?: return RaumNichtGefunden
