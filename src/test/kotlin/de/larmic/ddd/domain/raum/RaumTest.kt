@@ -1,7 +1,5 @@
 package de.larmic.ddd.domain.raum
 
-import de.larmic.ddd.domain.person.Person
-import de.larmic.ddd.domain.person.createPersonTestData
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -76,40 +74,43 @@ internal class RaumTest {
     }
 
     @Nested
-    @DisplayName("Create Raum Personen with")
+    @DisplayName("Create Raum with")
     inner class RaumPersonsTests {
 
         @Test
         internal fun `persons are empty`() {
             val raum = createRaumTestData()
 
-            assertThat(raum.personen).isEmpty()
+            assertThat(raum.personenIds).isEmpty()
         }
 
         @Test
         internal fun `persons are not empty`() {
             val raum = createRaumTestData()
 
-            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae"))
-            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", titel = Person.Titel.DR))
+            val personRefId1 = Raum.PersonRefId(value = UUID.randomUUID())
+            val personRefId2 = Raum.PersonRefId(value = UUID.randomUUID())
 
-            assertThat(raum.personen)
+            raum.fuegeHinzu(personRefId1)
+            raum.fuegeHinzu(personRefId2)
+
+            assertThat(raum.personenIds)
                 .containsExactlyInAnyOrder(
-                    "Lars Michaelis (lamichae)",
-                    "Dr. Lars Mühlmann (lamueh)"
+                    personRefId1,
+                    personRefId2,
                 )
         }
 
         @Test
         internal fun `person already exists`() {
             val raum = createRaumTestData()
-            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae")
+            val personRefId = Raum.PersonRefId(value = UUID.randomUUID())
 
-            raum.fuegeHinzu(person)
+            raum.fuegeHinzu(personRefId)
 
-            assertThatThrownBy { raum.fuegeHinzu(person) }
+            assertThatThrownBy { raum.fuegeHinzu(personRefId) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Person '${person.kurzschreibweise}' is already part of this room")
+                .hasMessage("Person '$personRefId' is already part of this room")
         }
     }
 

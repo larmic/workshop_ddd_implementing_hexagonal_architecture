@@ -1,20 +1,19 @@
 package de.larmic.ddd.infrastructure.rest
 
-import de.larmic.ddd.application.raum.PersonZuRaumHinzufuegen
+import de.larmic.ddd.application.common.PersonZuRaumHinzufuegen
+import de.larmic.ddd.application.common.RaumLaden
 import de.larmic.ddd.application.raum.RaumHinzufuegen
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum
-import de.larmic.ddd.domain.raum.RaumRepository
-import de.larmic.ddd.infrastructure.person.rest.CreatePersonDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 class RoomRestController(
-    private val raumRepository: RaumRepository,
     private val raumHinzufuegen: RaumHinzufuegen,
     private val personZuRaumHinzufuegen: PersonZuRaumHinzufuegen,
+    private val raumLaden: RaumLaden,
 ) {
 
     @PostMapping(value = ["/api/room"], consumes = ["application/json"], produces = ["application/json"])
@@ -25,21 +24,22 @@ class RoomRestController(
         }
     }
 
-    @PutMapping(value = ["/api/room/{id}/person"], consumes = ["application/json"], produces = ["application/json"])
-    fun postPerson(@PathVariable id: String, @RequestBody dto: CreatePersonDto): ResponseEntity<Any> {
-        return when (personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
+    @PutMapping(value = ["/api/room/{raumId}/person/{personId}"])
+    fun postPerson(@PathVariable raumId: String, @PathVariable personId: String): ResponseEntity<Any> {
+        return when (personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(Raum.Id(UUID.fromString(raumId)), Person.Id(UUID.fromString(personId)))) {
             is PersonZuRaumHinzufuegen.Ok -> ResponseEntity.ok().build()
             PersonZuRaumHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
             PersonZuRaumHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()
-            PersonZuRaumHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
+            PersonZuRaumHinzufuegen.PersonNichtGefunden -> ResponseEntity.badRequest().build()
         }
     }
 
     @GetMapping(value = ["/api/room/{id}"])
     fun getRoom(@PathVariable id: String): ResponseEntity<Any> {
-        val raum = raumRepository.finde(Raum.Id(UUID.fromString(id))) ?: return ResponseEntity.notFound().build()
-
-        return ResponseEntity.ok(raum.mapToDto())
+        return when(val result = raumLaden.lade(Raum.Id(UUID.fromString(id)))) {
+            is RaumLaden.Ok -> ResponseEntity.ok(result.raumMitPersonen.mapToDto())
+            RaumLaden.RaumNichtGefunden -> ResponseEntity.notFound().build()
+        }
     }
 }
 
@@ -63,13 +63,13 @@ private fun Raum.mapToDto() =
         id = this.id.value.toString(),
         number = this.nummer.value,
         name = this.name.value,
-        persons = this.personen,
+        persons = emptyList(),
     )
 
-private fun CreatePersonDto.mapToDomain() = Person(
-    vorname = Person.Vorname(this.firstName),
-    nachname = Person.Nachname(this.lastName),
-    ldap = Person.Ldap(this.ldap),
-    titel = Person.Titel.create(this.title),
-    namenszusatz = Person.Namenszusatz.create(this.addition),
-)
+private fun RaumLaden.RaumMitPersonen.mapToDto() =
+    ReadRoomDto(
+        id = this.raum.id.value.toString(),
+        number = this.raum.nummer.value,
+        name = this.raum.name.value,
+        persons = this.persons.map { it.kurzschreibweise },
+    )

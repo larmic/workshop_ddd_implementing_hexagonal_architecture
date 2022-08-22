@@ -1,13 +1,8 @@
 package de.larmic.ddd.infrastructure.raum.database
 
-import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.raum.Raum
-import de.larmic.ddd.domain.person.createPersonTestData
 import de.larmic.ddd.domain.raum.createRaumTestData
-import de.larmic.ddd.infrastructure.raum.database.CacheRoomRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 internal class CacheRoomRepositoryTest {
@@ -51,27 +46,5 @@ internal class CacheRoomRepositoryTest {
         roomRepository.legeAn(raum)
 
         assertThat(roomRepository.existiert(raum.nummer)).isTrue
-    }
-
-    @Nested
-    @DisplayName("Find room by ldap user name with")
-    inner class FindByLdapWith {
-
-        @Test
-        internal fun `no room with person exists`() {
-            assertThat(roomRepository.finde(personLdap = Person.Ldap("not-exists"))).isNull()
-        }
-
-        @Test
-        internal fun `room with person exists`() {
-            val person = createPersonTestData()
-            val raum1 = createRaumTestData(persons = mutableListOf(person))
-            val raum2 = createRaumTestData(raumNummer = "0129", raumName = "anderer Raum")
-
-            roomRepository.legeAn(raum1)
-            roomRepository.legeAn(raum2)
-
-            assertThat(roomRepository.finde(personLdap = person.ldap)).isEqualTo(raum1)
-        }
     }
 }

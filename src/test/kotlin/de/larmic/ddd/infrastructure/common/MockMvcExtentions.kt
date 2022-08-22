@@ -35,16 +35,11 @@ fun MockMvc.postPerson(json: String) = this.perform(
 )
     .andDo(print())
 
-// TODO use damain building blocks
-fun MockMvc.putPersonToRoom(raumId: Raum.Id, person: Person) =
-    this.putPersonToRoom(roomId = raumId.value.toString(), json = person.toJson())
+fun MockMvc.putPersonToRoom(raumId: Raum.Id, personId: Person.Id) =
+    this.putPersonToRoom(roomId = raumId.value.toString(), personId = personId.value.toString())
 
-fun MockMvc.putPersonToRoom(roomId: String, json: String) = this.perform(
-    put("/api/room/$roomId/person")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(json.trimIndent())
-)
-    .andDo(print())
+fun MockMvc.putPersonToRoom(roomId: String, personId: String) =
+    this.perform(put("/api/room/$roomId/person/$personId")).andDo(print())
 
 private fun Person.toJson() = """
             {

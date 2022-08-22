@@ -1,11 +1,12 @@
 package de.larmic.ddd.infrastructure.raum.rest
 
 import com.ninjasquad.springmockk.MockkBean
-import de.larmic.ddd.application.raum.PersonZuRaumHinzufuegen
+import de.larmic.ddd.application.common.PersonZuRaumHinzufuegen
+import de.larmic.ddd.application.common.RaumLaden
 import de.larmic.ddd.application.raum.RaumHinzufuegen
-import de.larmic.ddd.domain.raum.Raum
-import de.larmic.ddd.domain.raum.RaumRepository
+import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.createPersonTestData
+import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
@@ -27,14 +28,16 @@ internal class RoomRestControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @MockkBean(relaxed = true)
-    private lateinit var raumRepositoryMock: RaumRepository
+    @MockkBean
+    private lateinit var raumLadenMock: RaumLaden
 
     @MockkBean
     private lateinit var raumHinzufuegenMock: RaumHinzufuegen
 
     @MockkBean
     private lateinit var personZuRaumHinzufuegenMock: PersonZuRaumHinzufuegen
+
+
 
     @Test
     internal fun `post a new valid room`() {
@@ -91,10 +94,11 @@ internal class RoomRestControllerTest {
     }
 
     @Test
-    internal fun `get an existing room`() {
+    internal fun `get an existing room without persons in it`() {
         val raum = createRaumTestData()
+        val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = emptyList())
 
-        every { raumRepositoryMock.finde(id = raum.id) } returns raum
+        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
 
         this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
@@ -106,56 +110,53 @@ internal class RoomRestControllerTest {
     }
 
     @Test
+    internal fun `get an existing room with persons in it`() {
+        val raum = createRaumTestData()
+        val person = createPersonTestData()
+        val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = listOf(person))
+
+        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
+
+        this.mockMvc.getRoom(id = raum.id)
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
+            .andExpect(jsonPath("$.number").value(raum.nummer.value))
+            .andExpect(jsonPath("$.name").value(raum.name.value))
+            .andExpect(jsonPath("$.persons").isArray)
+            .andExpect(jsonPath("$.persons.length()").value(1))
+            .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
+    }
+
+    @Test
     internal fun `get a not existing room`() {
         val raumId = Raum.Id()
-        every { raumRepositoryMock.finde(id = raumId) } returns null
+        every { raumLadenMock.lade(id = raumId) } returns RaumLaden.RaumNichtGefunden
 
         this.mockMvc.getRoom(raumId)
             .andExpect(status().isNotFound)
     }
 
     @Test
-    internal fun `get an existing room with existing persons`() {
-        val person = createPersonTestData()
-        val raum = createRaumTestData(persons = mutableListOf(person))
-
-        every { raumRepositoryMock.finde(raum.id) } returns raum
-
-        this.mockMvc.getRoom(raum.id.value)
-            .andExpect(status().isOk)
-            .andExpect(jsonPath("$.id").value(raum.id.value.toString()))
-            .andExpect(jsonPath("$.number").value(raum.nummer.value))
-            .andExpect(jsonPath("$.name").value(raum.name.value))
-            .andExpect(jsonPath("$.persons[0]").value(person.kurzschreibweise))
-            .andExpect(jsonPath("$.persons.length()").value(1))
-    }
-
-    @Test
     internal fun `put a person to an existing room`() {
         val raumId = Raum.Id()
         val person = createPersonTestData()
-        every { personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonZuRaumHinzufuegen.Ok(person = person)
+        every { personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonZuRaumHinzufuegen.Ok
 
-        this.mockMvc.putPersonToRoom(raumId = raumId, person = person)
+        this.mockMvc.putPersonToRoom(raumId = raumId, personId = person.id)
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(raumId, withArg {
-                assertThat(it.vorname.value).isEqualTo(person.vorname.value)
-                assertThat(it.nachname.value).isEqualTo(person.nachname.value)
-                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
-                assertThat(it.titel).isNull()
-                assertThat(it.namenszusatz).isNull()
-            })
+            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(raumId = raumId, personId = person.id)
         }
     }
 
     @Test
     internal fun `put a person to an not existing room`() {
-        val raumId = Raum.Id()
-        every { personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonZuRaumHinzufuegen.RaumNichtGefunden
+        every {
+            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any())
+        } returns PersonZuRaumHinzufuegen.RaumNichtGefunden
 
-        this.mockMvc.putPersonToRoom(raumId = raumId, person = createPersonTestData())
+        this.mockMvc.putPersonToRoom(raumId = Raum.Id(), personId = Person.Id())
             .andExpect(status().is4xxClientError)
     }
 }
