@@ -38,6 +38,7 @@ Informationen.
 
 ```shell
 # java 
+$ make java/test
 $ make java/build
 $ make java/run
 
