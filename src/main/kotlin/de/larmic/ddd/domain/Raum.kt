@@ -5,7 +5,12 @@ import de.larmic.ddd.common.ValueObject
 import java.util.*
 
 @AggregateRoot
-class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val persons: MutableList<Person> = mutableListOf()) {
+class Raum(
+    val id: Id = Id(),
+    val nummer: Nummer,
+    val name: Name,
+    private val persons: MutableList<Person> = mutableListOf()
+) {
 
     // Innere Liste 'persons' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
@@ -38,10 +43,10 @@ class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val pe
             require(value.isNotBlank()) { "Room name should not be empty" }
         }
     }
-
 }
 
 private fun String.normalizeName() = trim { it <= ' ' }
 private fun String.validateRoomNumber() = this.length == 4 && this.isNumeric()
 private fun String.isNumeric() = this.all { it.isDigit() }
-private infix fun List<Person>.beinhaltet(person: Person) = this.map { it.id }.contains(person.id)
+private infix fun List<Person>.beinhaltet(person: Person) =
+    this.map { it.id }.contains(person.id) || this.map { it.ldap.value }.contains(person.ldap.value)

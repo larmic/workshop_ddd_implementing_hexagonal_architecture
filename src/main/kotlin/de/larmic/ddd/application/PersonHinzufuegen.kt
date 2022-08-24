@@ -23,12 +23,12 @@ class PersonHinzufuegen(val raumRepository: RaumRepository) {
 
         raumRepository.aktualisiere(raum)
 
-        return Ok(person)
+        return Ok
     }
 
     sealed class Result
 
-    class Ok(val person: Person) : Result()
+    object Ok : Result()
     object PersonIstDemRaumBereitsZugewiesen : Result()
     object PersonIstEinemAnderenRaumBereitsZugewiesen : Result()
     object RaumNichtGefunden : Result()

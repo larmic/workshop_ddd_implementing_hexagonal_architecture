@@ -99,15 +99,30 @@ internal class RaumTest {
         }
 
         @Test
-        internal fun `person already exists`() {
+        internal fun `person already exists by id`() {
             val raum = createRaumTestData()
-            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae")
+            val personId = UUID.randomUUID()
+            val person1 = createPersonTestData(id = personId, ldap = "ldap1")
+            val person2 = createPersonTestData(id = personId, ldap = "ldap2")
 
-            raum.fuegeHinzu(person)
+            raum.fuegeHinzu(person1)
 
-            assertThatThrownBy { raum.fuegeHinzu(person) }
+            assertThatThrownBy { raum.fuegeHinzu(person2) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Person '${person.kurzschreibweise}' is already part of this room")
+                .hasMessage("Person '${person2.kurzschreibweise}' is already part of this room")
+        }
+
+        @Test
+        internal fun `person already exists by ldap`() {
+            val raum = createRaumTestData()
+            val person1 = createPersonTestData(id = UUID.randomUUID(), ldap = "larmic")
+            val person2 = createPersonTestData(id = UUID.randomUUID(), ldap = "larmic")
+
+            raum.fuegeHinzu(person1)
+
+            assertThatThrownBy { raum.fuegeHinzu(person2) }
+                .isInstanceOf(IllegalArgumentException::class.java)
+                .hasMessage("Person '${person2.kurzschreibweise}' is already part of this room")
         }
     }
 

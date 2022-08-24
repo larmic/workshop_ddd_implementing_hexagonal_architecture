@@ -133,7 +133,7 @@ internal class RoomRestControllerTest {
     internal fun `put a person to an existing room`() {
         val raumId = Raum.Id()
         val person = createPersonTestData()
-        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok(person = person)
+        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok
 
         this.mockMvc.putPersonToRoom(raumId = raumId, person = person)
             .andExpect(status().is2xxSuccessful)
