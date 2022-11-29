@@ -1,6 +1,5 @@
 package de.larmic.ddd.domain.person
 
-import de.larmic.ddd.domain.person.Person
 import java.util.*
 
 fun createPersonTestData(
