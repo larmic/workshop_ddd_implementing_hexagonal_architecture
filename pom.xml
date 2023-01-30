@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.2</version>
     </parent>
 
     <properties>
@@ -21,14 +21,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <kotlin.version>1.7.21</kotlin.version>
+        <kotlin.version>1.8.0</kotlin.version>
 
         <jackson-module-kotlin.version>2.14.0</jackson-module-kotlin.version>
 
         <!-- testing -->
-        <junit-jupiter.version>5.9.1</junit-jupiter.version>
-        <mockk.version>1.13.2</mockk.version>
-        <springmockk.version>3.1.2</springmockk.version>
+        <junit-jupiter.version>5.9.2</junit-jupiter.version>
+        <mockk.version>1.13.4</mockk.version>
+        <springmockk.version>4.0.0</springmockk.version>
     </properties>
 
     <dependencies>
