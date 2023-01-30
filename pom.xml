@@ -28,7 +28,7 @@
         <!-- testing -->
         <junit-jupiter.version>5.9.2</junit-jupiter.version>
         <mockk.version>1.13.4</mockk.version>
-        <springmockk.version>3.1.2</springmockk.version>
+        <springmockk.version>4.0.0</springmockk.version>
     </properties>
 
     <dependencies>
