@@ -13,6 +13,6 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [IllegalArgumentException::class])
     fun handleConflict(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-        return handleExceptionInternal(ex, ex.message, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
+        return handleExceptionInternal(ex, ex.message, HttpHeaders(), HttpStatus.BAD_REQUEST, request)!!
     }
 }
