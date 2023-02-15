@@ -5,7 +5,12 @@ import de.larmic.ddd.common.ValueObject
 import java.util.*
 
 @AggregateRoot
-class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val personIds: MutableList<PersonRefId> = mutableListOf()) {
+class Raum(
+    val id: Id = Id(),
+    val nummer: Nummer,
+    val name: Name,
+    private val personIds: MutableList<PersonRefId> = mutableListOf()
+) {
 
     // Innere Liste 'persons' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
