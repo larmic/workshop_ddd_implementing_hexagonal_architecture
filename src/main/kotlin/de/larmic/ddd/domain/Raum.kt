@@ -12,7 +12,7 @@ class Raum(
     private val personen: MutableList<Person> = mutableListOf()
 ) {
 
-    // Innere Liste 'persons' ist nach aussen nicht sichtbar.
+    // Innere Liste 'personen' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
     val personenkurzschreibweisen: List<String>
         get() = this.personen.map { it.kurzschreibweise }
