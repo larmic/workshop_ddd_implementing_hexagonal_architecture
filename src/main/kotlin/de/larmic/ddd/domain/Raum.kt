@@ -9,20 +9,20 @@ class Raum(
     val id: Id = Id(),
     val nummer: Nummer,
     val name: Name,
-    private val persons: MutableList<Person> = mutableListOf()
+    private val personen: MutableList<Person> = mutableListOf()
 ) {
 
     // Innere Liste 'persons' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
-    val personen: List<String>
-        get() = this.persons.map { it.kurzschreibweise }
+    val personenkurzschreibweisen: List<String>
+        get() = this.personen.map { it.kurzschreibweise }
 
     fun fuegeHinzu(person: Person) {
-        if (persons beinhaltet person) {
+        if (personen beinhaltet person) {
             throw IllegalArgumentException("Person '${person.kurzschreibweise}' is already part of this room")
         }
 
-        this.persons.add(person)
+        this.personen.add(person)
     }
 
     @ValueObject

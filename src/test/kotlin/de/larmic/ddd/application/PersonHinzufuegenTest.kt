@@ -30,7 +30,7 @@ internal class PersonHinzufuegenTest {
             raumRepositoryMock.aktualisiere(withArg {
                 assertThat(it.nummer).isEqualTo(raum.nummer)
                 assertThat(it.name.value).isEqualTo(raum.name.value)
-                assertThat(it.personen).containsExactly(person.kurzschreibweise)
+                assertThat(it.personenkurzschreibweisen).containsExactly(person.kurzschreibweise)
             })
         }
     }

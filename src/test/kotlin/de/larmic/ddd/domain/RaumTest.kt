@@ -81,7 +81,7 @@ internal class RaumTest {
         internal fun `persons are empty`() {
             val raum = createRaumTestData()
 
-            assertThat(raum.personen).isEmpty()
+            assertThat(raum.personenkurzschreibweisen).isEmpty()
         }
 
         @Test
@@ -91,7 +91,7 @@ internal class RaumTest {
             raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae"))
             raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", titel = Person.Titel.DR))
 
-            assertThat(raum.personen)
+            assertThat(raum.personenkurzschreibweisen)
                 .containsExactlyInAnyOrder(
                     "Lars Michaelis (lamichae)",
                     "Dr. Lars Mühlmann (lamueh)"

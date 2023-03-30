@@ -62,7 +62,7 @@ private fun Raum.mapToDto() =
         id = this.id.value.toString(),
         number = this.nummer.value,
         name = this.name.value,
-        persons = this.personen
+        persons = this.personenkurzschreibweisen
     )
 
 private fun CreatePersonDto.mapToDomain() = Person(
