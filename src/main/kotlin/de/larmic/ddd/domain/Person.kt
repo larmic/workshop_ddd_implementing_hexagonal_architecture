@@ -10,14 +10,13 @@ class Person(
     val vorname: Vorname,
     val nachname: Nachname,
     val ldap: Ldap,
-    val titel: Titel? = null,
     val namenszusatz: Namenszusatz? = null
 ) {
 
     @ValueObject
     val kurzschreibweise: String
         get() {
-            return "${titel.asString()} ${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${ldap.value})"
+            return "${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${ldap.value})"
                 .removeDuplicatedWhiteSpaces()
                 .trim()
         }
@@ -70,26 +69,8 @@ class Person(
             private fun String.trimAndLowercase() = this.trim { it <= ' ' }.lowercase()
         }
     }
-
-    @ValueObject
-    enum class Titel(val value: String) {
-
-        DR("Dr.");
-
-        companion object Factory {
-            fun create(label: String?) = if (label.isNullOrBlank()) {
-                null
-            } else {
-                label.mapToAddition() ?: throw IllegalArgumentException("Person title '$label' is not supported")
-            }
-
-            private fun String.mapToAddition() = Titel.values().firstOrNull { it.value.lowercase() == this.trimAndLowercase() }
-            private fun String.trimAndLowercase() = this.trim { it <= ' ' }.lowercase()
-        }
-    }
 }
 
-private fun Person.Titel?.asString() = this?.value ?: ""
 private fun Person.Namenszusatz?.asString() = this?.value ?: ""
 private fun String.removeDuplicatedWhiteSpaces() = this.replace("\\s+".toRegex(), " ")
 private fun String.normalizeName() = trim { it <= ' ' }

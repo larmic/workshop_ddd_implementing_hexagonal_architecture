@@ -89,12 +89,12 @@ internal class RaumTest {
             val raum = createRaumTestData()
 
             raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae"))
-            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", titel = Person.Titel.DR))
+            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", namenszusatz = Person.Namenszusatz.VON))
 
             assertThat(raum.personenkurzschreibweisen)
                 .containsExactlyInAnyOrder(
                     "Lars Michaelis (lamichae)",
-                    "Dr. Lars Mühlmann (lamueh)"
+                    "Lars von Mühlmann (lamueh)"
                 )
         }
 

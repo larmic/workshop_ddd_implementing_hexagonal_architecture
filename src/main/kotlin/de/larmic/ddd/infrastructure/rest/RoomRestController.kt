@@ -48,7 +48,6 @@ class CreatePersonDto(
     val firstName: String,
     val lastName: String,
     val ldap: String,
-    val title: String?,
     val addition: String?,
 )
 
@@ -69,6 +68,5 @@ private fun CreatePersonDto.mapToDomain() = Person(
     vorname = Person.Vorname(this.firstName),
     nachname = Person.Nachname(this.lastName),
     ldap = Person.Ldap(this.ldap),
-    titel = Person.Titel.create(this.title),
     namenszusatz = Person.Namenszusatz.create(this.addition),
 )

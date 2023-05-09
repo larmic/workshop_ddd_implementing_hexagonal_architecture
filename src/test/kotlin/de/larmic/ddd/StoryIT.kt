@@ -33,7 +33,7 @@ class StoryIT {
     @Test
     internal fun `create room, add person and load room`() {
         val raum = createRaumTestData()
-        val person = createPersonTestData(titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
+        val person = createPersonTestData(namenszusatz = Person.Namenszusatz.VON)
 
         // post room
         val roomId = this.mockMvc.postRoom(raum = raum)

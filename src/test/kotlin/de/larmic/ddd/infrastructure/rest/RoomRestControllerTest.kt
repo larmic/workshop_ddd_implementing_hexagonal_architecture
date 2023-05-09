@@ -143,7 +143,6 @@ internal class RoomRestControllerTest {
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
                 assertThat(it.ldap.value).isEqualTo(person.ldap.value)
-                assertThat(it.titel).isNull()
                 assertThat(it.namenszusatz).isNull()
             })
         }
