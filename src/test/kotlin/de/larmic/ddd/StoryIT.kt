@@ -43,7 +43,6 @@ class StoryIT {
             .andExpect(jsonPath("$.id").isNotEmpty)
             .andExpect(jsonPath("$.firstName").value(person.vorname.value))
             .andExpect(jsonPath("$.lastName").value(person.nachname.value))
-            .andExpect(jsonPath("$.title").value(person.titel!!.value))
             .andExpect(jsonPath("$.addition").value(person.namenszusatz!!.value))
             .andReturnReadPersonDto()
             .mapToPersonId()

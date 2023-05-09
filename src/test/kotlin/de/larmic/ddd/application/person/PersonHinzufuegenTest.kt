@@ -25,7 +25,6 @@ internal class PersonHinzufuegenTest {
         assertThat(person.vorname.value).isEqualTo(result.person.vorname.value)
         assertThat(person.nachname.value).isEqualTo(result.person.nachname.value)
         assertThat(person.ldap.value).isEqualTo(result.person.ldap.value)
-        assertThat(person.titel?.value).isEqualTo(result.person.titel?.value)
         assertThat(person.namenszusatz?.value).isEqualTo(result.person.namenszusatz?.value)
         assertThat(person.kurzschreibweise).isEqualTo(result.person.kurzschreibweise)
 
@@ -35,7 +34,6 @@ internal class PersonHinzufuegenTest {
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
                 assertThat(it.ldap.value).isEqualTo(person.ldap.value)
-                assertThat(it.titel?.value).isEqualTo(person.titel?.value)
                 assertThat(it.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
                 assertThat(it.kurzschreibweise).isEqualTo(person.kurzschreibweise)
             })
