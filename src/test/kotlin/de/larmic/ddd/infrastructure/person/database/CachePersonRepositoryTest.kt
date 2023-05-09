@@ -26,7 +26,6 @@ internal class CachePersonRepositoryTest {
             assertThat(personRepository.finde(person.id)!!.vorname.value).isEqualTo(person.vorname.value)
             assertThat(personRepository.finde(person.id)!!.nachname.value).isEqualTo(person.nachname.value)
             assertThat(personRepository.finde(person.id)!!.ldap.value).isEqualTo(person.ldap.value)
-            assertThat(personRepository.finde(person.id)!!.titel?.value).isEqualTo(person.titel?.value)
             assertThat(personRepository.finde(person.id)!!.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
             assertThat(personRepository.finde(person.id)!!.kurzschreibweise).isEqualTo(person.kurzschreibweise)
         }
@@ -42,7 +41,6 @@ internal class CachePersonRepositoryTest {
             assertThat(personRepository.finde(person.id)!!.vorname.value).isEqualTo(person.vorname.value)
             assertThat(personRepository.finde(person.id)!!.nachname.value).isEqualTo(person.nachname.value)
             assertThat(personRepository.finde(person.id)!!.ldap.value).isEqualTo(person.ldap.value)
-            assertThat(personRepository.finde(person.id)!!.titel?.value).isEqualTo(person.titel?.value)
             assertThat(personRepository.finde(person.id)!!.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
             assertThat(personRepository.finde(person.id)!!.kurzschreibweise).isEqualTo(person.kurzschreibweise)
         }

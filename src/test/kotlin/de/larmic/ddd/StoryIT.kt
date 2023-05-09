@@ -41,7 +41,7 @@ class StoryIT {
     @Test
     internal fun `create room, add person and load room`() {
         val raum = createRaumTestData()
-        val person = createPersonTestData(titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
+        val person = createPersonTestData(namenszusatz = Person.Namenszusatz.VON)
 
         // post person
         val personId = this.mockMvc.postPerson(person = person)
@@ -49,7 +49,6 @@ class StoryIT {
             .andExpect(jsonPath("$.id").isNotEmpty)
             .andExpect(jsonPath("$.firstName").value(person.vorname.value))
             .andExpect(jsonPath("$.lastName").value(person.nachname.value))
-            .andExpect(jsonPath("$.title").value(person.titel!!.value))
             .andExpect(jsonPath("$.addition").value(person.namenszusatz!!.value))
             .andReturnReadPersonDto()
             .mapToPersonId()

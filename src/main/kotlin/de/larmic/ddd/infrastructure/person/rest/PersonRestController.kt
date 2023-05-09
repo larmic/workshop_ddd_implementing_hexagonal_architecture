@@ -35,7 +35,6 @@ class ReadPersonDto(
     val firstName: String,
     val lastName: String,
     val ldap: String,
-    val title: String?,
     val addition: String?,
 )
 
@@ -43,7 +42,6 @@ class CreatePersonDto(
     val firstName: String,
     val lastName: String,
     val ldap: String,
-    val title: String?,
     val addition: String?,
 )
 
@@ -52,7 +50,6 @@ private fun Person.mapToReadDto() = ReadPersonDto(
     firstName = this.vorname.value,
     lastName = this.nachname.value,
     ldap = this.ldap.value,
-    title = this.titel?.value,
     addition = this.namenszusatz?.value,
 )
 
@@ -60,6 +57,5 @@ private fun CreatePersonDto.mapToDomain() = Person(
     vorname = Person.Vorname(this.firstName),
     nachname = Person.Nachname(this.lastName),
     ldap = Person.Ldap(this.ldap),
-    titel = Person.Titel.create(this.title),
     namenszusatz = Person.Namenszusatz.create(this.addition),
 )
