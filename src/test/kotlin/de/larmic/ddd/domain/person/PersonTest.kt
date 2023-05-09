@@ -21,18 +21,16 @@ internal class PersonTest {
             assertThat(person.vorname.value).isEqualTo("Lars")
             assertThat(person.nachname.value).isEqualTo("Michaelis")
             assertThat(person.ldap.value).isEqualTo("larmic")
-            assertThat(person.titel).isNull()
             assertThat(person.namenszusatz).isNull()
         }
 
         @Test
         fun `has minimal not trimmed attributes`() {
-            val person = createPersonTestData(vorname = " Lars ", nachname = " Michaelis ", ldap = " larmic ", titel = Person.Titel.DR, namenszusatz = Person.Namenszusatz.VON)
+            val person = createPersonTestData(vorname = " Lars ", nachname = " Michaelis ", ldap = " larmic ", namenszusatz = Person.Namenszusatz.VON)
             assertThat(person.id).isNotNull
             assertThat(person.vorname.value).isEqualTo("Lars")
             assertThat(person.nachname.value).isEqualTo("Michaelis")
             assertThat(person.ldap.value).isEqualTo("larmic")
-            assertThat(person.titel).isEqualTo(Person.Titel.DR)
             assertThat(person.namenszusatz).isEqualTo(Person.Namenszusatz.VON)
         }
 
@@ -41,12 +39,6 @@ internal class PersonTest {
         fun `has Anrede`(namenszusatz: Person.Namenszusatz) {
             val person = createPersonTestData(namenszusatz = namenszusatz)
             assertThat(person.namenszusatz).isEqualTo(namenszusatz)
-        }
-
-        @Test
-        fun `has Titel`() {
-            val person = createPersonTestData(titel = Person.Titel.DR)
-            assertThat(person.titel).isEqualTo(Person.Titel.DR)
         }
 
         @ParameterizedTest
@@ -78,15 +70,9 @@ internal class PersonTest {
     @DisplayName("Test Kurzschreibweise with")
     inner class Kurzschreibweise {
         @Test
-        internal fun `person has no title or addition`() {
+        internal fun `person has no addition`() {
             val person = createPersonTestData(vorname = "Maxina", nachname = "Musterfrau", ldap = "muster")
             assertThat(person.kurzschreibweise).isEqualTo("Maxina Musterfrau (muster)")
-        }
-
-        @Test
-        internal fun `person has Title but no Anrede`() {
-            val person = createPersonTestData(titel = Person.Titel.DR)
-            assertThat(person.kurzschreibweise).isEqualTo("Dr. Lars Michaelis (larmic)")
         }
 
         @ParameterizedTest
@@ -122,35 +108,6 @@ internal class PersonTest {
             assertThatThrownBy { Person.Namenszusatz.create("not-known") }
                 .isInstanceOf(IllegalArgumentException::class.java)
                 .hasMessage("Person addition 'not-known' is not supported")
-        }
-    }
-
-    @Nested
-    @DisplayName("Test Titel with")
-    inner class PersonTitle {
-
-        @Test
-        fun `get value by label`() {
-            assertThat(Person.Titel.create("Dr.")).isEqualTo(Person.Titel.DR)
-            assertThat(Person.Titel.create(" Dr. ")).isEqualTo(Person.Titel.DR)
-        }
-
-        @Test
-        fun `get value by label when label is empty`() {
-            assertThat(Person.Titel.create("")).isNull()
-            assertThat(Person.Titel.create(" ")).isNull()
-        }
-
-        @Test
-        fun `get value by label when label is null`() {
-            assertThat(Person.Titel.create(null)).isNull()
-        }
-
-        @Test
-        fun `get value by label when label is unknown`() {
-            assertThatThrownBy { Person.Titel.create("not-known") }
-                .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Person title 'not-known' is not supported")
         }
     }
 }
