@@ -1,6 +1,6 @@
 package de.larmic.ddd.infrastructure.rest
 
-import de.larmic.ddd.application.PersonHinzufuegen
+import de.larmic.ddd.application.PersonZuRaumHinzufuegen
 import de.larmic.ddd.application.RaumHinzufuegen
 import de.larmic.ddd.domain.Person
 import de.larmic.ddd.domain.Raum
@@ -13,7 +13,7 @@ import java.util.*
 class RoomRestController(
     private val raumRepository: RaumRepository,
     private val raumHinzufuegen: RaumHinzufuegen,
-    private val personHinzufuegen: PersonHinzufuegen,
+    private val personZuRaumHinzufuegen: PersonZuRaumHinzufuegen,
 ) {
 
     @PostMapping(value = ["/api/room"], consumes = ["application/json"], produces = ["application/json"])
@@ -26,11 +26,11 @@ class RoomRestController(
 
     @PutMapping(value = ["/api/room/{id}/person"], consumes = ["application/json"], produces = ["application/json"])
     fun putPerson(@PathVariable id: String, @RequestBody dto: CreatePersonDto): ResponseEntity<Any> {
-        return when (personHinzufuegen(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
-            is PersonHinzufuegen.Ok -> ResponseEntity.ok().build()
-            PersonHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
-            PersonHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()
-            PersonHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
+        return when (personZuRaumHinzufuegen(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
+            is PersonZuRaumHinzufuegen.Ok -> ResponseEntity.ok().build()
+            PersonZuRaumHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
+            PersonZuRaumHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()
+            PersonZuRaumHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
         }
     }
 
