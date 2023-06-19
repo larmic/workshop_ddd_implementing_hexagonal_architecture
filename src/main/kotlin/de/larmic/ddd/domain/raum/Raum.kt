@@ -8,7 +8,7 @@ import java.util.*
 @AggregateRoot
 class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val personIds: MutableList<Person.Id> = mutableListOf()) {
 
-    // Innere Liste 'persons' ist nach aussen nicht sichtbar.
+    // Innere Liste 'personIds' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
     val personenIds: List<Person.Id>
         get() = this.personIds
