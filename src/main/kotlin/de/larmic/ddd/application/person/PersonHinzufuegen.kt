@@ -7,7 +7,7 @@ import de.larmic.ddd.domain.person.PersonRepository
 @UseCase
 class PersonHinzufuegen(private val personRepository: PersonRepository) {
 
-    fun fuegePersonHinzu(person: Person) = if (personRepository existiert person) {
+    operator fun invoke(person: Person) = if (personRepository existiert person) {
         PersonExistiertBereits
     } else {
         personRepository.legeAn(person)

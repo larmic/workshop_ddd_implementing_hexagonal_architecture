@@ -19,7 +19,7 @@ internal class PersonHinzufuegenTest {
 
         every { personRepositoryMock.existiert(person.id) } returns false
 
-        val result = personHinzufuegen.fuegePersonHinzu(person) as PersonHinzufuegen.Ok
+        val result = personHinzufuegen(person) as PersonHinzufuegen.Ok
 
         assertThat(person.id).isEqualTo(result.person.id)
         assertThat(person.vorname.value).isEqualTo(result.person.vorname.value)
@@ -47,7 +47,7 @@ internal class PersonHinzufuegenTest {
         every { personRepositoryMock.existiert(person.id) } returns true
         every { personRepositoryMock.existiert(person.ldap) } returns false
 
-        val result = personHinzufuegen.fuegePersonHinzu(person)
+        val result = personHinzufuegen(person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.PersonExistiertBereits)
 
@@ -61,7 +61,7 @@ internal class PersonHinzufuegenTest {
         every { personRepositoryMock.existiert(person.id) } returns false
         every { personRepositoryMock.existiert(person.ldap) } returns true
 
-        val result = personHinzufuegen.fuegePersonHinzu(person)
+        val result = personHinzufuegen(person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.PersonExistiertBereits)
 

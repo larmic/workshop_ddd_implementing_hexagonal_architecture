@@ -33,7 +33,7 @@ internal class PersonRestControllerTest {
     internal fun `post a new person with required fields`() {
         val person = createPersonTestData()
 
-        every { personHinzufuegenMock.fuegePersonHinzu(any()) } returns PersonHinzufuegen.Ok(person = person)
+        every { personHinzufuegenMock(any()) } returns PersonHinzufuegen.Ok(person = person)
 
         this.mockMvc.postPerson(person = person)
             .andExpect(status().isOk)
@@ -45,7 +45,7 @@ internal class PersonRestControllerTest {
             .andExpect(jsonPath("$.addition").doesNotExist())
 
         verify {
-            personHinzufuegenMock.fuegePersonHinzu(withArg {
+            personHinzufuegenMock(withArg {
                 assertThat(it).isNotNull
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
@@ -59,7 +59,7 @@ internal class PersonRestControllerTest {
     internal fun `post a new person with optional fields`() {
         val person = createPersonTestData(namenszusatz = Person.Namenszusatz.DE)
 
-        every { personHinzufuegenMock.fuegePersonHinzu(any()) } returns PersonHinzufuegen.Ok(person = person)
+        every { personHinzufuegenMock(any()) } returns PersonHinzufuegen.Ok(person = person)
 
         this.mockMvc.postPerson(person = person)
             .andExpect(status().isOk)
@@ -70,7 +70,7 @@ internal class PersonRestControllerTest {
             .andExpect(jsonPath("$.addition").value(person.namenszusatz!!.value))
 
         verify {
-            personHinzufuegenMock.fuegePersonHinzu(withArg {
+            personHinzufuegenMock(withArg {
                 assertThat(it).isNotNull
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)

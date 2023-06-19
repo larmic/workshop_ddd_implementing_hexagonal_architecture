@@ -16,7 +16,7 @@ class PersonRestController(
 
     @PostMapping(value = ["/api/person"], consumes = ["application/json"], produces = ["application/json"])
     fun postPerson(@RequestBody dto: CreatePersonDto): ResponseEntity<Any> {
-        return when (val result = personHinzufuegen.fuegePersonHinzu(dto.mapToDomain())) {
+        return when (val result = personHinzufuegen(dto.mapToDomain())) {
             is PersonHinzufuegen.Ok -> ResponseEntity.ok(result.person.mapToReadDto())
             PersonHinzufuegen.PersonExistiertBereits -> ResponseEntity.badRequest().build()
         }
