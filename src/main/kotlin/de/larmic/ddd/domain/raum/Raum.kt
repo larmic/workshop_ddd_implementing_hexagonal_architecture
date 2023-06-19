@@ -2,36 +2,27 @@ package de.larmic.ddd.domain.raum
 
 import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
+import de.larmic.ddd.domain.person.Person
 import java.util.*
 
 @AggregateRoot
-class Raum(
-    val id: Id = Id(),
-    val nummer: Nummer,
-    val name: Name,
-    private val personIds: MutableList<PersonRefId> = mutableListOf()
-) {
+class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val personIds: MutableList<Person.Id> = mutableListOf()) {
 
-    // Innere Liste 'persons' ist nach aussen nicht sichtbar.
+    // Innere Liste 'personIds' ist nach aussen nicht sichtbar.
     // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
-    val personenIds: List<PersonRefId>
+    val personenIds: List<Person.Id>
         get() = this.personIds
 
-    fun fuegeHinzu(personRefId: PersonRefId) {
-        if (personIds beinhaltet personRefId) {
-            throw IllegalArgumentException("Person '$personRefId' is already part of this room")
+    fun fuegeHinzu(personId: Person.Id) {
+        if (personIds beinhaltet personId) {
+            throw IllegalArgumentException("Person '$personId' is already part of this room")
         }
 
-        this.personIds.add(personRefId)
+        this.personIds.add(personId)
     }
 
     @ValueObject
     data class Id(val value: UUID = UUID.randomUUID())
-
-    // Man könnte an dieser Stelle auch direkt Person.Id verwenden.
-    // Eine Referenz ermöglicht hier die Entkopplung. Damit könnten beide Bereiche in eigene Domänen aufgeteilt werden.
-    @ValueObject
-    data class PersonRefId(val value: UUID)
 
     @ValueObject
     data class Nummer(val value: String) {
@@ -54,4 +45,4 @@ class Raum(
 private fun String.normalizeName() = trim { it <= ' ' }
 private fun String.validateRoomNumber() = this.length == 4 && this.isNumeric()
 private fun String.isNumeric() = this.all { it.isDigit() }
-private infix fun List<Raum.PersonRefId>.beinhaltet(personRefId: Raum.PersonRefId) = this.contains(personRefId)
+private infix fun List<Person.Id>.beinhaltet(personenId: Person.Id) = this.contains(personenId)

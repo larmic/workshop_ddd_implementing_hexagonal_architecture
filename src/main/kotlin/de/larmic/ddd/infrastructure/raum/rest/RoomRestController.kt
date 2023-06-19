@@ -18,7 +18,7 @@ class RoomRestController(
 
     @PostMapping(value = ["/api/room"], consumes = ["application/json"], produces = ["application/json"])
     fun postRoom(@RequestBody dto: CreateRoomDto): ResponseEntity<Any> {
-        return when (val result = raumHinzufuegen.fuegeRaumHinzu(dto.mapToDomain())) {
+        return when (val result = raumHinzufuegen(dto.mapToDomain())) {
             is RaumHinzufuegen.Ok -> ResponseEntity.ok(result.raum.mapToDto())
             RaumHinzufuegen.RaumExistiertBereits -> ResponseEntity.badRequest().body("Room number ${dto.number} already exists")
         }
@@ -26,7 +26,7 @@ class RoomRestController(
 
     @PutMapping(value = ["/api/room/{raumId}/person/{personId}"])
     fun postPerson(@PathVariable raumId: String, @PathVariable personId: String): ResponseEntity<Any> {
-        return when (personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(Raum.Id(UUID.fromString(raumId)), Person.Id(UUID.fromString(personId)))) {
+        return when (personZuRaumHinzufuegen(Raum.Id(UUID.fromString(raumId)), Person.Id(UUID.fromString(personId)))) {
             is PersonZuRaumHinzufuegen.Ok -> ResponseEntity.ok().build()
             PersonZuRaumHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
             PersonZuRaumHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()
@@ -36,7 +36,7 @@ class RoomRestController(
 
     @GetMapping(value = ["/api/room/{id}"])
     fun getRoom(@PathVariable id: String): ResponseEntity<Any> {
-        return when(val result = raumLaden.lade(Raum.Id(UUID.fromString(id)))) {
+        return when(val result = raumLaden(Raum.Id(UUID.fromString(id)))) {
             is RaumLaden.Ok -> ResponseEntity.ok(result.raumMitPersonen.mapToDto())
             RaumLaden.RaumNichtGefunden -> ResponseEntity.notFound().build()
         }

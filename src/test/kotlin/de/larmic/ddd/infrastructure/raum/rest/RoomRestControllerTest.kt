@@ -43,7 +43,7 @@ internal class RoomRestControllerTest {
     internal fun `post a new valid room`() {
         val raum = createRaumTestData(raumNummer = "0007", raumName = "James Room")
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.Ok(raum = raum)
+        every { raumHinzufuegenMock(any()) } returns RaumHinzufuegen.Ok(raum = raum)
 
         this.mockMvc.postRoom(raum = raum)
             .andExpect(status().isOk)
@@ -55,7 +55,7 @@ internal class RoomRestControllerTest {
             .andReturn().response.contentAsString
 
         verify {
-            raumHinzufuegenMock.fuegeRaumHinzu(withArg {
+            raumHinzufuegenMock(withArg {
                 assertThat(it).isNotNull
                 assertThat(it.nummer.value).isEqualTo(raum.nummer.value)
                 assertThat(it.name.value).isEqualTo(raum.name.value)
@@ -84,7 +84,7 @@ internal class RoomRestControllerTest {
     internal fun `post an existing room`() {
         val raum = createRaumTestData()
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.RaumExistiertBereits
+        every { raumHinzufuegenMock(any()) } returns RaumHinzufuegen.RaumExistiertBereits
 
         val response = this.mockMvc.postRoom(raum = raum)
             .andExpect(status().is4xxClientError)
@@ -98,7 +98,7 @@ internal class RoomRestControllerTest {
         val raum = createRaumTestData()
         val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = emptyList())
 
-        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
+        every { raumLadenMock(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
 
         this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
@@ -115,7 +115,7 @@ internal class RoomRestControllerTest {
         val person = createPersonTestData()
         val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = listOf(person))
 
-        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
+        every { raumLadenMock(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
 
         this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
@@ -130,7 +130,7 @@ internal class RoomRestControllerTest {
     @Test
     internal fun `get a not existing room`() {
         val raumId = Raum.Id()
-        every { raumLadenMock.lade(id = raumId) } returns RaumLaden.RaumNichtGefunden
+        every { raumLadenMock(id = raumId) } returns RaumLaden.RaumNichtGefunden
 
         this.mockMvc.getRoom(raumId)
             .andExpect(status().isNotFound)
@@ -140,20 +140,20 @@ internal class RoomRestControllerTest {
     internal fun `put a person to an existing room`() {
         val raumId = Raum.Id()
         val person = createPersonTestData()
-        every { personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonZuRaumHinzufuegen.Ok
+        every { personZuRaumHinzufuegenMock(any(), any()) } returns PersonZuRaumHinzufuegen.Ok
 
         this.mockMvc.putPersonToRoom(raumId = raumId, personId = person.id)
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(raumId = raumId, personId = person.id)
+            personZuRaumHinzufuegenMock(raumId = raumId, personId = person.id)
         }
     }
 
     @Test
     internal fun `put a person to an not existing room`() {
         every {
-            personZuRaumHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any())
+            personZuRaumHinzufuegenMock(any(), any())
         } returns PersonZuRaumHinzufuegen.RaumNichtGefunden
 
         this.mockMvc.putPersonToRoom(raumId = Raum.Id(), personId = Person.Id())
