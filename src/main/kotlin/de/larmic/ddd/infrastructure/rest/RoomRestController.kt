@@ -26,7 +26,7 @@ class RoomRestController(
 
     @PutMapping(value = ["/api/room/{id}/person"], consumes = ["application/json"], produces = ["application/json"])
     fun putPerson(@PathVariable id: String, @RequestBody dto: CreatePersonDto): ResponseEntity<Any> {
-        return when (personHinzufuegen.fuegePersonZuRaumHinzu(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
+        return when (personHinzufuegen(Raum.Id(UUID.fromString(id)), dto.mapToDomain())) {
             is PersonHinzufuegen.Ok -> ResponseEntity.ok().build()
             PersonHinzufuegen.PersonIstDemRaumBereitsZugewiesen -> ResponseEntity.badRequest().build()
             PersonHinzufuegen.RaumNichtGefunden -> ResponseEntity.badRequest().build()

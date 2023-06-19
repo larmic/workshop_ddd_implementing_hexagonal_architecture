@@ -22,7 +22,7 @@ internal class PersonHinzufuegenTest {
         every { raumRepositoryMock.finde(raum.id) } returns raum
         every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
 
-        val result = personHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person)
+        val result = personHinzufuegen(raum.id, person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.Ok)
 
@@ -43,7 +43,7 @@ internal class PersonHinzufuegenTest {
         every { raumRepositoryMock.finde(raum.id) } returns raum
         every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
 
-        val result = personHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person)
+        val result = personHinzufuegen(raum.id, person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.PersonIstDemRaumBereitsZugewiesen)
 
@@ -60,7 +60,7 @@ internal class PersonHinzufuegenTest {
         every { raumRepositoryMock.finde(raum2.id) } returns raum2
         every { raumRepositoryMock.finde(person.ldap) } returns raum2
 
-        val result = personHinzufuegen.fuegePersonZuRaumHinzu(raum1.id, person)
+        val result = personHinzufuegen(raum1.id, person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.PersonIstEinemAnderenRaumBereitsZugewiesen)
 
@@ -74,7 +74,7 @@ internal class PersonHinzufuegenTest {
 
         every { raumRepositoryMock.finde(roomId) } returns null
 
-        val result = personHinzufuegen.fuegePersonZuRaumHinzu(roomId, person)
+        val result = personHinzufuegen(roomId, person)
 
         assertThat(result).isEqualTo(PersonHinzufuegen.RaumNichtGefunden)
 

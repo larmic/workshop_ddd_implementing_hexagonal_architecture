@@ -133,13 +133,13 @@ internal class RoomRestControllerTest {
     internal fun `put a person to an existing room`() {
         val raumId = Raum.Id()
         val person = createPersonTestData()
-        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.Ok
+        every { personHinzufuegenMock(any(), any()) } returns PersonHinzufuegen.Ok
 
         this.mockMvc.putPersonToRoom(raumId = raumId, person = person)
             .andExpect(status().is2xxSuccessful)
 
         verify {
-            personHinzufuegenMock.fuegePersonZuRaumHinzu(raumId, withArg {
+            personHinzufuegenMock(raumId, withArg {
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
                 assertThat(it.ldap.value).isEqualTo(person.ldap.value)
@@ -151,7 +151,7 @@ internal class RoomRestControllerTest {
     @Test
     internal fun `put a person to an not existing room`() {
         val raumId = Raum.Id()
-        every { personHinzufuegenMock.fuegePersonZuRaumHinzu(any(), any()) } returns PersonHinzufuegen.RaumNichtGefunden
+        every { personHinzufuegenMock(any(), any()) } returns PersonHinzufuegen.RaumNichtGefunden
 
         this.mockMvc.putPersonToRoom(raumId = raumId, person = createPersonTestData())
             .andExpect(status().is4xxClientError)
