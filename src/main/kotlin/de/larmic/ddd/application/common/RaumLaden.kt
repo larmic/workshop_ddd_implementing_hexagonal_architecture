@@ -13,7 +13,7 @@ class RaumLaden(
     private val personRepository: PersonRepository,
 ) {
 
-    fun lade(id: Raum.Id) : Result {
+    operator fun invoke(id: Raum.Id) : Result {
         val raum = raumRepository.finde(id) ?: return RaumNichtGefunden
 
         return Ok(RaumMitPersonen(

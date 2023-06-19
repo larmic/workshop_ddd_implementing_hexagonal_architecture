@@ -36,7 +36,7 @@ class RoomRestController(
 
     @GetMapping(value = ["/api/room/{id}"])
     fun getRoom(@PathVariable id: String): ResponseEntity<Any> {
-        return when(val result = raumLaden.lade(Raum.Id(UUID.fromString(id)))) {
+        return when(val result = raumLaden(Raum.Id(UUID.fromString(id)))) {
             is RaumLaden.Ok -> ResponseEntity.ok(result.raumMitPersonen.mapToDto())
             RaumLaden.RaumNichtGefunden -> ResponseEntity.notFound().build()
         }

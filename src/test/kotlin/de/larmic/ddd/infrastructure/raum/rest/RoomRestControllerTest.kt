@@ -98,7 +98,7 @@ internal class RoomRestControllerTest {
         val raum = createRaumTestData()
         val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = emptyList())
 
-        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
+        every { raumLadenMock(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
 
         this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
@@ -115,7 +115,7 @@ internal class RoomRestControllerTest {
         val person = createPersonTestData()
         val raumMitPersonen = RaumLaden.RaumMitPersonen(raum = raum, persons = listOf(person))
 
-        every { raumLadenMock.lade(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
+        every { raumLadenMock(id = raum.id) } returns RaumLaden.Ok(raumMitPersonen = raumMitPersonen)
 
         this.mockMvc.getRoom(id = raum.id)
             .andExpect(status().isOk)
@@ -130,7 +130,7 @@ internal class RoomRestControllerTest {
     @Test
     internal fun `get a not existing room`() {
         val raumId = Raum.Id()
-        every { raumLadenMock.lade(id = raumId) } returns RaumLaden.RaumNichtGefunden
+        every { raumLadenMock(id = raumId) } returns RaumLaden.RaumNichtGefunden
 
         this.mockMvc.getRoom(raumId)
             .andExpect(status().isNotFound)
