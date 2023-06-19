@@ -78,7 +78,7 @@ class StoryIT {
             .andExpect(jsonPath("$.persons.length()").value(1))
 
         // verify PersonWurdeRaumZugeordnetEvent is send
-        assertThat(this.eventRepository.events).containsExactly(PersonWurdeRaumZugeordnetEvent(raumId = raumId, personRefId = personId.mapToPersonRefId()))
+        assertThat(this.eventRepository.events).containsExactly(PersonWurdeRaumZugeordnetEvent(raumId = raumId, personId = personId))
     }
 }
 
@@ -91,5 +91,3 @@ private fun String.readPersonJsonValue() = jacksonObjectMapper().readValue(this,
 
 private fun ReadRoomDto.mapToRaumId() = Raum.Id(UUID.fromString(this.id))
 private fun ReadPersonDto.mapToPersonId() = Person.Id(UUID.fromString(this.id))
-
-private fun Person.Id.mapToPersonRefId() = Raum.PersonRefId(value = this.value)
