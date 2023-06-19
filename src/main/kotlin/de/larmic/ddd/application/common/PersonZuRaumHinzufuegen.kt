@@ -13,7 +13,7 @@ class PersonZuRaumHinzufuegen(
     private val personRepository: PersonRepository,
 ) {
 
-    fun fuegePersonZuRaumHinzu(raumId: Raum.Id, personId: Person.Id): Result {
+    operator fun invoke(raumId: Raum.Id, personId: Person.Id): Result {
         val raum = raumRepository.finde(raumId) ?: return RaumNichtGefunden
         val person = personRepository.finde(personId) ?: return PersonNichtGefunden
 

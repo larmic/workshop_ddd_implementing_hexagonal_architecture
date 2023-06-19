@@ -27,7 +27,7 @@ internal class PersonZuRaumHinzufuegenTest {
         every { raumRepositoryMock.finde(raum.id) } returns raum
         every { personRepositoryMock.finde(person.id) } returns person
 
-        val result = personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person.id)
+        val result = personZuRaumHinzufuegen(raum.id, person.id)
 
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.Ok)
 
@@ -48,7 +48,7 @@ internal class PersonZuRaumHinzufuegenTest {
         every { raumRepositoryMock.finde(raum.id) } returns raum
         every { personRepositoryMock.finde(person.id) } returns person
 
-        val result = personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person.id)
+        val result = personZuRaumHinzufuegen(raum.id, person.id)
 
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.PersonIstDemRaumBereitsZugewiesen)
 
@@ -65,7 +65,7 @@ internal class PersonZuRaumHinzufuegenTest {
         every { raumRepositoryMock.finde(raum2.id) } returns raum2
         every { personRepositoryMock.finde(person.id) } returns person
 
-        val result = personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(raum1.id, person.id)
+        val result = personZuRaumHinzufuegen(raum1.id, person.id)
 
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.Ok)
 
@@ -86,7 +86,7 @@ internal class PersonZuRaumHinzufuegenTest {
         every { raumRepositoryMock.finde(roomId) } returns null
         every { personRepositoryMock.finde(person.id) } returns person
 
-        val result = personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(roomId, person.id)
+        val result = personZuRaumHinzufuegen(roomId, person.id)
 
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.RaumNichtGefunden)
 
@@ -101,7 +101,7 @@ internal class PersonZuRaumHinzufuegenTest {
         every { raumRepositoryMock.finde(raum.id) } returns raum
         every { personRepositoryMock.finde(person.id) } returns null
 
-        val result = personZuRaumHinzufuegen.fuegePersonZuRaumHinzu(raum.id, person.id)
+        val result = personZuRaumHinzufuegen(raum.id, person.id)
 
         assertThat(result).isEqualTo(PersonZuRaumHinzufuegen.PersonNichtGefunden)
 
