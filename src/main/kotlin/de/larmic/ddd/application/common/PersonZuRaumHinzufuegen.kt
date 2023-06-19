@@ -18,7 +18,7 @@ class PersonZuRaumHinzufuegen(
         val person = personRepository.finde(personId) ?: return PersonNichtGefunden
 
         try {
-            raum.fuegeHinzu(person.id.mapToPersonRefId())
+            raum.fuegeHinzu(person.id)
         } catch (e: IllegalArgumentException) {
             return PersonIstDemRaumBereitsZugewiesen
         }
@@ -35,5 +35,3 @@ class PersonZuRaumHinzufuegen(
     object RaumNichtGefunden : Result()
     object PersonNichtGefunden : Result()
 }
-
-private fun Person.Id.mapToPersonRefId() = Raum.PersonRefId(value = this.value)

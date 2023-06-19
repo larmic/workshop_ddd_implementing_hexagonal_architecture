@@ -1,5 +1,6 @@
 package de.larmic.ddd.domain.raum
 
+import de.larmic.ddd.domain.person.Person
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -88,29 +89,29 @@ internal class RaumTest {
         internal fun `persons are not empty`() {
             val raum = createRaumTestData()
 
-            val personRefId1 = Raum.PersonRefId(value = UUID.randomUUID())
-            val personRefId2 = Raum.PersonRefId(value = UUID.randomUUID())
+            val personId1 = Person.Id()
+            val personId2 = Person.Id()
 
-            raum.fuegeHinzu(personRefId1)
-            raum.fuegeHinzu(personRefId2)
+            raum.fuegeHinzu(personId1)
+            raum.fuegeHinzu(personId2)
 
             assertThat(raum.personenIds)
                 .containsExactlyInAnyOrder(
-                    personRefId1,
-                    personRefId2,
+                    personId1,
+                    personId2,
                 )
         }
 
         @Test
         internal fun `person already exists`() {
             val raum = createRaumTestData()
-            val personRefId = Raum.PersonRefId(value = UUID.randomUUID())
+            val personId = Person.Id()
 
-            raum.fuegeHinzu(personRefId)
+            raum.fuegeHinzu(personId)
 
-            assertThatThrownBy { raum.fuegeHinzu(personRefId) }
+            assertThatThrownBy { raum.fuegeHinzu(personId) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("Person '$personRefId' is already part of this room")
+                .hasMessage("Person '$personId' is already part of this room")
         }
     }
 
