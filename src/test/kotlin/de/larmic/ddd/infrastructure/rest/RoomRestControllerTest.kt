@@ -39,7 +39,7 @@ internal class RoomRestControllerTest {
     internal fun `post a new valid room`() {
         val raum = createRaumTestData(raumNummer = "0007", raumName = "James Room")
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.Ok(raum = raum)
+        every { raumHinzufuegenMock(any()) } returns RaumHinzufuegen.Ok(raum = raum)
 
         this.mockMvc.postRoom(raum = raum)
             .andExpect(status().isOk)
@@ -51,7 +51,7 @@ internal class RoomRestControllerTest {
             .andReturn().response.contentAsString
 
         verify {
-            raumHinzufuegenMock.fuegeRaumHinzu(withArg {
+            raumHinzufuegenMock(withArg {
                 assertThat(it).isNotNull
                 assertThat(it.nummer.value).isEqualTo(raum.nummer.value)
                 assertThat(it.name.value).isEqualTo(raum.name.value)
@@ -80,7 +80,7 @@ internal class RoomRestControllerTest {
     internal fun `post an existing room`() {
         val raum = createRaumTestData()
 
-        every { raumHinzufuegenMock.fuegeRaumHinzu(any()) } returns RaumHinzufuegen.RaumExistiertBereits
+        every { raumHinzufuegenMock(any()) } returns RaumHinzufuegen.RaumExistiertBereits
 
         val response = this.mockMvc.postRoom(raum = raum)
             .andExpect(status().is4xxClientError)
