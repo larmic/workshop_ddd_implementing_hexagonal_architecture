@@ -1,5 +1,5 @@
 # Build spring boot app
-FROM eclipse-temurin:17 as app-build
+FROM openjdk:21-jdk as app-build
 
 COPY mvnw .
 COPY .mvn/ .mvn/
@@ -19,10 +19,9 @@ RUN ./mvnw package -DskipTests
 RUN mv target/*.jar target/spring-boot-app.jar
 
 
-# Up to now there is no eclipse-temurin:17 JRE so build a custom jre using jlink
-# Default spring boot using eclipse-temurin:17 has a size of ~470MB
-# Using jlink reduces size to ~160MB
-FROM eclipse-temurin:17 as jre-build
+# OpenJDK has a size of ~517MB, Slim has ~230MB
+# Build custom jre using jlink reduces size to ~160MB
+FROM openjdk:21-jdk as jre-build
 
 # Create a custom Java runtime
 # see https://medium.com/azulsystems/using-jlink-to-build-java-runtimes-for-non-modular-applications-9568c5e70ef4

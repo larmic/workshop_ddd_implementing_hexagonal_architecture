@@ -22,7 +22,7 @@ In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories de
 
 ## Requirements
 
-* Java 17
+* Java 21
 * Docker
 
 ## Build and run
