@@ -32,12 +32,5 @@ Siehe [Makefile](Makefile) und [requests.http](misc/requests.http)
 Informationen.
 
 ```shell
-# java 
-$ make java/test
-$ make java/build
-$ make java/run
-
-# docker
-$ make docker/build
-$ make docker/run
+$ make 
 ```
