@@ -1,15 +1,36 @@
 # Jetbrains HTTP Client: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+# Change values in http-client.env.json if needed!
 
 ###
 
-# curl -i -H "Accept: text/plain" --request GET http://localhost:8080/api/hello
-GET {{host}}/api/hello
-Accept: text/plain
+# Add a new room
+POST {{host}}/api/room
+Content-Type: application/json
+
+{
+  "number": "{{room-number}}",
+  "name": "{{room-name}}"
+}
 
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200");
-        client.assert(response.body === "Hello World!", "Response is not 'Hello World!'")
+    });
+
+    client.global.set("room-id", response.body.id)
+    client.log("room-id is " + client.global.get("room-id"))
+%}
+
+###
+
+# Get a room by id
+# curl -i -X GET localhost:8080/api/room/0815 -H 'Content-Type: application/json'
+GET {{host}}/api/room/{{room-id}}
+Content-Type: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
     });
 %}
 
