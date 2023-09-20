@@ -22,22 +22,15 @@ In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories de
 
 ## Requirements
 
-* Java 17
+* Java 21
 * Docker
 
 ## Build and run
 
-Siehe [Makefile](Makefile) und [requests.http](misc/requests.rest) 
+Siehe [Makefile](Makefile) und [requests.http](misc/rest-requests/requests.http) 
 ([Jetbrains HTTP Client](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html)) für genauere 
 Informationen.
 
 ```shell
-# java 
-$ make java/test
-$ make java/build
-$ make java/run
-
-# docker
-$ make docker/build
-$ make docker/run
+$ make 
 ```
