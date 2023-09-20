@@ -20,8 +20,8 @@
         <maven.min.version>3.2.1</maven.min.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
-        <kotlin.version>1.9.10</kotlin.version>
+        <java.version>21</java.version>
+        <kotlin.version>1.9.20-Beta</kotlin.version>
 
         <jackson-module-kotlin.version>2.15.2</jackson-module-kotlin.version>
 
@@ -84,7 +84,7 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
                 <configuration>
-                    <jvmTarget>17</jvmTarget>
+                    <jvmTarget>21</jvmTarget>
                 </configuration>
                 <executions>
                     <execution>

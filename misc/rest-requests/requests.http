@@ -4,7 +4,7 @@
 ###
 
 # Add a new room
-POST localhost:8080/api/room
+POST {{host}}/api/room
 Content-Type: application/json
 
 {
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 # Get a room by id
 # curl -i -X GET localhost:8080/api/room/0815 -H 'Content-Type: application/json'
-GET localhost:8080/api/room/{{room-id}}
+GET {{host}}/api/room/{{room-id}}
 Content-Type: application/json
 
 > {%
