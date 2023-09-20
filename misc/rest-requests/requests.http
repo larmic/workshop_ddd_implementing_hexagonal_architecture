@@ -4,7 +4,7 @@
 ###
 
 # Add a new person
-POST localhost:8080/api/person
+POST {{host}}/api/person
 Content-Type: application/json
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json
 ###
 
 # Get person
-GET localhost:8080/api/person/{{person-id}}
+GET {{host}}/api/person/{{person-id}}
 Content-Type: application/json
 
 > {%
@@ -37,7 +37,7 @@ Content-Type: application/json
 ###
 
 # Add a new room
-POST localhost:8080/api/room
+POST {{host}}/api/room
 Content-Type: application/json
 
 {
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 # Add person to a room
 # curl -i -X PUT localhost:8080/api/room/0815/person -H 'Content-Type: application/json' -d '{"firstName":"Lars","lastName":"Michaelis","ldap":"larmic"}'
-PUT localhost:8080/api/room/{{room-id}}/person/{{person-id}}
+PUT {{host}}/api/room/{{room-id}}/person/{{person-id}}
 Content-Type: application/json
 
 {
@@ -76,7 +76,7 @@ Content-Type: application/json
 ###
 
 # Get a room by id
-GET localhost:8080/api/room/{{room-id}}
+GET {{host}}/api/room/{{room-id}}
 Content-Type: application/json
 
 > {%
