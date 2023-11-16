@@ -11,7 +11,7 @@ class PersonZuRaumHinzufuegen(val raumRepository: RaumRepository) {
      operator fun invoke(id: Raum.Id, person: Person): Result {
         val raum = raumRepository.finde(id) ?: return RaumNichtGefunden
 
-        if (raumRepository.finde(person.ldap) != null) {
+        if (raumRepository.finde(person.benutzername) != null) {
             return PersonIstEinemAnderenRaumBereitsZugewiesen
         }
 

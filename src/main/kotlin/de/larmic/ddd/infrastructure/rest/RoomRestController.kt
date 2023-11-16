@@ -47,7 +47,7 @@ class ReadRoomDto(val id: String, val number: String, val name: String, val pers
 class CreatePersonDto(
     val firstName: String,
     val lastName: String,
-    val ldap: String,
+    val userName: String,
     val addition: String?,
 )
 
@@ -67,6 +67,6 @@ private fun Raum.mapToDto() =
 private fun CreatePersonDto.mapToDomain() = Person(
     vorname = Person.Vorname(this.firstName),
     nachname = Person.Nachname(this.lastName),
-    ldap = Person.Ldap(this.ldap),
+    benutzername = Person.Benutzername(this.userName),
     namenszusatz = Person.Namenszusatz.create(this.addition),
 )

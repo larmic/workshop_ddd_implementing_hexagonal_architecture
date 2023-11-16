@@ -6,12 +6,12 @@ fun createPersonTestData(
     id: UUID = UUID.randomUUID(),
     vorname: String = "Lars",
     nachname: String = "Michaelis",
-    ldap: String = "larmic",
+    benutzername: String = "larmic",
     namenszusatz: Person.Namenszusatz? = null,
 ) = Person(
     id = Person.Id(id),
     vorname = Person.Vorname(vorname),
     nachname = Person.Nachname(nachname),
-    ldap = Person.Ldap(ldap),
+    benutzername = Person.Benutzername(benutzername),
     namenszusatz = namenszusatz
 )

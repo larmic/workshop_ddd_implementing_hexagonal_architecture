@@ -88,8 +88,8 @@ internal class RaumTest {
         internal fun `persons are not empty`() {
             val raum = createRaumTestData()
 
-            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "lamichae"))
-            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", ldap = "lamueh", namenszusatz = Person.Namenszusatz.VON))
+            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Michaelis", benutzername = "lamichae"))
+            raum.fuegeHinzu(createPersonTestData(vorname = "Lars", nachname = "Mühlmann", benutzername = "lamueh", namenszusatz = Person.Namenszusatz.VON))
 
             assertThat(raum.personenkurzschreibweisen)
                 .containsExactlyInAnyOrder(
@@ -102,8 +102,8 @@ internal class RaumTest {
         internal fun `person already exists by id`() {
             val raum = createRaumTestData()
             val personId = UUID.randomUUID()
-            val person1 = createPersonTestData(id = personId, ldap = "ldap1")
-            val person2 = createPersonTestData(id = personId, ldap = "ldap2")
+            val person1 = createPersonTestData(id = personId, benutzername = "benutzername1")
+            val person2 = createPersonTestData(id = personId, benutzername = "benutzername2")
 
             raum.fuegeHinzu(person1)
 
@@ -113,10 +113,10 @@ internal class RaumTest {
         }
 
         @Test
-        internal fun `person already exists by ldap`() {
+        internal fun `person already exists by Benutzername`() {
             val raum = createRaumTestData()
-            val person1 = createPersonTestData(id = UUID.randomUUID(), ldap = "larmic")
-            val person2 = createPersonTestData(id = UUID.randomUUID(), ldap = "larmic")
+            val person1 = createPersonTestData(id = UUID.randomUUID(), benutzername = "larmic")
+            val person2 = createPersonTestData(id = UUID.randomUUID(), benutzername = "larmic")
 
             raum.fuegeHinzu(person1)
 

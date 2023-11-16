@@ -20,7 +20,7 @@ internal class PersonZuRaumHinzufuegenTest {
         val person = createPersonTestData()
 
         every { raumRepositoryMock.finde(raum.id) } returns raum
-        every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
+        every { raumRepositoryMock.finde(any<Person.Benutzername>()) } returns null
 
         val result = personZuRaumHinzufuegen(raum.id, person)
 
@@ -41,7 +41,7 @@ internal class PersonZuRaumHinzufuegenTest {
         val raum = createRaumTestData(persons = mutableListOf(person))
 
         every { raumRepositoryMock.finde(raum.id) } returns raum
-        every { raumRepositoryMock.finde(any<Person.Ldap>()) } returns null
+        every { raumRepositoryMock.finde(any<Person.Benutzername>()) } returns null
 
         val result = personZuRaumHinzufuegen(raum.id, person)
 
@@ -58,7 +58,7 @@ internal class PersonZuRaumHinzufuegenTest {
 
         every { raumRepositoryMock.finde(raum1.id) } returns raum1
         every { raumRepositoryMock.finde(raum2.id) } returns raum2
-        every { raumRepositoryMock.finde(person.ldap) } returns raum2
+        every { raumRepositoryMock.finde(person.benutzername) } returns raum2
 
         val result = personZuRaumHinzufuegen(raum1.id, person)
 

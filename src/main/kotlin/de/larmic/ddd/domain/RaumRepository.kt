@@ -8,7 +8,7 @@ interface RaumRepository {
     fun legeAn(raum: Raum)
     fun aktualisiere(raum: Raum)
     fun finde(id: Raum.Id): Raum?
-    fun finde(personLdap: Person.Ldap) : Raum?
+    fun finde(benutzername: Person.Benutzername) : Raum?
     infix fun existiert(nummer: Raum.Nummer): Boolean
 
 }

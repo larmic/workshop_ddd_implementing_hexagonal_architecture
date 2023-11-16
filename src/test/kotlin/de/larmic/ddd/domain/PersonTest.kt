@@ -16,21 +16,21 @@ internal class PersonTest {
     inner class CreatePerson {
         @Test
         fun `has minimal attributes`() {
-            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", ldap = "larmic")
+            val person = createPersonTestData(vorname = "Lars", nachname = "Michaelis", benutzername = "larmic")
             assertThat(person.id).isNotNull
             assertThat(person.vorname.value).isEqualTo("Lars")
             assertThat(person.nachname.value).isEqualTo("Michaelis")
-            assertThat(person.ldap.value).isEqualTo("larmic")
+            assertThat(person.benutzername.value).isEqualTo("larmic")
             assertThat(person.namenszusatz).isNull()
         }
 
         @Test
         fun `has minimal not trimmed attributes`() {
-            val person = createPersonTestData(vorname = " Lars ", nachname = " Michaelis ", ldap = " larmic ", namenszusatz = Person.Namenszusatz.VON)
+            val person = createPersonTestData(vorname = " Lars ", nachname = " Michaelis ", benutzername = " larmic ", namenszusatz = Person.Namenszusatz.VON)
             assertThat(person.id).isNotNull
             assertThat(person.vorname.value).isEqualTo("Lars")
             assertThat(person.nachname.value).isEqualTo("Michaelis")
-            assertThat(person.ldap.value).isEqualTo("larmic")
+            assertThat(person.benutzername.value).isEqualTo("larmic")
             assertThat(person.namenszusatz).isEqualTo(Person.Namenszusatz.VON)
         }
 
@@ -59,10 +59,10 @@ internal class PersonTest {
 
         @ParameterizedTest
         @ValueSource(strings = ["", " ", "   "])
-        fun `has empty ldap user name`(ldapUser: String) {
-            assertThatThrownBy { createPersonTestData(ldap = ldapUser) }
+        fun `has empty Benutzername`(benutzername: String) {
+            assertThatThrownBy { createPersonTestData(benutzername = benutzername) }
                 .isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("LDAP user must not be empty")
+                .hasMessage("Benutzername user must not be empty")
         }
     }
 
@@ -71,14 +71,14 @@ internal class PersonTest {
     inner class Kurzschreibweise {
         @Test
         internal fun `person has no addition`() {
-            val person = createPersonTestData(vorname = "Maxina", nachname = "Musterfrau", ldap = "muster")
+            val person = createPersonTestData(vorname = "Maxina", nachname = "Musterfrau", benutzername = "muster")
             assertThat(person.kurzschreibweise).isEqualTo("Maxina Musterfrau (muster)")
         }
 
         @ParameterizedTest
         @EnumSource(Person.Namenszusatz::class)
         internal fun `person has Anrede but no Titel`(namenszusatz: Person.Namenszusatz) {
-            val person = createPersonTestData(vorname = "Max", nachname = "Mustermann", ldap = "maxmu", namenszusatz = namenszusatz)
+            val person = createPersonTestData(vorname = "Max", nachname = "Mustermann", benutzername = "maxmu", namenszusatz = namenszusatz)
             assertThat(person.kurzschreibweise).isEqualTo("Max ${namenszusatz.value} Mustermann (maxmu)")
         }
     }

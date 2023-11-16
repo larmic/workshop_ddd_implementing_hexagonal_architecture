@@ -49,4 +49,4 @@ private fun String.normalizeName() = trim { it <= ' ' }
 private fun String.validateRoomNumber() = this.length == 4 && this.isNumeric()
 private fun String.isNumeric() = this.all { it.isDigit() }
 private infix fun List<Person>.beinhaltet(person: Person) =
-    this.map { it.id }.contains(person.id) || this.map { it.ldap.value }.contains(person.ldap.value)
+    this.map { it.id }.contains(person.id) || this.map { it.benutzername.value }.contains(person.benutzername.value)

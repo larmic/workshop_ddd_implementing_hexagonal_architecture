@@ -53,12 +53,12 @@ internal class CacheRoomRepositoryTest {
     }
 
     @Nested
-    @DisplayName("Find room by ldap user name with")
-    inner class FindByLdapWith {
+    @DisplayName("Find room by user name with")
+    inner class FindByUserNameWith {
 
         @Test
         internal fun `no room with person exists`() {
-            assertThat(roomRepository.finde(personLdap = Person.Ldap("not-exists"))).isNull()
+            assertThat(roomRepository.finde(benutzername = Person.Benutzername("not-exists"))).isNull()
         }
 
         @Test
@@ -70,7 +70,7 @@ internal class CacheRoomRepositoryTest {
             roomRepository.legeAn(raum1)
             roomRepository.legeAn(raum2)
 
-            assertThat(roomRepository.finde(personLdap = person.ldap)).isEqualTo(raum1)
+            assertThat(roomRepository.finde(benutzername = person.benutzername)).isEqualTo(raum1)
         }
     }
 }

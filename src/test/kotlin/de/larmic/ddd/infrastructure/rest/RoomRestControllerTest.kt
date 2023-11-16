@@ -142,7 +142,7 @@ internal class RoomRestControllerTest {
             personZuRaumHinzufuegenMock(raumId, withArg {
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
-                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
+                assertThat(it.benutzername.value).isEqualTo(person.benutzername.value)
                 assertThat(it.namenszusatz).isNull()
             })
         }
