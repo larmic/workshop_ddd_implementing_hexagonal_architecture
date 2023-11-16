@@ -22,7 +22,7 @@ class PersonRestController(
     }
 
     @GetMapping(value = ["/api/person/{id}"])
-    fun getRoom(@PathVariable id: String): ResponseEntity<Any> {
+    fun getPerson(@PathVariable id: String): ResponseEntity<Any> {
         val person = personRepository.finde(Person.Id(UUID.fromString(id))) ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(person.mapToReadDto())
