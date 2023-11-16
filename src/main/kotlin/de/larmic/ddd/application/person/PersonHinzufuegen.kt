@@ -20,4 +20,4 @@ class PersonHinzufuegen(private val personRepository: PersonRepository) {
     object PersonExistiertBereits : Result()
 }
 
-private infix fun PersonRepository.existiert(person: Person) = this existiert person.id || this existiert person.ldap
+private infix fun PersonRepository.existiert(person: Person) = this existiert person.id || this existiert person.benutzername

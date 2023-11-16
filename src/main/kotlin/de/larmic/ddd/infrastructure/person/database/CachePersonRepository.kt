@@ -17,7 +17,7 @@ class CachePersonRepository : PersonRepository {
 
     override infix fun existiert(id: Person.Id) = persons[id] != null
 
-    override infix fun existiert(ldap: Person.Ldap) = persons.filter { it.value.ldap.value == ldap.value }.isNotEmpty()
+    override infix fun existiert(benutzername: Person.Benutzername) = persons.filter { it.value.benutzername.value == benutzername.value }.isNotEmpty()
 
     val size: Int
         get() = persons.size

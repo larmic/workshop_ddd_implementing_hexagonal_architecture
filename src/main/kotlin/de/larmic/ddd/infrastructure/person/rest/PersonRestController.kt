@@ -3,7 +3,6 @@ package de.larmic.ddd.infrastructure.person.rest
 import de.larmic.ddd.application.person.PersonHinzufuegen
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.PersonRepository
-import de.larmic.ddd.infrastructure.rest.CreatePersonDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -34,14 +33,14 @@ class ReadPersonDto(
     val id: String,
     val firstName: String,
     val lastName: String,
-    val ldap: String,
+    val benutzername: String,
     val addition: String?,
 )
 
 class CreatePersonDto(
     val firstName: String,
     val lastName: String,
-    val ldap: String,
+    val userName: String,
     val addition: String?,
 )
 
@@ -49,13 +48,13 @@ private fun Person.mapToReadDto() = ReadPersonDto(
     id = this.id.value.toString(),
     firstName = this.vorname.value,
     lastName = this.nachname.value,
-    ldap = this.ldap.value,
+    benutzername = this.benutzername.value,
     addition = this.namenszusatz?.value,
 )
 
 private fun CreatePersonDto.mapToDomain() = Person(
     vorname = Person.Vorname(this.firstName),
     nachname = Person.Nachname(this.lastName),
-    ldap = Person.Ldap(this.ldap),
+    benutzername = Person.Benutzername(this.userName),
     namenszusatz = Person.Namenszusatz.create(this.addition),
 )

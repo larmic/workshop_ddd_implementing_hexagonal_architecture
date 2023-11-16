@@ -40,7 +40,7 @@ internal class PersonRestControllerTest {
             .andExpect(jsonPath("$.id").value(person.id.value.toString()))
             .andExpect(jsonPath("$.firstName").value(person.vorname.value))
             .andExpect(jsonPath("$.lastName").value(person.nachname.value))
-            .andExpect(jsonPath("$.ldap").value(person.ldap.value))
+            .andExpect(jsonPath("$.benutzername").value(person.benutzername.value))
             .andExpect(jsonPath("$.title").doesNotExist())
             .andExpect(jsonPath("$.addition").doesNotExist())
 
@@ -49,7 +49,7 @@ internal class PersonRestControllerTest {
                 assertThat(it).isNotNull
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
-                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
+                assertThat(it.benutzername.value).isEqualTo(person.benutzername.value)
                 assertThat(it.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
             })
         }
@@ -66,7 +66,7 @@ internal class PersonRestControllerTest {
             .andExpect(jsonPath("$.id").value(person.id.value.toString()))
             .andExpect(jsonPath("$.firstName").value(person.vorname.value))
             .andExpect(jsonPath("$.lastName").value(person.nachname.value))
-            .andExpect(jsonPath("$.ldap").value(person.ldap.value))
+            .andExpect(jsonPath("$.benutzername").value(person.benutzername.value))
             .andExpect(jsonPath("$.addition").value(person.namenszusatz!!.value))
 
         verify {
@@ -74,7 +74,7 @@ internal class PersonRestControllerTest {
                 assertThat(it).isNotNull
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
-                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
+                assertThat(it.benutzername.value).isEqualTo(person.benutzername.value)
                 assertThat(it.namenszusatz?.value).isEqualTo(person.namenszusatz!!.value)
             })
         }
@@ -97,7 +97,7 @@ internal class PersonRestControllerTest {
             .andExpect(jsonPath("$.id").value(person.id.value.toString()))
             .andExpect(jsonPath("$.firstName").value(person.vorname.value))
             .andExpect(jsonPath("$.lastName").value(person.nachname.value))
-            .andExpect(jsonPath("$.ldap").value(person.ldap.value))
+            .andExpect(jsonPath("$.benutzername").value(person.benutzername.value))
             .andExpect(jsonPath("$.addition").isEmpty)
     }
 
