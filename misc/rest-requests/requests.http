@@ -64,7 +64,7 @@ Content-Type: application/json
 {
   "firstName": "{{first-name}}",
   "lastName": "{{last-name}}",
-  "ldap": "{{ldap}}"
+  "userName": "{{user-name}}"
 }
 
 > {%
