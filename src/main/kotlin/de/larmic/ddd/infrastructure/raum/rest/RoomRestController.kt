@@ -45,13 +45,6 @@ class RoomRestController(
 
 class CreateRoomDto(val number: String, val name: String)
 class ReadRoomDto(val id: String, val number: String, val name: String, val persons: List<String>)
-class CreatePersonDto(
-    val firstName: String,
-    val lastName: String,
-    val ldap: String,
-    val title: String?,
-    val addition: String?,
-)
 
 private fun CreateRoomDto.mapToDomain() = Raum(
     nummer = Raum.Nummer(value = this.number),

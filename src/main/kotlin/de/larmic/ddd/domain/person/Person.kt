@@ -9,14 +9,14 @@ class Person(
     val id: Id = Id(),
     val vorname: Vorname,
     val nachname: Nachname,
-    val ldap: Ldap,
+    val benutzername: Benutzername,
     val namenszusatz: Namenszusatz? = null
 ) {
 
     @ValueObject
     val kurzschreibweise: String
         get() {
-            return "${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${ldap.value})"
+            return "${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${benutzername.value})"
                 .removeDuplicatedWhiteSpaces()
                 .trim()
         }
@@ -43,11 +43,11 @@ class Person(
     }
 
     @ValueObject
-    class Ldap(value: String) {
+    class Benutzername(value: String) {
         val value: String = value.normalizeName()
 
         init {
-            require(value.isNotBlank()) { "LDAP user must not be empty" }
+            require(value.isNotBlank()) { "Benutzername user must not be empty" }
         }
     }
 

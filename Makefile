@@ -15,7 +15,7 @@ docker-build: ## Builds docker container
 	DOCKER_BUILDKIT=1 docker build -t $(IMAGE_NAME):$(DOCKER_TAG) -f src/main/docker/Dockerfile .
 
 ## —— Run application 🏃🏽————————————————————————————————————————————————————————————————————————————————————————
-java-run: java/build ## Run java application
+java-run: java-build ## Run java application
 	java -jar target/workshop_implementing_ddd.jar
 
 docker-run: ## Run docker image

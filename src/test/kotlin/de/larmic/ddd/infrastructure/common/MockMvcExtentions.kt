@@ -44,7 +44,7 @@ private fun Person.toJson() = """
             {
                 "firstName": "${this.vorname.value}",
                 "lastName": "${this.nachname.value}",
-                "ldap": "${this.ldap.value}",
+                "userName": "${this.benutzername.value}",
                 "addition" : "${this.namenszusatz?.value.orEmpty()}"
             }
         """.trimIndent()

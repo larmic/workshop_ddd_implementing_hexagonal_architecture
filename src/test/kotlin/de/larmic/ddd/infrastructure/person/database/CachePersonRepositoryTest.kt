@@ -25,7 +25,7 @@ internal class CachePersonRepositoryTest {
             assertThat(personRepository.finde(person.id)).isNotNull
             assertThat(personRepository.finde(person.id)!!.vorname.value).isEqualTo(person.vorname.value)
             assertThat(personRepository.finde(person.id)!!.nachname.value).isEqualTo(person.nachname.value)
-            assertThat(personRepository.finde(person.id)!!.ldap.value).isEqualTo(person.ldap.value)
+            assertThat(personRepository.finde(person.id)!!.benutzername.value).isEqualTo(person.benutzername.value)
             assertThat(personRepository.finde(person.id)!!.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
             assertThat(personRepository.finde(person.id)!!.kurzschreibweise).isEqualTo(person.kurzschreibweise)
         }
@@ -40,7 +40,7 @@ internal class CachePersonRepositoryTest {
             assertThat(personRepository.size).isEqualTo(1)
             assertThat(personRepository.finde(person.id)!!.vorname.value).isEqualTo(person.vorname.value)
             assertThat(personRepository.finde(person.id)!!.nachname.value).isEqualTo(person.nachname.value)
-            assertThat(personRepository.finde(person.id)!!.ldap.value).isEqualTo(person.ldap.value)
+            assertThat(personRepository.finde(person.id)!!.benutzername.value).isEqualTo(person.benutzername.value)
             assertThat(personRepository.finde(person.id)!!.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
             assertThat(personRepository.finde(person.id)!!.kurzschreibweise).isEqualTo(person.kurzschreibweise)
         }
@@ -71,12 +71,12 @@ internal class CachePersonRepositoryTest {
     }
 
     @Nested
-    @DisplayName("Verify person exists by ldap with")
-    inner class PersonExistsByLdap {
+    @DisplayName("Verify person exists by user name with")
+    inner class PersonExistsByUserName {
 
         @Test
         internal fun `person does not exists`() {
-            assertThat(personRepository.existiert(Person.Ldap(value = "not-existing"))).isFalse
+            assertThat(personRepository.existiert(Person.Benutzername(value = "not-existing"))).isFalse
         }
 
         @Test
@@ -85,7 +85,7 @@ internal class CachePersonRepositoryTest {
 
             personRepository.legeAn(person)
 
-            assertThat(personRepository.existiert(person.ldap)).isTrue
+            assertThat(personRepository.existiert(person.benutzername)).isTrue
         }
     }
 }

@@ -24,7 +24,7 @@ internal class PersonHinzufuegenTest {
         assertThat(person.id).isEqualTo(result.person.id)
         assertThat(person.vorname.value).isEqualTo(result.person.vorname.value)
         assertThat(person.nachname.value).isEqualTo(result.person.nachname.value)
-        assertThat(person.ldap.value).isEqualTo(result.person.ldap.value)
+        assertThat(person.benutzername.value).isEqualTo(result.person.benutzername.value)
         assertThat(person.namenszusatz?.value).isEqualTo(result.person.namenszusatz?.value)
         assertThat(person.kurzschreibweise).isEqualTo(result.person.kurzschreibweise)
 
@@ -33,7 +33,7 @@ internal class PersonHinzufuegenTest {
                 assertThat(it.id).isEqualTo(person.id)
                 assertThat(it.vorname.value).isEqualTo(person.vorname.value)
                 assertThat(it.nachname.value).isEqualTo(person.nachname.value)
-                assertThat(it.ldap.value).isEqualTo(person.ldap.value)
+                assertThat(it.benutzername.value).isEqualTo(person.benutzername.value)
                 assertThat(it.namenszusatz?.value).isEqualTo(person.namenszusatz?.value)
                 assertThat(it.kurzschreibweise).isEqualTo(person.kurzschreibweise)
             })
@@ -45,7 +45,7 @@ internal class PersonHinzufuegenTest {
         val person = createPersonTestData()
 
         every { personRepositoryMock.existiert(person.id) } returns true
-        every { personRepositoryMock.existiert(person.ldap) } returns false
+        every { personRepositoryMock.existiert(person.benutzername) } returns false
 
         val result = personHinzufuegen(person)
 
@@ -55,11 +55,11 @@ internal class PersonHinzufuegenTest {
     }
 
     @Test
-    internal fun `add existing person by ldap`() {
+    internal fun `add existing person by benutzername`() {
         val person = createPersonTestData()
 
         every { personRepositoryMock.existiert(person.id) } returns false
-        every { personRepositoryMock.existiert(person.ldap) } returns true
+        every { personRepositoryMock.existiert(person.benutzername) } returns true
 
         val result = personHinzufuegen(person)
 
