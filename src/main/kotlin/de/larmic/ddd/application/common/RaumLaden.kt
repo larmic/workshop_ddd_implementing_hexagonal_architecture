@@ -1,9 +1,9 @@
 package de.larmic.ddd.application.common
 
 import de.larmic.ddd.common.UseCase
+import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.person.Person
 import de.larmic.ddd.domain.person.PersonRepository
-import de.larmic.ddd.domain.raum.Raum
 import de.larmic.ddd.domain.raum.RaumRepository
 
 // Befindet sich im common-Package, weil zwei Aggregate abgerufen werden.

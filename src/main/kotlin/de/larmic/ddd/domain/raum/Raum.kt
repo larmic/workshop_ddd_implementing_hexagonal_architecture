@@ -1,4 +1,4 @@
-package de.larmic.ddd.domain
+package de.larmic.ddd.domain.raum
 
 import de.larmic.ddd.common.AggregateRoot
 import de.larmic.ddd.common.ValueObject
