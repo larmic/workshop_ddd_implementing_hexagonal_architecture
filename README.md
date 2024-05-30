@@ -6,7 +6,7 @@
 [![Story 3 - Person in mehreren Räumen](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story_3.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story_3.yml)
 [![Story 4 - Events](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story_4.yml/badge.svg)](https://github.com/larmic/workshop_ddd_implementing_hexagonal_architecture/actions/workflows/story_4.yml)
 
-Dieses Projekt dient als Unterstützung und Musterlösung zu meinem [Workshop](misc/presentation/workshop_folien.pdf). 
+Dieses Projekt dient als Unterstützung und Musterlösung zu meinem [Workshop](https://larmic.de/workshops/ddd_hexagonal_architecture_for_devs/). 
 In den einzelnen Branches sind die jeweiligen Umsetzungen zu den User Stories des Workshops dokumentiert. 
 
 #### Stories und Branches
