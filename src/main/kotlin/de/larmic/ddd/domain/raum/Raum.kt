@@ -27,22 +27,21 @@ class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name, private val pe
     @ValueObject
     data class Nummer(val value: String) {
         init {
-            require(value.validateRoomNumber()) { "Room number $value must have 4 arbitrary digits" }
+            require(value.validiereRaumnummer()) { "Room number $value must have 4 arbitrary digits" }
         }
     }
 
     @ValueObject
     class Name(value: String) {
-        val value = value.normalizeName()
+        val value = value.entferneLeerzeichen()
 
         init {
             require(value.isNotBlank()) { "Room name should not be empty" }
         }
     }
-
 }
 
-private fun String.normalizeName() = trim { it <= ' ' }
-private fun String.validateRoomNumber() = this.length == 4 && this.isNumeric()
-private fun String.isNumeric() = this.all { it.isDigit() }
+private fun String.entferneLeerzeichen() = trim { it <= ' ' }
+private fun String.validiereRaumnummer() = this.length == 4 && this.istEineZahl()
+private fun String.istEineZahl() = this.all { it.isDigit() }
 private infix fun List<Person.Id>.beinhaltet(personenId: Person.Id) = this.contains(personenId)
