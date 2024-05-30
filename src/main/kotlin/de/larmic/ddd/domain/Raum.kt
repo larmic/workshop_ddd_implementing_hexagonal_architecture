@@ -5,7 +5,25 @@ import de.larmic.ddd.common.ValueObject
 import java.util.*
 
 @AggregateRoot
-class Raum(val id: Id = Id(), val nummer: Nummer, val name: Name) {
+class Raum(
+    val id: Id = Id(),
+    val nummer: Nummer,
+    val name: Name,
+    private val personen: MutableList<Person> = mutableListOf(),
+) {
+
+    // Innere Liste 'personen' ist nach aussen nicht sichtbar.
+    // Nach Anforderung genügt es, nur die Kurzschreibweisen sichtbar zu machen.
+    val personenkurzschreibweisen: List<String>
+        get() = this.personen.map { it.kurzschreibweise }
+
+    fun fuegeHinzu(person: Person) {
+        if (personen beinhaltet person) {
+            throw IllegalArgumentException("Person '${person.kurzschreibweise}' is already part of this room")
+        }
+
+        this.personen.add(person)
+    }
 
     @ValueObject
     data class Id(val value: UUID = UUID.randomUUID())

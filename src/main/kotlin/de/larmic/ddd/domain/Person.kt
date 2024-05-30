@@ -17,7 +17,7 @@ class Person(
     val kurzschreibweise: String
         get() {
             return "${vorname.value} ${namenszusatz.asString()} ${nachname.value} (${benutzername.value})"
-                .removeDuplicatedWhiteSpaces()
+                .entferneDoppelteLeerzeichen()
                 .trim()
         }
 
@@ -26,7 +26,7 @@ class Person(
 
     @ValueObject
     class Vorname(value: String) {
-        val value: String = value.normalizeName()
+        val value: String = value.entferneLeerzeichen()
 
         init {
             require(value.isNotBlank()) { "First name must not be empty" }
@@ -35,7 +35,7 @@ class Person(
 
     @ValueObject
     class Nachname(value: String) {
-        val value: String = value.normalizeName()
+        val value: String = value.entferneLeerzeichen()
 
         init {
             require(value.isNotBlank()) { "Last name must not be empty" }
@@ -44,7 +44,7 @@ class Person(
 
     @ValueObject
     class Benutzername(value: String) {
-        val value: String = value.normalizeName()
+        val value: String = value.entferneLeerzeichen()
 
         init {
             require(value.isNotBlank()) { "Benutzername user must not be empty" }
@@ -72,5 +72,5 @@ class Person(
 }
 
 private fun Person.Namenszusatz?.asString() = this?.value ?: ""
-private fun String.removeDuplicatedWhiteSpaces() = this.replace("\\s+".toRegex(), " ")
-private fun String.normalizeName() = trim { it <= ' ' }
+private fun String.entferneDoppelteLeerzeichen() = this.replace("\\s+".toRegex(), " ")
+private fun String.entferneLeerzeichen() = trim { it <= ' ' }
