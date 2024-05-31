@@ -17,5 +17,5 @@ class RaumHinzufuegen(private val raumRepository: RaumRepository) {
     sealed class Result
 
     class Ok(val raum: Raum) : Result()
-    object RaumExistiertBereits : Result()
+    data object RaumExistiertBereits : Result()
 }
