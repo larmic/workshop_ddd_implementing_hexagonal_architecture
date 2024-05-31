@@ -12,7 +12,7 @@ import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
 import de.larmic.ddd.infrastructure.person.rest.ReadPersonDto
 import de.larmic.ddd.infrastructure.raum.database.CacheEventRepository
-import de.larmic.ddd.infrastructure.rest.ReadRoomDto
+import de.larmic.ddd.infrastructure.raum.rest.ReadRoomDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
