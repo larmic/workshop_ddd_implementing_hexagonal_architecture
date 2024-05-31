@@ -30,8 +30,8 @@ class PersonZuRaumHinzufuegen(
 
     sealed class Result
 
-    object Ok : Result()
-    object PersonIstDemRaumBereitsZugewiesen : Result()
-    object RaumNichtGefunden : Result()
-    object PersonNichtGefunden : Result()
+    data object Ok : Result()
+    data object PersonIstDemRaumBereitsZugewiesen : Result()
+    data object RaumNichtGefunden : Result()
+    data object PersonNichtGefunden : Result()
 }

@@ -17,7 +17,7 @@ class PersonHinzufuegen(private val personRepository: PersonRepository) {
     sealed class Result
 
     class Ok(val person: Person) : Result()
-    object PersonExistiertBereits : Result()
+    data object PersonExistiertBereits : Result()
 }
 
 private infix fun PersonRepository.existiert(person: Person) = this existiert person.id || this existiert person.benutzername

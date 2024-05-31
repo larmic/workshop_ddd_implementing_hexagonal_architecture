@@ -11,7 +11,6 @@ import de.larmic.ddd.domain.raum.createRaumTestData
 import de.larmic.ddd.infrastructure.common.getRoom
 import de.larmic.ddd.infrastructure.common.postRoom
 import de.larmic.ddd.infrastructure.common.putPersonToRoom
-import de.larmic.ddd.infrastructure.rest.RoomRestController
 import io.mockk.every
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
