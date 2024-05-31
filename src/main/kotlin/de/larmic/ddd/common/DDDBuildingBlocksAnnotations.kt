@@ -37,7 +37,7 @@ annotation class Repository
 /**
  * Marks class as 'use case'.
  * In DDD this building block is a 'service'.
- * This annotation extends Spring Boot @Component a class marked with this extention will be known in spring context.
+ * This annotation extends Spring Boot @Component a class marked with this extension will be known in spring context.
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
