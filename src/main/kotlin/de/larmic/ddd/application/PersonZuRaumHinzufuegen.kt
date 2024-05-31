@@ -6,7 +6,7 @@ import de.larmic.ddd.domain.Raum
 import de.larmic.ddd.domain.RaumRepository
 
 @UseCase
-class PersonZuRaumHinzufuegen(val raumRepository: RaumRepository) {
+class PersonZuRaumHinzufuegen(private val raumRepository: RaumRepository) {
 
      operator fun invoke(id: Raum.Id, person: Person): Result {
         val raum = raumRepository.finde(id) ?: return RaumNichtGefunden
@@ -28,8 +28,8 @@ class PersonZuRaumHinzufuegen(val raumRepository: RaumRepository) {
 
     sealed class Result
 
-    object Ok : Result()
-    object PersonIstDemRaumBereitsZugewiesen : Result()
-    object PersonIstEinemAnderenRaumBereitsZugewiesen : Result()
-    object RaumNichtGefunden : Result()
+    data object Ok : Result()
+    data object PersonIstDemRaumBereitsZugewiesen : Result()
+    data object PersonIstEinemAnderenRaumBereitsZugewiesen : Result()
+    data object RaumNichtGefunden : Result()
 }
