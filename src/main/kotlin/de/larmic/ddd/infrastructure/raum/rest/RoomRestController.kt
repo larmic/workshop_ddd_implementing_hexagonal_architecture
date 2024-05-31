@@ -1,4 +1,4 @@
-package de.larmic.ddd.infrastructure.rest
+package de.larmic.ddd.infrastructure.raum.rest
 
 import de.larmic.ddd.application.common.PersonZuRaumHinzufuegen
 import de.larmic.ddd.application.common.RaumLaden

@@ -65,7 +65,7 @@ class Person(
                 label.mapToAddition() ?: throw IllegalArgumentException("Person addition '$label' is not supported")
             }
 
-            private fun String.mapToAddition() = Namenszusatz.values().firstOrNull { it.value == this.trimAndLowercase() }
+            private fun String.mapToAddition() = entries.firstOrNull { it.value == this.trimAndLowercase() }
             private fun String.trimAndLowercase() = this.trim { it <= ' ' }.lowercase()
         }
     }

@@ -28,7 +28,7 @@ class RaumLaden(
     sealed class Result
 
     class Ok(val raumMitPersonen: RaumMitPersonen) : Result()
-    object RaumNichtGefunden : Result()
+    data object RaumNichtGefunden : Result()
 
     private fun PersonRepository.ladePersonenDesRaums(raum: Raum) = raum.personenIds.map { this.finde(id = Person.Id(it.value))!! }
 }
